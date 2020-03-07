@@ -1,12 +1,16 @@
-#include "Map.h"
+#include "TiledMap.h"
 
 #include "Utils.h"
 
 namespace Godamn
 {
-	bool Map::loadTileset(
-		const std::string& tilesetPath,
-		sf::Vector2<uint8_t> tileSize)
+	TiledMap::TiledMap()
+	{
+		// resize the vertex array to fit the level size
+		this->m_vertices.setPrimitiveType(sf::Quads);
+	}
+
+	bool TiledMap::loadTileset(const std::string& tilesetPath, sf::Vector2<uint8_t> tileSize)
 	{
 		// load the tileset texture
 		if (!this->m_tileset.loadFromFile(tilesetPath))
@@ -21,26 +25,26 @@ namespace Godamn
 		return true;
 	}
 
-	void Map::setTilesConfig(std::vector<uint8_t>& tilesConfig)
+	void TiledMap::setTilesConfig(std::vector<uint8_t>& tilesConfig)
 	{
 		this->m_tilesConfig = tilesConfig;
-		this->m_vertexOutdated = true;
+		this->m_verticesOutdated = true;
 	}
 
-	void Map::setRenderSize(sf::Vector2<uint8_t> renderSize)
+	void TiledMap::setRenderSize(const sf::Vector2<uint8_t> renderSize)
 	{
 		this->m_renderSize = renderSize;
 	}
 
-	void Map::updateIfOutdated()
+	void TiledMap::updateIfOutdated()
 	{
-		if (this->m_vertexOutdated)
+		if (this->m_verticesOutdated)
 		{
 			this->redraw();
 		}
 	}
 
-	void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
+	void TiledMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		// apply the transform
 		states.transform *= this->getTransform();
@@ -52,10 +56,8 @@ namespace Godamn
 		target.draw(this->m_vertices, states);
 	}
 
-	void Map::redraw()
+	void TiledMap::redraw()
 	{
-		// resize the vertex array to fit the level size
-		this->m_vertices.setPrimitiveType(sf::Quads);
 		this->m_vertices.resize(this->m_renderSize.x * this->m_renderSize.y * 4);
 
 		// populate the vertex array, with one quad per tile
@@ -87,7 +89,7 @@ namespace Godamn
 				quad[3].texCoords = sf::Vector2f(tileX * this->m_tileSize.x, (tileY + 1) * this->m_tileSize.y);
 			}
 		}
-		
-		this->m_vertexOutdated = false;
+
+		this->m_verticesOutdated = false;
 	}
 }

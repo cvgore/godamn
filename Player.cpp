@@ -9,6 +9,6 @@ namespace Godamn
 
 	const std::string& Player::getName() const
 	{
-		return this->m_name;;
+		return this->m_name;
 	}
 }

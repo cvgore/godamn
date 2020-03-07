@@ -11,14 +11,11 @@
 
 namespace Godamn
 {
-	class Map : public sf::Drawable, public sf::Transformable
+	class TiledMap : public sf::Drawable, public sf::Transformable
 	{
-		friend class sf::Drawable;
 	public:
-		bool loadTileset(
-			const std::string& tilesetPath,
-			sf::Vector2<uint8_t> tileSize
-		);
+		TiledMap();
+		bool loadTileset(const std::string& tilesetPath, sf::Vector2<uint8_t> tileSize);
 		void setTilesConfig(std::vector<uint8_t>& tilesConfig);
 		void setRenderSize(sf::Vector2<uint8_t> renderSize);
 		void updateIfOutdated();
@@ -29,7 +26,7 @@ namespace Godamn
 		sf::Vector2<uint8_t> m_renderSize;
 		sf::Vector2<uint8_t> m_tileSize;
 		std::vector<uint8_t> m_tilesConfig;
-		bool m_vertexOutdated = true;
+		bool m_verticesOutdated = true;
 
 		void redraw();
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

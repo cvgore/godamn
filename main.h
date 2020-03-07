@@ -7,6 +7,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include "Utils.h"
-#include "Map.h"
+#include "TiledMap.h"
 #include "GameState.h"
 #include "Player.h"
