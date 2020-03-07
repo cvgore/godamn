@@ -1,26 +1,37 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/Transformable.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <string>
+#include <vector>
 
 namespace Godamn
 {
 	class Map : public sf::Drawable, public sf::Transformable
 	{
+		friend class sf::Drawable;
 	public:
-
-		bool load(
+		bool loadTileset(
 			const std::string& tilesetPath,
-			sf::Vector2u tileSize,
-			const uint8_t* tiles,
-			uint16_t width,
-			uint16_t height
+			sf::Vector2<uint8_t> tileSize
 		);
+		void setTilesConfig(std::vector<uint8_t>& tilesConfig);
+		void setRenderSize(sf::Vector2<uint8_t> renderSize);
+		void updateIfOutdated();
 
 	private:
-
-		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-		sf::VertexArray m_vertices;
 		sf::Texture m_tileset;
+		sf::VertexArray m_vertices;
+		sf::Vector2<uint8_t> m_renderSize;
+		sf::Vector2<uint8_t> m_tileSize;
+		std::vector<uint8_t> m_tilesConfig;
+		bool m_vertexOutdated = true;
+
+		void redraw();
+		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	};
 }

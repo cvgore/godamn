@@ -4,5 +4,9 @@
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 #endif
 
-#include "Utils.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include "Utils.h"
+#include "Map.h"
+#include "GameState.h"
+#include "Player.h"
