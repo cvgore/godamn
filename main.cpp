@@ -2,37 +2,36 @@
 
 int main()
 {
-	// create the window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Game");
-	LOG_DEBUG("Renderer created");
-
-
-    sf::CircleShape shape(50.f);
-
-	// set the shape color to green
-	shape.setFillColor(sf::Color(100, 250, 50));
+	LOG_DEBUG("Creating renderer...");
 	
-    // run the program as long as the window is open
-    while (window.isOpen())
-    {
-        // check all the window's events that were triggered since the last iteration of the loop
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            // "close requested" event: we close the window
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+	sf::RenderWindow window(
+		sf::VideoMode(800, 600),
+		APP_NAME " " APP_VERSION,
+		sf::Style::Default ^ sf::Style::Resize
+	);
 
-        // clear the window with black color
-        window.clear(sf::Color::Black);
-
-        // draw everything here...
-        window.draw(shape);
-
-        // end the current frame
-        window.display();
-    }
+	LOG_DEBUG("Creating game instance...");
 	
+	while (window.isOpen())
+	{
+		sf::Event event;
+
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+			{
+				window.close();
+			}
+		}
+
+		window.clear(sf::Color::Black);
+
+		
+		
+		window.display();
+	}
+
+	LOG_DEBUG("Bye bye...");
+
 	return 0;
 }

@@ -4,6 +4,5 @@
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 #endif
 
-#include <iostream>
-#include <SFML/Graphics.hpp>
 #include "Utils.h"
+#include <SFML/Graphics.hpp>

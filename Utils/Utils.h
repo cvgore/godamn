@@ -4,8 +4,7 @@
 #include <cstdio>
 #include <cstring>
 
-// template <typename... Vargs>
-void debug_print(const char* file, const int line, const char* a);
+void debug_print(const char* file, const int line, const char* content);
 
 #ifdef _DEBUG
 #define LOG_DEBUG(...) debug_print(__FILE__, __LINE__, __VA_ARGS__)

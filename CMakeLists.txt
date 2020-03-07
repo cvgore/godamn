@@ -3,16 +3,23 @@
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-project (Gra VERSION 0.1 LANGUAGES CXX)
+set(APP_NAME godamn)
+set(APP_VERSION 0.1)
+
+add_compile_definitions(APP_NAME="${APP_NAME}" APP_VERSION="${APP_VERSION}")
+
+project (Gra VERSION ${APP_VERSION} LANGUAGES CXX)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 
-find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
+find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 
 add_subdirectory(Utils)
 
-add_executable(Game main.cpp main.h)
+add_executable(Game main.cpp GameState.cpp)
 
-target_link_libraries(Game sfml-graphics sfml-audio Utils)
+target_link_libraries(Game sfml-graphics Utils)
 
-target_include_directories(Game PUBLIC ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR}/Utils)
+list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/Utils")
+
+target_include_directories(Game PUBLIC ${PROJECT_BINARY_DIR} ${EXTRA_INCLUDES})
