@@ -28,12 +28,19 @@ int main()
 	Godamn::Player player("Player");
 	Godamn::GameState gameState(player);
 
-	std::vector<uint8_t> cfg {0, 1, 0, 1};
+	std::vector<uint8_t> cfg {};
+
+	for (uint16_t i = 0; i < (24 * 15); i++)
+	{
+		cfg.push_back(i % 2);
+	}
 
 	map.loadTileset("assets/tiles.png", sf::Vector2<uint8_t>(32, 32));
-	map.setRenderSize(sf::Vector2<uint8_t>(4, 1));
+	map.setRenderSize(sf::Vector2<uint8_t>(24, 15));
 	map.setTilesConfig(cfg);
-	map.setPosition(10.f, 10.f);
+	map.setPosition(16.f, 16.f);
+
+	gameState.setPosition(0.f, 700.f);
 
 	LOG_DEBUG("Creating game instance...");
 
@@ -45,7 +52,7 @@ int main()
 		{
 			if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Key::L)
 			{
-				std::vector<uint8_t> cfg {1, 0, 0, 0};
+				cfg[rand() % (24 * 15 - 1)] = (cfg[rand() % (24 * 15 - 1)] + 1) % 2;
 				map.setTilesConfig(cfg);
 			}
 
