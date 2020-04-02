@@ -7,11 +7,9 @@ namespace Godamn
 	class Player
 	{
 	public:
-		Player(const std::string& name);
-		const std::string& getName() const;
+		Player();
 		
 	private:
-		std::string m_name;
 		uint16_t m_power = 0;
 	};
 }

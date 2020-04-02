@@ -2,13 +2,7 @@
 
 namespace Godamn
 {
-	Player::Player(const std::string& name)
+	Player::Player()
 	{
-		this->m_name = name;
-	}
-
-	const std::string& Player::getName() const
-	{
-		return this->m_name;
 	}
 }

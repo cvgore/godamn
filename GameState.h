@@ -5,8 +5,11 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
 #include <vector>
 #include "Player.h"
+#include "TiledMap.h"
 
 namespace Godamn
 {
@@ -16,14 +19,19 @@ namespace Godamn
 	class GameState : public sf::Drawable, public sf::Transformable
 	{
 	public:
-		GameState(Player& player);
+		GameState(sf::RenderWindow& renderer);
 		GameState(const GameState&) = delete;
 		GameState& operator=(const GameState&) = delete;
 		~GameState();
 		void setPaused(bool paused = true);
+		Player* getPlayer() const;
+		TiledMap* getMap() const;
+		void dispatch(sf::Event ev);
 	private:
 		bool m_paused;
-		Player& m_player;
+		Player* m_player;
+		TiledMap* m_map;
+		sf::RenderWindow& m_renderer;
 		std::vector<sf::Drawable*> m_drawables;
 
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

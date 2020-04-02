@@ -16,11 +16,12 @@ find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 
 add_subdirectory(Utils)
 
-add_executable(Game main.cpp GameState.cpp TiledMap.cpp Player.cpp)
+add_executable(Game main.cpp GameState.cpp TiledMap.cpp Player.cpp Engine.cpp)
 
 target_link_libraries(Game sfml-graphics Utils)
 
 list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/Utils")
+list(APPEND EXTRA_INCLUDES "${eventpp_DIR}/include")
 
 target_include_directories(Game PUBLIC ${PROJECT_BINARY_DIR} ${EXTRA_INCLUDES})
 

@@ -2,14 +2,18 @@
  
 namespace Godamn
 {
-	GameState::GameState(Player& player) : m_paused(false), m_player(player)
+	GameState::GameState(sf::RenderWindow& renderer) : m_paused(false), m_renderer(renderer)
 	{
+		this->m_map = new Godamn::TiledMap;
+		this->m_player = new Godamn::Player;
+		
 		auto hud = new sf::RectangleShape(sf::Vector2f(800.f, 100.f));
 		
 		hud->setFillColor(sf::Color::Blue);
 		hud->setPosition(0.f, 500.f);
 
 		this->m_drawables.push_back(hud);
+		this->m_drawables.push_back(this->m_map);
 	}
 
 	GameState::~GameState()
@@ -18,6 +22,8 @@ namespace Godamn
 		{
 			delete drawable;
 		}
+
+		delete this->m_player;
 	}
 
 	void GameState::setPaused(const bool paused)
@@ -25,8 +31,27 @@ namespace Godamn
 		this->m_paused = paused;
 	}
 
+	Player* GameState::getPlayer() const
+	{
+		return this->m_player;
+	}
+
+	TiledMap* GameState::getMap() const
+	{
+		return this->m_map;
+	}
+
+	void GameState::dispatch(sf::Event ev)
+	{
+		if (ev.type == sf::Event::Closed)
+		{
+			this->m_renderer.close();
+		}	
+	}
+
 	void GameState::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
+		this->m_map->updateIfOutdated();
 		// // apply the transform
 		// states.transform *= this->getTransform();
 		//

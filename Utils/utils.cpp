@@ -1,13 +1,14 @@
 #include "Utils.h"
 
-void debug_print(const char* file, const int line, const char* content)
+void debug_print(const char* file, const int line, const char* severity, const char* content)
 {
 	const auto basename = strrchr(file, DIRSEP);
-	static const auto FMT = "[%d/%02d/%02d %02d:%02d:%02d] (%s:%d) %s\n";
+	static const auto FMT = "[%d/%02d/%02d %02d:%02d:%02d] %2s (%s:%d) %s\n";
 
 	const auto time = std::time(NULL);
-	// ReSharper disable once CppDeprecatedEntity
-	const auto tm = std::localtime(&time); // NOLINT(clang-diagnostic-deprecated-declarations)
+#define _CRT_SECURE_NO_WARNINGS
+	const auto tm = std::localtime(&time);
+#undef _CRT_SECURE_NO_WARNINGS
 
 	printf_s(
 		FMT,
@@ -17,6 +18,7 @@ void debug_print(const char* file, const int line, const char* content)
 		tm->tm_hour,
 		tm->tm_min,
 		tm->tm_sec,
+		severity,
 		basename + 1,
 		line,
 		content

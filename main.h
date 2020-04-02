@@ -1,12 +1,11 @@
 ﻿#pragma once
 
+/**
+ * Release version cannot include debug console window.
+ * Also we need to change entry from WinMain to platform-independent main function
+ */
 #if defined(_WIN32) && !defined(_DEBUG)
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 #endif
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include "Utils.h"
-#include "TiledMap.h"
-#include "GameState.h"
-#include "Player.h"
+#include "Engine.h"

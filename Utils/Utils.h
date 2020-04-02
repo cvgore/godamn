@@ -3,13 +3,19 @@
 #include <ctime>
 #include <cstdio>
 #include <cstring>
+#include <stdexcept>
 
-void debug_print(const char* file, const int line, const char* content);
+void debug_print(const char* file, const int line, const char* severity, const char* content);
 
 #ifdef _DEBUG
-#define LOG_DEBUG(...) debug_print(__FILE__, __LINE__, __VA_ARGS__)
+#define DEBUG(...) debug_print(__FILE__, __LINE__, "D", __VA_ARGS__)
+#define WARNING(...) debug_print(__FILE__, __LINE__, "W", __VA_ARGS__)
+#define PANIC(...) debug_print(__FILE__, __LINE__, "P", __VA_ARGS__); \
+	throw std::exception(__VA_ARGS__);
 #else
-#define LOG_DEBUG(...)
+#define DEBUG(...)
+#define WARNING(...)
+#define PANIC(...) throw std::exception(__VA_ARGS__);  // NOLINT(cppcoreguidelines-macro-usage)
 #endif
 
 #ifdef _WIN32
