@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cstring>
 #include <stdexcept>
+#include <iostream>
 
 void debug_print(const char* file, const int line, const char* severity, const char* content);
 

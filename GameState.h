@@ -14,7 +14,7 @@
 namespace Godamn
 {
 	/**
-	 * Holds information about current game state
+	 * Holds information about current game state, keeps also all entities in one place
 	 */
 	class GameState : public sf::Drawable, public sf::Transformable
 	{
@@ -26,13 +26,14 @@ namespace Godamn
 		void setPaused(bool paused = true);
 		Player* getPlayer() const;
 		TiledMap* getMap() const;
-		void dispatch(sf::Event ev);
+		void handleEvent(sf::Event ev);
+		
 	private:
 		bool m_paused;
 		Player* m_player;
 		TiledMap* m_map;
 		sf::RenderWindow& m_renderer;
-		std::vector<sf::Drawable*> m_drawables;
+		std::vector<Entity* > m_entites;
 
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	};

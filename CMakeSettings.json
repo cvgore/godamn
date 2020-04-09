@@ -17,11 +17,6 @@
           "type": "PATH"
         },
         {
-          "name": "eventpp_DIR",
-          "value": "C:/eventpp",
-          "type": "PATH"
-        },
-        {
           "name": "_DEBUG",
           "value": "True",
           "type": "BOOL"

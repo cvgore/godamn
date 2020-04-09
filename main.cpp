@@ -1,7 +1,7 @@
 ﻿#include "main.h"
 
 int main()
-{
+{	
 	Godamn::Engine game {};
 
 	game.runChecks();

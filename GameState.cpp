@@ -1,26 +1,28 @@
 #include "GameState.h"
- 
+#include "Event.h";
+
 namespace Godamn
 {
 	GameState::GameState(sf::RenderWindow& renderer) : m_paused(false), m_renderer(renderer)
 	{
-		this->m_map = new Godamn::TiledMap;
-		this->m_player = new Godamn::Player;
-		
+		this->m_map = new TiledMap;
+		this->m_player = new Player;
+
 		auto hud = new sf::RectangleShape(sf::Vector2f(800.f, 100.f));
-		
+		//
 		hud->setFillColor(sf::Color::Blue);
 		hud->setPosition(0.f, 500.f);
 
-		this->m_drawables.push_back(hud);
-		this->m_drawables.push_back(this->m_map);
+		// this->m_entites.push_back(hud);
+		
+		this->m_entites.push_back(this->m_map);
 	}
 
 	GameState::~GameState()
 	{
-		for (Drawable* drawable : this->m_drawables)
+		for (Entity* entity : this->m_entites)
 		{
-			delete drawable;
+			delete entity;
 		}
 
 		delete this->m_player;
@@ -41,12 +43,25 @@ namespace Godamn
 		return this->m_map;
 	}
 
-	void GameState::dispatch(sf::Event ev)
+	void GameState::handleEvent(sf::Event ev)
 	{
 		if (ev.type == sf::Event::Closed)
 		{
 			this->m_renderer.close();
-		}	
+		}
+		else
+		{
+			// this->m_renderer.
+			
+			Event wrapper(*this, ev);
+			
+			for (Entity* entity : this->m_entites)
+			{
+				// if ()
+				
+				entity->onEvent(wrapper);
+			}
+		}
 	}
 
 	void GameState::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -67,7 +82,7 @@ namespace Godamn
 		// 	target.draw(this->m_drawables[i]);
 		// }
 		//
-		for (Drawable* const drawable : this->m_drawables)
+		for (Entity* drawable : this->m_entites)
 		{
 			target.draw(*drawable);
 		}

@@ -2,14 +2,20 @@
 
 #include <string>
 
+#include "Entity.h"
+
 namespace Godamn
 {
-	class Player
+	class Player : public Entity
 	{
 	public:
 		Player();
 		
+		const sf::Vector2u getRelativePos() override;
+
 	private:
 		uint16_t m_power = 0;
+		
+		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	};
 }
