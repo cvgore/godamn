@@ -1,6 +1,6 @@
 #include "TiledMap.h"
-#include "Utils.h"
-#include "Event.h"
+#include "../../Utils/Utils.h"
+#include "../../Events/Event.h"
 
 namespace Godamn
 {
@@ -41,7 +41,7 @@ namespace Godamn
 
 		for (uint32_t i = 0; i < tilesCount; ++i)
 		{
-			this->m_tiles.push_back(Tile(sf::FloatRect(0.f, 0.f, 0.f, 0.f)));
+			this->m_tiles.emplace_back(Tile(sf::FloatRect(0.f, 0.f, 0.f, 0.f)));
 		}
 	}
 
@@ -87,8 +87,7 @@ namespace Godamn
 			for (uint16_t j = 0; j < this->m_renderSize.y; ++j)
 			{
 				// get the current tile enum
-				const TileEnum tileCfg = this->m_tiles[i + j * this->m_renderSize.x].getType();
-				// const TileEnum tileCfg = TileEnum::VOID;
+				const auto tileCfg = static_cast<uint8_t>(this->m_tiles[i + j * this->m_renderSize.x].getType());
 
 				// find its position in the tileset texture
 				const uint8_t size = this->m_tileset.getSize().x / this->m_tileSize.x;

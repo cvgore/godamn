@@ -1,9 +1,11 @@
 #include "Tile.h"
-#include "Event.h"
+#include "../../Events/Event.h"
+#include "../../Utils/Utils.h"
 
 namespace Godamn
 {
-	Tile::Tile(const sf::FloatRect& rect): Entity(rect)
+	Tile::Tile(const sf::FloatRect& rect, const TileEnum type)
+		: Entity(rect), m_type(type), m_vertexOutdated(true)
 	{
 	}
 

@@ -6,9 +6,9 @@ void debug_print(const char* file, const int line, const char* severity, const c
 	static const auto FMT = "[%d/%02d/%02d %02d:%02d:%02d] %2s (%s:%d) %s\n";
 
 	const auto time = std::time(NULL);
-#define _CRT_SECURE_NO_WARNINGS
+#pragma warning(disable:4996)
 	const auto tm = std::localtime(&time);
-#undef _CRT_SECURE_NO_WARNINGS
+#pragma warning(default:4996)
 
 	printf_s(
 		FMT,

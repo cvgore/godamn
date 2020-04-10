@@ -1,6 +1,8 @@
 #pragma once
 
-/* Creates common event interface name, f.e: MouseClick => IEvMouseClick */
+/**
+ * @brief Creates common event interface name, f.e: MouseClick => IEvMouseClick
+ */
 #define EVINAME(name) IEv##name
 
 #define MAKE_EVENT_INTERFACE(name) class EVINAME(name) \

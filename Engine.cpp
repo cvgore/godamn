@@ -1,13 +1,13 @@
 #include "Engine.h"
-#include "Event.h"
+#include "Events/Event.h"
 #include "Utils.h"
 
 using EventType = sf::Event::EventType;
 
 namespace Godamn
 {
-	constexpr char FF_MAIN_FONT[] = "assets/tradewinds.ttf";
-	constexpr char FF_ALT_FONT[] = "assets/roboto.ttf";
+	constexpr char FF_MAIN_FONT[] = "assets/fonts/tradewinds.ttf";
+	constexpr char FF_ALT_FONT[] = "assets/fonts/roboto.ttf";
 	constexpr char FF_TILESET[] = "assets/tiles.png";
 
 	/**
@@ -17,11 +17,8 @@ namespace Godamn
 		FF_ALT_FONT, FF_MAIN_FONT, FF_TILESET
 	};
 
-	Engine::Engine()
+	Engine::Engine(): m_renderer(NULL), m_state(NULL), m_map(NULL)
 	{
-		this->m_renderer = NULL;
-		this->m_state = NULL;
-		this->m_map = NULL;
 	}
 
 	Engine::~Engine()
@@ -30,6 +27,9 @@ namespace Godamn
 		{
 			delete entity;
 		}
+		
+		delete this->m_state;
+		delete this->m_renderer;
 	}
 
 	void Engine::runChecks()
@@ -58,7 +58,7 @@ namespace Godamn
 			PANIC("Could not find roboto font");
 		}
 
-		this->m_renderer = new sf::RenderWindow(
+		this->m_renderer = __new sf::RenderWindow(
 			sf::VideoMode(800, 600),
 			APP_NAME " " APP_VERSION,
 			sf::Style::Default ^ sf::Style::Resize
@@ -69,8 +69,11 @@ namespace Godamn
 	{
 		DEBUG("Creating renderer...");
 
-		this->m_state = new GameState;
-		this->m_map = new TiledMap(sf::FloatRect(16.f, 16.f, 768.f, 480.f));
+		this->m_state = __new GameState;
+
+		auto tiledMapRect = sf::FloatRect(16.f, 16.f, 768.f, 480.f);
+		
+		this->m_map = __new TiledMap(tiledMapRect);
 
 		this->m_entities.push_back(this->m_map);
 
@@ -132,23 +135,23 @@ namespace Godamn
 
 	sf::Vector2f Engine::translateEventPosition(const sf::Event& event)
 	{
-		sf::Vector2f vec(-1, -1);
+		sf::Vector2f vec;
 
 		switch (event.type)
 		{
-		case EventType::MouseButtonReleased:
-		case EventType::MouseButtonPressed:
-			vec.x = event.mouseButton.x;
-			vec.y = event.mouseButton.y;
-			break;
-		case EventType::MouseMoved:
-			vec.x = event.mouseMove.x;
-			vec.y = event.mouseMove.y;
-			break;
-		case EventType::MouseWheelScrolled:
-			vec.x = event.mouseWheelScroll.x;
-			vec.y = event.mouseWheelScroll.y;
-			break;
+			case EventType::MouseButtonReleased:
+			case EventType::MouseButtonPressed:
+				vec.x = static_cast<float>(event.mouseButton.x);
+				vec.y = static_cast<float>(event.mouseButton.y);
+				break;
+			case EventType::MouseMoved:
+				vec.x = static_cast<float>(event.mouseMove.x);
+				vec.y = static_cast<float>(event.mouseMove.y);
+				break;
+			case EventType::MouseWheelScrolled:
+				vec.x = static_cast<float>(event.mouseWheelScroll.x);
+				vec.y = static_cast<float>(event.mouseWheelScroll.y);
+				break;
 		}
 
 		return vec;
@@ -162,7 +165,7 @@ namespace Godamn
 
 		for (Entity* entity : this->m_entities)
 		{
-			if (pos.y != -1 && pos.x != -1)
+			if (wrapper.isMouseEvent())
 			{
 				if (entity->getRect().contains(pos))
 				{

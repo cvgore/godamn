@@ -1,5 +1,4 @@
 #include "GameState.h"
-#include "Event.h"
 
 namespace Godamn
 {

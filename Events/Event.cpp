@@ -1,7 +1,6 @@
 #include "Event.h"
 
-#include "Entity.h"
-#include "GameState.h"
+using EventType = sf::Event::EventType;
 
 namespace Godamn
 {
@@ -25,13 +24,27 @@ namespace Godamn
 		return this->m_pos;
 	}
 
-	const sf::Vector2f& Event::getRelativePos(const sf::FloatRect& rect)
+	sf::Vector2f Event::getRelativePos(const sf::FloatRect& rect)
 	{
 		return sf::Vector2f(this->m_pos.x - rect.left, this->m_pos.y - rect.top);
 	}
 
-	const sf::Vector2f& Event::getRelativePos(const Entity& ent)
+	sf::Vector2f Event::getRelativePos(const Entity& ent)
 	{
 		return this->getRelativePos(ent.getRect());
+	}
+
+	bool Event::isMouseEvent() const
+	{
+		switch (this->m_originalEvent.type)
+		{
+			case EventType::MouseButtonReleased:
+			case EventType::MouseButtonPressed:
+			case EventType::MouseMoved:
+			case EventType::MouseWheelScrolled:
+				return true;
+		}
+
+		return false;
 	}
 }

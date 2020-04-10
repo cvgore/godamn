@@ -8,4 +8,9 @@
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 #endif
 
+#if defined(_DEBUG) && defined(_MSC_VER)
+#include <stdlib.h>
+#include <crtdbg.h>
+#endif
+
 #include "Engine.h"

@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
+#include <string>
 
 namespace Godamn
 {
@@ -14,7 +15,7 @@ namespace Godamn
 		Entity() = delete;
 		Entity(const sf::FloatRect& rect);
 		virtual ~Entity() = default;
-		virtual const char* getName() const;
+		virtual std::string getName() const;
 		void onEvent(Event& ev);
 		const sf::FloatRect& getRect() const;
 

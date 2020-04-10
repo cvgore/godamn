@@ -1,8 +1,7 @@
 #include "Entity.h"
-
+#include "../Events/EventMethodsInterfaces.h"
+#include "../Events/Event.h"
 #include <SFML/Window/Event.hpp>
-#include "EventMethodsInterfaces.h"
-#include "Event.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 
 namespace Godamn
@@ -13,11 +12,15 @@ namespace Godamn
 		this->setPosition(rect.left, rect.top);
 	}
 
-	const char* Entity::getName() const
+	std::string Entity::getName() const
 	{
-		const auto name = typeid(*this).name();
-
-		return strncmp(name, "Entity", 16) == 0 ? "?unknown" : name;
+		// MSVC returns human-readable FQN, other returns mangled FQN
+#if _MSC_VER
+		const auto fqn = std::string(typeid(*this).name());
+		const auto name = fqn.substr(fqn.find_last_of(':') + 1);
+#endif
+		
+		return name;
 	}
 
 	void Entity::onEvent(Event& ev)
@@ -31,21 +34,21 @@ namespace Godamn
 #pragma endregion
 
 		auto& orgEv = ev.getOriginalEvent();
-		
+
 		switch (orgEv.type)
 		{
-		case sf::Event::MouseButtonReleased:
-		{
-			CAST_AND_CALL(MouseClick);
-		}
-		break;
-		case sf::Event::MouseMoved:
-		{
-			CAST_AND_CALL(MouseOver);
-		}
-		break;
-		default:
+			case sf::Event::MouseButtonReleased:
+			{
+				CAST_AND_CALL(MouseClick);
+			}
 			break;
+			case sf::Event::MouseMoved:
+			{
+				CAST_AND_CALL(MouseOver);
+			}
+			break;
+			default:
+				break;
 		}
 
 		/*CAST_AND_CALL(MouseClick)

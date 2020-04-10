@@ -19,7 +19,6 @@ namespace Godamn
 		void setTilesConfig(std::vector<Tile>& tilesConfig);
 		void setRenderSize(sf::Vector2<uint8_t> renderSize);
 		void updateIfOutdated();
-		
 		void onMouseClick(Event& ev) override;
 		
 	private:

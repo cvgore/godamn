@@ -2,7 +2,7 @@
 
 namespace Godamn
 {
-	enum TileEnum
+	enum class TileEnum
 	{
 		VOID,
 		VOID2
