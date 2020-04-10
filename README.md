@@ -14,7 +14,7 @@ int* m = __new int(2);
 When creating new file remember to include it into folder-scoped file `CMakeLists.txt` like that:
 (i.e: if creating file within `Entities`, add it into `Entities/CMakeLists.txt`)
 
-```make
+```cmake
 target_sources(GodamnLib
     PRIVATE
         ... [other files] ...
