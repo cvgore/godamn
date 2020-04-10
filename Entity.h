@@ -3,13 +3,12 @@
 
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
-#include "IRelativePos.h"
 
 namespace Godamn
 {
 	class Event;
 
-	class Entity : public sf::Drawable, public sf::Transformable, IRelativePos
+	class Entity : public sf::Drawable, public sf::Transformable
 	{
 	public:
 		Entity() = delete;
