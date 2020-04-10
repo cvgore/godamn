@@ -3,9 +3,16 @@
 #include <SFML/Window/Event.hpp>
 #include "EventMethodsInterfaces.h"
 #include "Event.h"
+#include <SFML/Graphics/RenderTarget.hpp>
 
 namespace Godamn
 {
+	Entity::Entity(const sf::FloatRect& rect)
+	{
+		this->m_rect = rect;
+		this->setPosition(rect.left, rect.top);
+	}
+
 	const char* Entity::getName() const
 	{
 		const auto name = typeid(*this).name();
@@ -24,21 +31,21 @@ namespace Godamn
 #pragma endregion
 
 		auto& orgEv = ev.getOriginalEvent();
-
+		
 		switch (orgEv.type)
 		{
-			case sf::Event::MouseButtonReleased:
-			{
-				CAST_AND_CALL(MouseClick);
-			}
+		case sf::Event::MouseButtonReleased:
+		{
+			CAST_AND_CALL(MouseClick);
+		}
+		break;
+		case sf::Event::MouseMoved:
+		{
+			CAST_AND_CALL(MouseOver);
+		}
+		break;
+		default:
 			break;
-			case sf::Event::MouseMoved:
-			{
-				CAST_AND_CALL(MouseOver);
-			}
-			break;
-			default:
-				break;
 		}
 
 		/*CAST_AND_CALL(MouseClick)
@@ -49,5 +56,10 @@ namespace Godamn
 #undef CAST_AND_CALL
 #undef CAST_VAR
 #pragma endregion
+	}
+
+	const sf::FloatRect& Entity::getRect() const
+	{
+		return this->m_rect;
 	}
 }

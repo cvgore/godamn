@@ -1,14 +1,12 @@
 #pragma once
 
 #include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <string>
 #include <vector>
-#include "HandlesEvents.h"
 #include "Tile.h"
 
 namespace Godamn
@@ -16,14 +14,13 @@ namespace Godamn
 	class TiledMap : public Entity, public IEvMouseClick
 	{
 	public:
-		TiledMap();
+		TiledMap(sf::FloatRect& rect);
 		bool loadTileset(const std::string& tilesetPath, sf::Vector2<uint8_t> tileSize);
 		void setTilesConfig(std::vector<Tile>& tilesConfig);
 		void setRenderSize(sf::Vector2<uint8_t> renderSize);
 		void updateIfOutdated();
 		
 		void onMouseClick(Event& ev) override;
-		const sf::Vector2u getRelativePos() override;
 		
 	private:
 		sf::Texture m_tileset;
@@ -34,7 +31,6 @@ namespace Godamn
 		bool m_verticesOutdated;
 
 		void redraw();
-		
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	};
 }

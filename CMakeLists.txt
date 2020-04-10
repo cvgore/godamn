@@ -16,7 +16,7 @@ find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 
 add_subdirectory(Utils)
 
-add_executable(Game main.cpp GameState.cpp TiledMap.cpp Player.cpp Engine.cpp Tile.cpp Entity.cpp Event.cpp HandlesEvents.cpp)
+add_executable(Game main.cpp GameState.cpp TiledMap.cpp Player.cpp Engine.cpp Tile.cpp Entity.cpp Event.cpp)
 
 target_link_libraries(Game sfml-graphics Utils)
 

@@ -3,7 +3,7 @@
 
 namespace Godamn
 {
-	Tile::Tile()
+	Tile::Tile(const sf::FloatRect& rect): Entity(rect)
 	{
 	}
 
@@ -12,14 +12,20 @@ namespace Godamn
 		return this->m_type;
 	}
 
+	void Tile::setType(TileEnum type)
+	{
+		this->m_type = type;
+	}
+
+	bool Tile::isOutdated()
+	{
+		return this->m_vertexOutdated;
+	}
+
 	void Tile::onMouseClick(Event& ev)
 	{
 		this->m_type = TileEnum::VOID2;
-	}
-
-	const sf::Vector2u Tile::getRelativePos()
-	{
-		return sf::Vector2u(0, 0);
+		this->m_vertexOutdated = true;
 	}
 
 	void Tile::draw(sf::RenderTarget& target, sf::RenderStates states) const

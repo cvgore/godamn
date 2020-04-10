@@ -10,15 +10,15 @@ namespace Godamn
 	class Tile : public Entity, public IEvMouseClick
 	{
 	public:
-		Tile();
+		Tile(const sf::FloatRect& rect);
 		TileEnum getType() const;
-		
+		void setType(TileEnum type);
+		bool isOutdated();
 		void onMouseClick(Event& ev) override;
-		const sf::Vector2u getRelativePos() override;
 		
 	private:
 		TileEnum m_type;
-
+		bool m_vertexOutdated;
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	};
 }

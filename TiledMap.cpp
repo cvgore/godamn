@@ -4,7 +4,7 @@
 
 namespace Godamn
 {
-	TiledMap::TiledMap(): m_verticesOutdated(true)
+	TiledMap::TiledMap(sf::FloatRect& rect): Entity(rect), m_verticesOutdated(true)
 	{
 		// resize the vertex array to fit the level size
 		this->m_vertices.setPrimitiveType(sf::Quads);
@@ -33,6 +33,16 @@ namespace Godamn
 	void TiledMap::setRenderSize(const sf::Vector2<uint8_t> renderSize)
 	{
 		this->m_renderSize = renderSize;
+		this->m_verticesOutdated = true;
+
+		this->m_tiles.clear();
+
+		const uint32_t tilesCount = this->m_renderSize.x * this->m_renderSize.y;
+
+		for (uint32_t i = 0; i < tilesCount; ++i)
+		{
+			this->m_tiles.push_back(Tile(sf::FloatRect(0.f, 0.f, 0.f, 0.f)));
+		}
 	}
 
 	void TiledMap::updateIfOutdated()
@@ -45,20 +55,14 @@ namespace Godamn
 
 	void TiledMap::onMouseClick(Event& ev)
 	{
-		const auto posX = ev.getOriginalEvent().mouseButton.x;
-		const auto posY = ev.getOriginalEvent().mouseButton.y;
-		
-		for (size_t i = 0; i < this->m_vertices.getVertexCount(); ++i)
-		{
-			const auto * vertex = &this->m_vertices[i];
-			
-			printf("Tap pos [%d, %d] Vertex pos [%f, %f]\n", posX, posY, vertex->position.x, vertex->position.y);
-		}
-	}
+		const auto relPos = ev.getRelativePos(*this);
 
-	const sf::Vector2u TiledMap::getRelativePos()
-	{
-		return sf::Vector2u(0,0);
+		const uint8_t tileX = floor(relPos.x / static_cast<float>(this->m_tileSize.x));
+		const uint8_t tileY = floor(relPos.y / static_cast<float>(this->m_tileSize.y));
+
+		this->m_tiles[tileX + tileY * this->m_renderSize.x].onMouseClick(ev);
+		// TODO: redraw only single tile, not whole map (!performance)
+		this->m_verticesOutdated = true;
 	}
 
 	void TiledMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -83,8 +87,8 @@ namespace Godamn
 			for (uint16_t j = 0; j < this->m_renderSize.y; ++j)
 			{
 				// get the current tile enum
-				//const TileEnum tileCfg = this->m_tiles[i + j * this->m_renderSize.x].getType();
-				const TileEnum tileCfg = TileEnum::VOID;
+				const TileEnum tileCfg = this->m_tiles[i + j * this->m_renderSize.x].getType();
+				// const TileEnum tileCfg = TileEnum::VOID;
 
 				// find its position in the tileset texture
 				const uint8_t size = this->m_tileset.getSize().x / this->m_tileSize.x;
