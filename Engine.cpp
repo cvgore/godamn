@@ -32,6 +32,9 @@ namespace Godamn
 		delete this->m_renderer;
 	}
 
+	/**
+	 * @brief Checks for existence of required files in FF_* and requirements constant
+	 */
 	void Engine::runChecks()
 	{
 		struct stat data;
@@ -57,7 +60,7 @@ namespace Godamn
 		{
 			PANIC("Could not find roboto font");
 		}
-
+		
 		this->m_renderer = __new sf::RenderWindow(
 			sf::VideoMode(800, 600),
 			APP_NAME " " APP_VERSION,
@@ -67,8 +70,6 @@ namespace Godamn
 
 	int Engine::spawn()
 	{
-		DEBUG("Creating renderer...");
-
 		this->m_state = __new GameState;
 
 		auto tiledMapRect = sf::FloatRect(16.f, 16.f, 768.f, 480.f);
@@ -77,20 +78,16 @@ namespace Godamn
 
 		this->m_entities.push_back(this->m_map);
 
-		std::vector<uint8_t> cfg {};
-
-		for (uint16_t i = 0; i < (24 * 15); i++)
-		{
-			cfg.push_back(i % 2);
-		}
+		// std::vector<uint8_t> cfg {};
+		//
+		// for (uint16_t i = 0; i < (24 * 15); i++)
+		// {
+		// 	cfg.push_back(i % 2);
+		// }
 
 		this->m_map->loadTileset(FF_TILESET, sf::Vector2<uint8_t>(32, 32));
 		this->m_map->setRenderSize(sf::Vector2<uint8_t>(24, 15));
 		// this->m_map->setTilesConfig(cfg);
-
-		// this->m_state->setPosition(0.f, 700.f);
-
-		DEBUG("Creating game instance...");
 
 		while (this->m_renderer->isOpen())
 		{

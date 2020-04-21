@@ -9,6 +9,7 @@ namespace Godamn
 	Entity::Entity(const sf::FloatRect& rect)
 	{
 		this->m_rect = rect;
+		
 		this->setPosition(rect.left, rect.top);
 	}
 

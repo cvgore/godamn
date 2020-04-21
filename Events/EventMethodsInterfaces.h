@@ -16,7 +16,7 @@
 namespace Godamn
 {
 	class Event;
-
+	
 	MAKE_EVENT_INTERFACE(MouseClick)
 
 	MAKE_EVENT_INTERFACE(MouseOver)
