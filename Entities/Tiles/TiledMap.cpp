@@ -23,7 +23,6 @@ namespace Godamn
 
 		return true;
 	}
-
 	void TiledMap::setTilesConfig(std::vector<Tile>& tilesConfig)
 	{
 		this->m_tiles = tilesConfig;
