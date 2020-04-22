@@ -3,7 +3,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <string>
-#include "Entity.h"
+#include "../Tile.h"
 
 namespace Godamn
 {
@@ -12,7 +12,7 @@ namespace Godamn
 		OFF, ON, IN_BUILDING
 	};
 
-	class Building : public Entity {
+	class Building : public Tile {
 		BuildingStateEnum m_state;
 		uint16_t m_buildingProgress;
 		// todo: ceny drewna i kamienia do ustalenia oraz iloœæ osób potrzebnych do budowy

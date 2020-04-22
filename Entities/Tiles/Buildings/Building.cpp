@@ -2,7 +2,7 @@
 
 namespace Godamn
 {
-	Building::Building(const sf::FloatRect& rect) : Entity(rect)
+	Building::Building(const sf::FloatRect& rect) : Tile(rect)
 	{
 		m_buildingProgress = 0;
 		m_state = BuildingStateEnum::IN_BUILDING;
