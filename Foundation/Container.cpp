@@ -27,8 +27,6 @@ namespace Godamn
 
 	Container::~Container()
 	{
-		DEBUG("Destructing container");
-		
 		delete m_engine;
 	}
 }
