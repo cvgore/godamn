@@ -1,4 +1,6 @@
 ﻿#include "main.h"
+#include "Foundation/Container.h"
+#include "Foundation/Object.h"
 
 int main()
 {
@@ -9,8 +11,10 @@ int main()
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 
-	Godamn::Engine game {};
-
+	Godamn::Engine game{};
+	Godamn::Container container(&game);
+	Godamn::Object::setContainer(&container);
+	 
 	game.runChecks();
 	game.initialize();
 
