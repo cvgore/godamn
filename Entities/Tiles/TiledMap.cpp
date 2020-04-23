@@ -53,14 +53,14 @@ namespace Godamn
 		}
 	}
 
-	void TiledMap::onMouseClick(Event& ev)
+	void TiledMap::onMouseButtonClick(Event& ev)
 	{
 		const auto relPos = ev.getRelativePos(*this);
 
 		const uint8_t tileX = floor(relPos.x / static_cast<float>(m_tileSize.x));
 		const uint8_t tileY = floor(relPos.y / static_cast<float>(m_tileSize.y));
 
-		m_tiles[tileX + tileY * m_renderSize.x].onMouseClick(ev);
+		m_tiles[tileX + tileY * m_renderSize.x].onMouseButtonClick(ev);
 		// TODO: redraw only single tile, not whole map (!performance)
 		m_verticesOutdated = true;
 	}
@@ -95,7 +95,7 @@ namespace Godamn
 				const uint8_t tileY = tileCfg / size;
 
 				// get a pointer to the current tile's quad
-				sf::Vertex* quad = &m_vertices[(i + j * m_renderSize.x) * 4];
+				auto* quad = &m_vertices[(i + j * m_renderSize.x) * 4];
 
 				// define its 4 corners
 				quad[0].position = sf::Vector2f(i * m_tileSize.x, j * m_tileSize.y);

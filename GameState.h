@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Foundation/Object.h"
 
 namespace Godamn

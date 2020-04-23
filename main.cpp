@@ -1,4 +1,6 @@
 ﻿#include "main.h"
+
+#include "Utils.h"
 #include "Foundation/Container.h"
 
 int main()
@@ -10,7 +12,7 @@ int main()
 #if defined(_MSC_VER) && _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
-
+	
 	// Receiving container instance
 	auto& container = Godamn::Container::getInstance();
 

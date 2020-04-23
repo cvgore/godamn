@@ -1,5 +1,6 @@
 #pragma once
 
+#include <guiddef.h>
 #include <map>
 #include <string>
 
@@ -7,11 +8,13 @@
 
 namespace Godamn
 {
-	class Store : Object
+	class Store : public Object
 	{
 		std::map<std::string, void&> m_store;
 
 	public:
+		Store()
 		void& operator[](std::string key);
+		void& operator[](GUID key);
 	};
 }

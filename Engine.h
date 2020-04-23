@@ -44,7 +44,6 @@ namespace Godamn
 
 	private:
 		/**
-		 *
 		 * @brief Returns common event occurence position
 		 *
 		 * @remarks Built-in sf::Event has many event types and each has own mouse struct, so translator is required 

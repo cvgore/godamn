@@ -2,7 +2,6 @@
 #include "../Events/EventMethodsInterfaces.h"
 #include "../Events/Event.h"
 #include <SFML/Window/Event.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 
 namespace Godamn
 {
@@ -18,7 +17,7 @@ namespace Godamn
 		// MSVC returns human-readable FQN, other returns mangled FQN
 #if _MSC_VER
 		const auto fqn = std::string(typeid(*this).name());
-		const auto name = fqn.substr(fqn.find_last_of(':') + 1);
+		auto name = fqn.substr(fqn.find_last_of(':') + 1);
 #endif
 
 		return name;
@@ -34,13 +33,22 @@ namespace Godamn
 	}
 #pragma endregion
 
-		auto& orgEv = ev.getOriginalEvent();
+		const auto& orgEv = ev.getOriginalEvent();
 
 		switch (orgEv.type)
 		{
 			case sf::Event::MouseButtonReleased:
 			{
-				CAST_AND_CALL(MouseClick);
+				CAST_AND_CALL(MouseButtonClick);
+
+				if (orgEv.mouseButton.button == sf::Mouse::Button::Left)
+				{
+					CAST_AND_CALL(MouseLeftButtonClick);
+				}
+				else if (orgEv.mouseButton.button == sf::Mouse::Button::Right)
+				{
+					CAST_AND_CALL(MouseRightButtonClick);
+				}
 			}
 			break;
 			case sf::Event::MouseMoved:
@@ -51,10 +59,6 @@ namespace Godamn
 			default:
 				break;
 		}
-
-		/*CAST_AND_CALL(MouseClick)
-		CAST_AND_CALL(MouseOver)
-		CAST_AND_CALL(KeyPress)*/
 
 #pragma region </Helper macros
 #undef CAST_AND_CALL

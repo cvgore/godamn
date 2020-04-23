@@ -11,7 +11,7 @@
 
 namespace Godamn
 {
-	class TiledMap : public Entity, public IEvMouseClick
+	class TiledMap : public Entity, public IEvMouseButtonClick
 	{
 		sf::Texture m_tileset;
 		sf::VertexArray m_vertices;
@@ -21,12 +21,17 @@ namespace Godamn
 		bool m_verticesOutdated;
 
 	public:
+		// {7381B45C-9619-4E46-888D-9C9C10C935F7}
+		inline static constexpr GUID entity_id = {
+			0x7381b45c, 0x9619, 0x4e46, {0x88, 0x8d, 0x9c, 0x9c, 0x10, 0xc9, 0x35, 0xf7}
+		};
+
 		TiledMap(sf::FloatRect& rect);
 		bool loadTileset(const std::string& tilesetPath, sf::Vector2<uint8_t> tileSize);
 		void setTilesConfig(std::vector<Tile>& tilesConfig);
 		void setRenderSize(sf::Vector2<uint8_t> renderSize);
 		void updateIfOutdated();
-		void onMouseClick(Event& ev) override;
+		void onMouseButtonClick(Event& ev) override;
 
 	private:
 		void redraw();

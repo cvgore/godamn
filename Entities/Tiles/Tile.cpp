@@ -24,7 +24,7 @@ namespace Godamn
 		return m_vertexOutdated;
 	}
 
-	void Tile::onMouseClick(Event& ev)
+	void Tile::onMouseButtonClick(Event& ev)
 	{
 		m_type = TileEnum::VOID2;
 		m_vertexOutdated = true;
