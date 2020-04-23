@@ -13,6 +13,8 @@ namespace Godamn
 
 	class Entity : public sf::Drawable, public sf::Transformable, public Object
 	{
+		sf::FloatRect m_rect;
+		
 	public:
 		Entity() = delete;
 		Entity(const sf::FloatRect& rect);
@@ -20,8 +22,5 @@ namespace Godamn
 		virtual std::string getName() const;
 		void onEvent(Event& ev);
 		const sf::FloatRect& getRect() const;
-
-	private:
-		sf::FloatRect m_rect;
 	};
 }

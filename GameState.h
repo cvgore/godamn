@@ -8,15 +8,14 @@ namespace Godamn
 	 * 
 	 * @brief Holds information about current game state (centralized store)
 	 */
-	class GameState : Object
+	class GameState : public Object
 	{
+		bool m_paused;
+		
 	public:
 		GameState();
 		GameState(const GameState&) = delete;
 		GameState& operator=(const GameState&) = delete;
 		void setPaused(bool paused = true);
-
-	private:
-		bool m_paused;
 	};
 }

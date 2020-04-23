@@ -11,14 +11,17 @@ int main()
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 
-	Godamn::Engine game{};
-	Godamn::Container container(&game);
-	Godamn::Object::setContainer(&container);
-	 
-	game.runChecks();
-	game.initialize();
+	auto* game = __new Godamn::Engine;
 
-	const int exitCode = game.spawn();
+	Godamn::Container::getInstance().setEngine(game);
 
+	game->runChecks();
+	game->initialize();
+
+	const auto exitCode = game->spawn();
+
+	// Free resources
+	delete game;
+	
 	return exitCode;
 }

@@ -2,13 +2,22 @@
 
 namespace Godamn
 {
-	Container::Container(Engine* engine)
+	Container& Container::getInstance()
 	{
-		m_engine = engine;
+		static Container instance;
+
+		return instance;
 	}
 
 	Engine* Container::getEngine() const
 	{
 		return m_engine;
 	}
+
+	void Container::setEngine(Engine* engine)
+	{
+		m_engine = engine;
+	}
+
+	Container::Container() = default;
 }

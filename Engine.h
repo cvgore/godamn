@@ -13,8 +13,15 @@ namespace Godamn
 	 * 
 	 * @brief Main class holding and combining everything within game, manages event loop
 	 */
-	class Engine : sf::NonCopyable, public sf::Drawable, public sf::Transformable, Object
+	class Engine final : sf::NonCopyable, public sf::Drawable, public sf::Transformable, public Object
 	{
+		sf::Font m_mainFont;
+		sf::Font m_altFont;
+		sf::RenderWindow* m_renderer;
+		GameState* m_state;
+		TiledMap* m_map;
+		std::vector<Entity*> m_entities;
+
 	public:
 		Engine();
 		~Engine();
@@ -36,13 +43,6 @@ namespace Godamn
 		TiledMap* getMap() const;
 
 	private:
-		sf::Font m_mainFont;
-		sf::Font m_altFont;
-		sf::RenderWindow* m_renderer;
-		GameState* m_state;
-		TiledMap* m_map;
-		std::vector<Entity*> m_entities;
-
 		/**
 		 *
 		 * @brief Returns common event occurence position

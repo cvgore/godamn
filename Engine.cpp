@@ -27,7 +27,7 @@ namespace Godamn
 		{
 			delete entity;
 		}
-		
+
 		delete this->m_state;
 		delete this->m_renderer;
 	}
@@ -60,7 +60,7 @@ namespace Godamn
 		{
 			PANIC("Could not find roboto font");
 		}
-		
+
 		this->m_renderer = __new sf::RenderWindow(
 			sf::VideoMode(800, 600),
 			APP_NAME " " APP_VERSION,
@@ -73,7 +73,7 @@ namespace Godamn
 		this->m_state = __new GameState;
 
 		auto tiledMapRect = sf::FloatRect(16.f, 16.f, 768.f, 480.f);
-		
+
 		this->m_map = __new TiledMap(tiledMapRect);
 
 		this->m_entities.push_back(this->m_map);
