@@ -24,11 +24,11 @@ find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 add_library(GodamnLib "")
 
 add_subdirectory(Utils)
-add_subdirectory(Events)
-add_subdirectory(Entities)
 add_subdirectory(Foundation)
 add_subdirectory(Config)
+add_subdirectory(Events)
 add_subdirectory(Structs)
+add_subdirectory(Entities)
 
 add_executable(Game main.cpp GameState.cpp Engine.cpp)
 
@@ -39,4 +39,4 @@ list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/Utils")
 
 target_include_directories(Game PUBLIC ${PROJECT_BINARY_DIR} ${EXTRA_INCLUDES})
 
-file(COPY ./assets DESTINATION ${PROJECT_BINARY_DIR}/${CMAKE_CONFIGURATION_TYPES})
+file(COPY ./assets DESTINATION ${PROJECT_BINARY_DIR}/${CMAKE_CONFIGURATION_TYPES} REGEX [^.afdesign]$)

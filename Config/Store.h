@@ -1,4 +1,8 @@
 #pragma once
+
+#include <map>
+#include <string>
+
 #include "../Foundation/Object.h"
 
 namespace Godamn

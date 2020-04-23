@@ -14,7 +14,7 @@ namespace Godamn
 	class Entity : public sf::Drawable, public sf::Transformable, public Object
 	{
 		sf::FloatRect m_rect;
-		
+
 	public:
 		Entity() = delete;
 		Entity(const sf::FloatRect& rect);

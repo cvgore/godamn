@@ -19,7 +19,7 @@ namespace Godamn
 		sf::Vector2<uint8_t> m_tileSize;
 		std::vector<Tile> m_tiles;
 		bool m_verticesOutdated;
-		
+
 	public:
 		TiledMap(sf::FloatRect& rect);
 		bool loadTileset(const std::string& tilesetPath, sf::Vector2<uint8_t> tileSize);

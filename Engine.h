@@ -13,7 +13,7 @@ namespace Godamn
 	 * 
 	 * @brief Main class holding and combining everything within game, manages event loop
 	 */
-	class Engine final : sf::NonCopyable, public sf::Drawable, public sf::Transformable, public Object
+	class Engine : sf::NonCopyable, public sf::Drawable, public sf::Transformable, public Object
 	{
 		sf::Font m_mainFont;
 		sf::Font m_altFont;
@@ -49,7 +49,7 @@ namespace Godamn
 		 *
 		 * @remarks Built-in sf::Event has many event types and each has own mouse struct, so translator is required 
 		 */
-		sf::Vector2f translateEventPosition(const sf::Event& event);
+		static sf::Vector2f translateEventPosition(const sf::Event& event);
 		/**
 		 * @brief Propagates event from event loop to concrete entities
 		 */

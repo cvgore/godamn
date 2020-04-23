@@ -14,7 +14,7 @@ namespace Godamn
 	{
 		TileEnum m_type;
 		bool m_vertexOutdated;
-		
+
 	public:
 		Tile(const sf::FloatRect& rect, TileEnum type = TileEnum::VOID);
 		TileEnum getType() const;

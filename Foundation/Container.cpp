@@ -1,5 +1,7 @@
 #include "Container.h"
 
+#include "../Utils/Utils.h"
+
 namespace Godamn
 {
 	Container& Container::getInstance()
@@ -19,5 +21,14 @@ namespace Godamn
 		m_engine = engine;
 	}
 
-	Container::Container() = default;
+	Container::Container() : m_engine(NULL)
+	{
+	}
+
+	Container::~Container()
+	{
+		DEBUG("Destructing container");
+		
+		delete m_engine;
+	}
 }

@@ -8,9 +8,9 @@ namespace Godamn
 {
 	Entity::Entity(const sf::FloatRect& rect)
 	{
-		this->m_rect = rect;
+		m_rect = rect;
 
-		this->setPosition(rect.left, rect.top);
+		setPosition(rect.left, rect.top);
 	}
 
 	std::string Entity::getName() const
@@ -64,6 +64,6 @@ namespace Godamn
 
 	const sf::FloatRect& Entity::getRect() const
 	{
-		return this->m_rect;
+		return m_rect;
 	}
 }

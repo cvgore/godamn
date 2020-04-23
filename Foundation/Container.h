@@ -1,11 +1,12 @@
 #pragma once
 
 #include "../Engine.h"
+#include "Object.h"
 
 namespace Godamn
 {
 	/**
-	 * @brief Simple & small IoC container
+	 * @brief Simple & small container
 	 */
 	class Container : public Object
 	{
@@ -13,7 +14,9 @@ namespace Godamn
 
 	public:
 		Container(const Container&) = delete;
-		void operator=(const Container&) = delete;
+		Container(Container&& other) = delete;
+		Container& operator=(const Container&) = delete;
+		Container& operator=(Container&&) = delete;
 
 		static Container& getInstance();
 
@@ -21,6 +24,10 @@ namespace Godamn
 		void setEngine(Engine* engine);
 
 	private:
+		/***
+		 * We deny creation of container by anyone but container itself
+		 */
 		Container();
+		~Container();
 	};
 }

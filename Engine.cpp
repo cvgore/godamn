@@ -23,13 +23,13 @@ namespace Godamn
 
 	Engine::~Engine()
 	{
-		for (Entity* entity : this->m_entities)
+		for (Entity* entity : m_entities)
 		{
 			delete entity;
 		}
 
-		delete this->m_state;
-		delete this->m_renderer;
+		delete m_state;
+		delete m_renderer;
 	}
 
 	/**
@@ -51,17 +51,17 @@ namespace Godamn
 	void Engine::initialize()
 	{
 		// TODO: load from memory assets
-		if (!this->m_mainFont.loadFromFile(FF_MAIN_FONT))
+		if (!m_mainFont.loadFromFile(FF_MAIN_FONT))
 		{
 			PANIC("Could not find tradewinds font");
 		}
 
-		if (!this->m_mainFont.loadFromFile(FF_ALT_FONT))
+		if (!m_mainFont.loadFromFile(FF_ALT_FONT))
 		{
 			PANIC("Could not find roboto font");
 		}
 
-		this->m_renderer = __new sf::RenderWindow(
+		m_renderer = __new sf::RenderWindow(
 			sf::VideoMode(800, 600),
 			APP_NAME " " APP_VERSION,
 			sf::Style::Default ^ sf::Style::Resize
@@ -70,34 +70,34 @@ namespace Godamn
 
 	int Engine::spawn()
 	{
-		this->m_state = __new GameState;
+		m_state = __new GameState;
 
 		auto tiledMapRect = sf::FloatRect(16.f, 16.f, 768.f, 480.f);
 
-		this->m_map = __new TiledMap(tiledMapRect);
+		m_map = __new TiledMap(tiledMapRect);
 
-		this->m_entities.push_back(this->m_map);
+		m_entities.push_back(m_map);
 
-		this->m_map->loadTileset(FF_TILESET, sf::Vector2<uint8_t>(32, 32));
-		this->m_map->setRenderSize(sf::Vector2<uint8_t>(24, 15));
+		m_map->loadTileset(FF_TILESET, sf::Vector2<uint8_t>(32, 32));
+		m_map->setRenderSize(sf::Vector2<uint8_t>(24, 15));
 
-		while (this->m_renderer->isOpen())
+		while (m_renderer->isOpen())
 		{
 			sf::Event event;
 
-			while (this->m_renderer->pollEvent(event))
+			while (m_renderer->pollEvent(event))
 			{
 				if (event.type == sf::Event::Closed)
 				{
-					this->m_renderer->close();
+					m_renderer->close();
 				}
 
-				this->propagateEvent(event);
+				propagateEvent(event);
 			}
 
-			this->m_renderer->clear(sf::Color::Black);
-			this->m_renderer->draw(*this);
-			this->m_renderer->display();
+			m_renderer->clear(sf::Color::Black);
+			m_renderer->draw(*this);
+			m_renderer->display();
 		}
 
 		DEBUG("Bye bye...");
@@ -107,14 +107,14 @@ namespace Godamn
 
 	TiledMap* Engine::getMap() const
 	{
-		return this->m_map;
+		return m_map;
 	}
 
 	void Engine::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
-		this->m_map->updateIfOutdated();
+		m_map->updateIfOutdated();
 
-		for (Entity* const entity : this->m_entities)
+		for (Entity* const entity : m_entities)
 		{
 			target.draw(*entity);
 		}
@@ -146,11 +146,11 @@ namespace Godamn
 
 	void Engine::propagateEvent(const sf::Event& event)
 	{
-		sf::Vector2f pos = this->translateEventPosition(event);
+		sf::Vector2f pos = translateEventPosition(event);
 
-		Godamn::Event wrapper(*this, event, pos);
+		Event wrapper(event, pos);
 
-		for (Entity* entity : this->m_entities)
+		for (Entity* entity : m_entities)
 		{
 			if (wrapper.isMouseEvent())
 			{

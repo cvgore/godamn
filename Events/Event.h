@@ -9,20 +9,17 @@ namespace Godamn
 {
 	class Engine;
 
-
 	/**
 	 * @class Event
 	 *
 	 * @brief Neat little wrapper over sf::Event, providing 
 	 */
-	class Event : Object
+	class Event : public Object
 	{
+		const sf::Event& m_originalEvent;
+		sf::Vector2f m_pos;
 	public:
-		Event(Engine& engine, const sf::Event& originalEvent, sf::Vector2f& pos);
-		/**
-		 * @brief Returns underlying engine instance
-		 */
-		Engine& getEngine();
+		Event(const sf::Event& originalEvent, sf::Vector2f& pos);
 		/**
 		 * @brief Returns wrapped event instance
 		 */
@@ -43,10 +40,5 @@ namespace Godamn
 		 * @brief Checks whether event type is MouseEvent*
 		 */
 		bool isMouseEvent() const;
-
-	private:
-		Engine& m_engine;
-		const sf::Event& m_originalEvent;
-		sf::Vector2f m_pos;
 	};
 }
