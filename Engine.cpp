@@ -78,16 +78,8 @@ namespace Godamn
 
 		this->m_entities.push_back(this->m_map);
 
-		// std::vector<uint8_t> cfg {};
-		//
-		// for (uint16_t i = 0; i < (24 * 15); i++)
-		// {
-		// 	cfg.push_back(i % 2);
-		// }
-
 		this->m_map->loadTileset(FF_TILESET, sf::Vector2<uint8_t>(32, 32));
 		this->m_map->setRenderSize(sf::Vector2<uint8_t>(24, 15));
-		// this->m_map->setTilesConfig(cfg);
 
 		while (this->m_renderer->isOpen())
 		{
@@ -104,9 +96,7 @@ namespace Godamn
 			}
 
 			this->m_renderer->clear(sf::Color::Black);
-
 			this->m_renderer->draw(*this);
-
 			this->m_renderer->display();
 		}
 

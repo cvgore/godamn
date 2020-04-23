@@ -8,19 +8,12 @@
 
 namespace Godamn
 {
-
-	class Temple : public Building {
-
+	class Temple : public Building
+	{
 		uint16_t m_level;
 
 	public:
 		uint16_t getRange() const;
-		sf::Rect <uint16_t> getRectRange() const;
-
+		sf::Rect<uint16_t> getRectRange() const;
 	};
-
-
-
-
-
 }

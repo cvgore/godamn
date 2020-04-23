@@ -7,16 +7,19 @@
 
 namespace Godamn
 {
-
-	enum class BuildingStateEnum {
-		OFF, ON, IN_BUILDING
+	enum class BuildingStateEnum
+	{
+		OFF,
+		ON,
+		IN_BUILDING
 	};
 
-	class Building : public Tile {
+	class Building : public Tile
+	{
 		BuildingStateEnum m_state;
 		uint16_t m_buildingProgress;
 		// todo: ceny drewna i kamienia do ustalenia oraz iloœæ osób potrzebnych do budowy
-		// oraz wymagan¹ liczbê pracowników 
+		// todo: oraz wymagan¹ liczbê pracowników 
 
 	public:
 		Building(const sf::FloatRect& rect);
@@ -26,5 +29,4 @@ namespace Godamn
 		uint16_t getBuildingProgress();
 		void setBuildingProgress(uint16_t progress);
 	};
-
 }
