@@ -26,6 +26,9 @@ add_library(GodamnLib "")
 add_subdirectory(Utils)
 add_subdirectory(Events)
 add_subdirectory(Entities)
+add_subdirectory(Foundation)
+add_subdirectory(Config)
+add_subdirectory(Structs)
 
 add_executable(Game main.cpp GameState.cpp Engine.cpp)
 

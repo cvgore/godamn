@@ -1,4 +1,6 @@
 #pragma once
+#include "Foundation/Object.h"
+
 namespace Godamn
 {
 	/**
@@ -6,7 +8,7 @@ namespace Godamn
 	 * 
 	 * @brief Holds information about current game state (centralized store)
 	 */
-	class GameState
+	class GameState : Object
 	{
 	public:
 		GameState();

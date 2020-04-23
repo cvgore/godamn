@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Window/Event.hpp>
 #include "../Entities/Entity.h"
+#include "../Foundation/Object.h"
 
 namespace Godamn
 {
@@ -14,7 +15,7 @@ namespace Godamn
 	 *
 	 * @brief Neat little wrapper over sf::Event, providing 
 	 */
-	class Event
+	class Event : Object
 	{
 	public:
 		Event(Engine& engine, const sf::Event& originalEvent, sf::Vector2f& pos);

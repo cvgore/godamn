@@ -5,11 +5,13 @@
 #include <SFML/Graphics/Transformable.hpp>
 #include <string>
 
+#include "../Foundation/Object.h"
+
 namespace Godamn
 {
 	class Event;
 
-	class Entity : public sf::Drawable, public sf::Transformable
+	class Entity : public sf::Drawable, public sf::Transformable, public Object
 	{
 	public:
 		Entity() = delete;

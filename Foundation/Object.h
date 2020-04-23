@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Container.h"
 
 namespace Godamn
@@ -8,7 +9,7 @@ namespace Godamn
 		static Container* m_container;
 	public:
 		Object() = default;
-		static Container* getContainer()const;
+		static Container* getContainer();
 		static void setContainer(Container* container);
 	};
 }

@@ -3,6 +3,7 @@
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/Graphics.hpp>
 #include "Entities/Tiles/TiledMap.h"
+#include "Foundation/Object.h"
 #include "GameState.h"
 
 namespace Godamn
@@ -12,7 +13,7 @@ namespace Godamn
 	 * 
 	 * @brief Main class holding and combining everything within game, manages event loop
 	 */
-	class Engine : sf::NonCopyable, public sf::Drawable, public sf::Transformable
+	class Engine : sf::NonCopyable, public sf::Drawable, public sf::Transformable, Object
 	{
 	public:
 		Engine();

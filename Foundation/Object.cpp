@@ -1,13 +1,16 @@
 #include "Object.h"
+
 namespace Godamn
 {
-	Container* Object::getContainer() const
+	Container* Object::getContainer()
 	{
 		return m_container;
 	}
+
 	void Object::setContainer(Container* container)
 	{
-		if (m_container != NULL) {
+		if (m_container != NULL)
+		{
 			return;
 		}
 

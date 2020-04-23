@@ -9,7 +9,7 @@ namespace Godamn
 	Entity::Entity(const sf::FloatRect& rect)
 	{
 		this->m_rect = rect;
-		
+
 		this->setPosition(rect.left, rect.top);
 	}
 
@@ -20,7 +20,7 @@ namespace Godamn
 		const auto fqn = std::string(typeid(*this).name());
 		const auto name = fqn.substr(fqn.find_last_of(':') + 1);
 #endif
-		
+
 		return name;
 	}
 

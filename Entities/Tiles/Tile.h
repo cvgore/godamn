@@ -18,7 +18,7 @@ namespace Godamn
 		void setType(TileEnum type);
 		bool isOutdated();
 		void onMouseClick(Event& ev) override;
-		
+
 	private:
 		TileEnum m_type;
 		bool m_vertexOutdated;
