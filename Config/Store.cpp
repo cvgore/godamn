@@ -4,31 +4,51 @@
 #include "../Entities/Tiles/Buildings/Temple.h"
 #include "../Structs/EntityConfig.h"
 
-#define KVPAIR(key,value) std::pair<std::string, void*>(key,static_cast<void*>(__new value))
-#define GVPAIR(key,value) KVPAIR(guid_to_string(key),value)
+// Here we define some helper macros for easier config management
+
+#define KVPAIR(key, value) std::pair<std::string, void*>(key, static_cast<void*>(value))
+#define GVPAIR(key, value) KVPAIR(guid_to_string(key), value)
+#define CONFIGURE_ENTITY(entityClass) m_store.insert(std::pair<std::string, void*>(guid_to_string(##entityClass::getEntityId()),static_cast<void*>(__new EntityConfig {
+#define END_CONFIGURING(entityClass) })));
 
 namespace Godamn
 {
 	Store::Store()
 	{
-		m_store.insert(GVPAIR(Temple::getEntityId(), EntityConfig{
+		// ReSharper fks up indentation due to macros, so disabling it right now
+		// @formatter:off
+		
+		CONFIGURE_ENTITY(Temple)
 			.requirements = {
-				.res.wood = 10;
-				.res.stone = 10;
-				.res.faith = 0;
-				.people = 5;
-			}
+				.res = {
+					.faith = 0,
+					.stone = 10,
+					.wood = 10
+				},
+				.people = 1
+			},
 			.produces = {
-				.res.faith = 5;
-				.res.wood = 0;
-				.res.stone = 0;
-				.people = 0;
-			}
-			.workers = 1;
-		}));
+				.res = {
+					.faith = 1,
+					.wood = 0,
+					.stone = 0
+				}
+			},
+			.workers = 5
+		END_CONFIGURING(Temple)
+		
+		// @formatter:on
 	}
 
-	void* Store::operator[](std::string key)
+	Store::~Store()
+	{
+		for (auto& pair : m_store)
+		{
+			delete static_cast<EntityConfig*>(pair.second);
+		}
+	}
+
+	void* Store::operator[](const std::string key)
 	{
 		return m_store.at(key);
 	}
@@ -38,3 +58,8 @@ namespace Godamn
 		return (*this)[guid_to_string(key)];
 	}
 }
+
+#undef CONFIGURE_ENTITY
+#undef END_CONFIGURING
+#undef GVPAIR
+#undef KVPAIR

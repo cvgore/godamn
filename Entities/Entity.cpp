@@ -37,27 +37,27 @@ namespace Godamn
 
 		switch (orgEv.type)
 		{
-		case sf::Event::MouseButtonReleased:
-		{
-			CAST_AND_CALL(MouseButtonClick);
+			case sf::Event::MouseButtonReleased:
+			{
+				CAST_AND_CALL(MouseButtonClick);
 
-			if (orgEv.mouseButton.button == sf::Mouse::Button::Left)
-			{
-				CAST_AND_CALL(MouseLeftButtonClick);
+				if (orgEv.mouseButton.button == sf::Mouse::Button::Left)
+				{
+					CAST_AND_CALL(MouseLeftButtonClick);
+				}
+				else if (orgEv.mouseButton.button == sf::Mouse::Button::Right)
+				{
+					CAST_AND_CALL(MouseRightButtonClick);
+				}
 			}
-			else if (orgEv.mouseButton.button == sf::Mouse::Button::Right)
-			{
-				CAST_AND_CALL(MouseRightButtonClick);
-			}
-		}
-		break;
-		case sf::Event::MouseMoved:
-		{
-			CAST_AND_CALL(MouseOver);
-		}
-		break;
-		default:
 			break;
+			case sf::Event::MouseMoved:
+			{
+				CAST_AND_CALL(MouseOver);
+			}
+			break;
+			default:
+				break;
 		}
 
 #pragma region </Helper macros
