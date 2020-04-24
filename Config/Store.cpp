@@ -1,10 +1,11 @@
 #include "Store.h"
+#include "Utils.h"
 
 namespace Godamn
 {
 	Store::Store()
 	{
-		m_store.insert()
+		// m_store.insert();
 	}
 
 	void& Store::operator[](std::string key)
@@ -14,6 +15,6 @@ namespace Godamn
 
 	void& Store::operator[](GUID key)
 	{
-		
+		return (*this)[guid_to_string(key)];
 	}
 }
