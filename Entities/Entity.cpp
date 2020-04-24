@@ -37,27 +37,27 @@ namespace Godamn
 
 		switch (orgEv.type)
 		{
-			case sf::Event::MouseButtonReleased:
-			{
-				CAST_AND_CALL(MouseButtonClick);
+		case sf::Event::MouseButtonReleased:
+		{
+			CAST_AND_CALL(MouseButtonClick);
 
-				if (orgEv.mouseButton.button == sf::Mouse::Button::Left)
-				{
-					CAST_AND_CALL(MouseLeftButtonClick);
-				}
-				else if (orgEv.mouseButton.button == sf::Mouse::Button::Right)
-				{
-					CAST_AND_CALL(MouseRightButtonClick);
-				}
-			}
-			break;
-			case sf::Event::MouseMoved:
+			if (orgEv.mouseButton.button == sf::Mouse::Button::Left)
 			{
-				CAST_AND_CALL(MouseOver);
+				CAST_AND_CALL(MouseLeftButtonClick);
 			}
+			else if (orgEv.mouseButton.button == sf::Mouse::Button::Right)
+			{
+				CAST_AND_CALL(MouseRightButtonClick);
+			}
+		}
+		break;
+		case sf::Event::MouseMoved:
+		{
+			CAST_AND_CALL(MouseOver);
+		}
+		break;
+		default:
 			break;
-			default:
-				break;
 		}
 
 #pragma region </Helper macros
@@ -69,5 +69,10 @@ namespace Godamn
 	const sf::FloatRect& Entity::getRect() const
 	{
 		return m_rect;
+	}
+
+	GUID Entity::getEntityId()
+	{
+		return entity_id;
 	}
 }

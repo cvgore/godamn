@@ -27,5 +27,6 @@ namespace Godamn
 		virtual std::string getName() const;
 		void onEvent(Event& ev);
 		const sf::FloatRect& getRect() const;
+		static GUID getEntityId();
 	};
 }

@@ -1,7 +1,7 @@
 ﻿#include "main.h"
 
 #include "Utils.h"
-#include "Foundation/Container.h"
+#include "Foundation/Container.h
 
 int main()
 {
@@ -26,6 +26,6 @@ int main()
 	game->initialize();
 
 	const auto exitCode = game->spawn();
-
+	
 	return exitCode;
 }

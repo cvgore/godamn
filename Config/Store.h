@@ -10,11 +10,11 @@ namespace Godamn
 {
 	class Store : public Object
 	{
-		std::map<std::string, void&> m_store;
+		std::map<std::string, void*> m_store;
 
 	public:
 		Store();
-		void& operator[](std::string key);
-		void& operator[](GUID key);
+		void* operator[](std::string key);
+		void* operator[](GUID key);
 	};
 }

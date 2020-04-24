@@ -3,7 +3,7 @@
 
 namespace Godamn
 {
-	struct ResBuilding
+	struct Resources
 	{
 		uint32_t wood;
 		uint32_t stone;
