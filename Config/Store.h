@@ -13,7 +13,7 @@ namespace Godamn
 		std::map<std::string, void&> m_store;
 
 	public:
-		Store()
+		Store();
 		void& operator[](std::string key);
 		void& operator[](GUID key);
 	};
