@@ -9,4 +9,6 @@ target_sources(GodamnLib
         Building.h
         Temple.cpp
         Temple.h
+        Chapel.h
+        Chapel.cpp
 )
