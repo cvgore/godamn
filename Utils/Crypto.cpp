@@ -21,11 +21,11 @@ namespace Godamn
 
 	int64_t Crypto::getRandomNumber(int64_t left, int64_t right)
 	{
-		// todo by Omush
+		return getRandomNumber() % (right - left + 1) - left;
 	}
 
 	int64_t Crypto::getRandomNumber(int64_t max)
 	{
-		// todo by Omush
+		return getRandomNumber(0, max);
 	}
 }
