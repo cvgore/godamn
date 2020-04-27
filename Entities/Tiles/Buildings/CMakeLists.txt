@@ -11,4 +11,8 @@ target_sources(GodamnLib
         Temple.h
         Chapel.h
         Chapel.cpp
+        Mine.h
+        Mine.cpp
+        LoggingCamp.h
+        LoggingCamp.cpp
 )
