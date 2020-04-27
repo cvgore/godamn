@@ -34,7 +34,7 @@ add_subdirectory(includes/doctest)
 
 add_subdirectory(tests)
 
-add_executable(Game main.cpp GameState.cpp Engine.cpp)
+add_executable(Game main.cpp GameState.cpp Engine.cpp "Entities/Tiles/Buildings/LoggingCamp.cpp")
 
 target_link_libraries(GodamnLib PUBLIC sfml-graphics)
 target_link_libraries(Game PUBLIC sfml-graphics PRIVATE GodamnLib)
