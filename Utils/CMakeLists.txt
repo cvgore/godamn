@@ -7,4 +7,6 @@ target_sources(GodamnLib
     PRIVATE
         Utils.cpp
         Utils.h
+        Crypto.h
+        Crypto.cpp
 )
