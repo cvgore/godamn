@@ -1,8 +1,9 @@
 #include "Crypto.h"
 #include "CryptoException.h"
-#include <bcrypt.h>
+
+#include <windows.h>
 #include <ntstatus.h>
-#include <minwindef.h>
+#include <bcrypt.h>
 
 namespace Godamn
 {
@@ -20,7 +21,6 @@ namespace Godamn
 		{
 			throw CryptoException();
 		}
-
 
 		return converter.num;
 	}
