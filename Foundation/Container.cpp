@@ -1,7 +1,5 @@
 #include "Container.h"
 
-#include "../Utils/Utils.h"
-
 namespace Godamn
 {
 	Container& Container::getInstance()
@@ -11,22 +9,22 @@ namespace Godamn
 		return instance;
 	}
 
-	Engine* Container::getEngine() const
+	void Container::dispose()
+	{		
+		this->m_engine.reset();
+	}
+
+	std::shared_ptr<Engine> Container::getEngine() const
 	{
 		return m_engine;
 	}
 
 	void Container::setEngine(Engine* engine)
 	{
-		m_engine = engine;
+		m_engine.reset(engine);
 	}
 
 	Container::Container() : m_engine(NULL)
 	{
-	}
-
-	Container::~Container()
-	{
-		delete m_engine;
 	}
 }

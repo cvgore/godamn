@@ -13,19 +13,23 @@ int main()
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 	
-	// Receiving container instance
+	// Storing reference to container instance
 	auto& container = Godamn::Container::getInstance();
 
 	// Creating engine & putting it in a container
 	container.setEngine(__new Godamn::Engine);
 
-	// Receiving engine from container and storing pointer to it as a temporary variable
-	auto* game = container.getEngine();
+	// Storing pointer to engine from container
+	auto game = container.getEngine();
 
 	game->runChecks();
 	game->initialize();
 
 	const auto exitCode = game->spawn();
+
+	// Right before exiting, we're disposing any resources
+	// NOTE: container is not usable after disposing
+	container.dispose();
 	
 	return exitCode;
 }
