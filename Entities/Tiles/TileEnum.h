@@ -9,6 +9,5 @@ namespace Godamn
 		Grass,
 		Lumber,
 		Miner,
-
 	};
 }
