@@ -26,7 +26,7 @@ namespace Godamn
 
 	void Tile::onMouseButtonClick(Event& ev)
 	{
-		m_type = TileEnum::VOID2;
+		m_type = static_cast<TileEnum>((static_cast<int>(m_type) + 1) % 5);
 		m_vertexOutdated = true;
 	}
 

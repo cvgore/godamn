@@ -8,7 +8,7 @@ namespace Godamn
 {
 	constexpr char FF_MAIN_FONT[] = "assets/fonts/tradewinds.ttf";
 	constexpr char FF_ALT_FONT[] = "assets/fonts/roboto.ttf";
-	constexpr char FF_TILESET[] = "assets/tiles.png";
+	constexpr char FF_TILESET[] = "assets/Graphics/Mix.png";
 
 	/**
 	 * This files are required for game to launch
