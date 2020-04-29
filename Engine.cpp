@@ -17,19 +17,20 @@ namespace Godamn
 		FF_ALT_FONT, FF_MAIN_FONT, FF_TILESET
 	};
 
-	Engine::Engine(): m_renderer(NULL), m_state(NULL), m_map(NULL)
+	Engine::Engine(): m_renderer(nullptr), m_state(nullptr), m_map(nullptr)
 	{
 	}
 
 	Engine::~Engine()
 	{
-		for (Entity* entity : m_entities)
+		for (auto& entity : m_entities)
 		{
-			delete entity;
+			entity.reset();
 		}
 
+		m_renderer.reset();
+		
 		delete m_state;
-		delete m_renderer;
 	}
 
 	/**
@@ -39,7 +40,7 @@ namespace Godamn
 	{
 		struct stat data;
 
-		for (auto requirement : requirements)
+		for (auto* requirement : requirements)
 		{
 			if (stat(requirement, &data) != EXIT_SUCCESS)
 			{
@@ -61,11 +62,11 @@ namespace Godamn
 			PANIC("Could not find roboto font");
 		}
 
-		m_renderer = __new sf::RenderWindow(
+		m_renderer = std::shared_ptr<sf::RenderWindow>(__new sf::RenderWindow(
 			sf::VideoMode(800, 600),
 			APP_NAME " " APP_VERSION,
 			sf::Style::Default ^ sf::Style::Resize
-		);
+		));
 	}
 
 	int Engine::spawn()
@@ -74,7 +75,7 @@ namespace Godamn
 
 		auto tiledMapRect = sf::FloatRect(16.f, 16.f, 768.f, 480.f);
 
-		m_map = __new TiledMap(tiledMapRect);
+		m_map = std::shared_ptr<TiledMap>(__new TiledMap(tiledMapRect));
 
 		m_entities.push_back(m_map);
 
@@ -100,12 +101,10 @@ namespace Godamn
 			m_renderer->display();
 		}
 
-		DEBUG("Bye bye...");
-
 		return 0;
 	}
 
-	TiledMap* Engine::getMap() const
+	std::shared_ptr<TiledMap> Engine::getMap() const
 	{
 		return m_map;
 	}
@@ -114,7 +113,7 @@ namespace Godamn
 	{
 		m_map->updateIfOutdated();
 
-		for (Entity* const entity : m_entities)
+		for (const auto& entity : m_entities)
 		{
 			target.draw(*entity);
 		}
@@ -150,7 +149,7 @@ namespace Godamn
 
 		Event wrapper(event, pos);
 
-		for (Entity* entity : m_entities)
+		for (auto& entity : m_entities)
 		{
 			if (wrapper.isMouseEvent())
 			{

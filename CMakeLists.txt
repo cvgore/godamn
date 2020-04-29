@@ -26,6 +26,7 @@ add_library(GodamnLib "")
 add_subdirectory(Utils)
 add_subdirectory(Foundation)
 add_subdirectory(Config)
+add_subdirectory(Scenery)
 add_subdirectory(Events)
 add_subdirectory(Structs)
 add_subdirectory(Entities)
@@ -34,7 +35,7 @@ add_subdirectory(includes/doctest)
 
 add_subdirectory(tests)
 
-add_executable(Game main.cpp GameState.cpp Engine.cpp "Entities/Tiles/Buildings/LoggingCamp.cpp")
+add_executable(Game main.cpp GameState.cpp Engine.cpp)
 
 target_link_libraries(GodamnLib PUBLIC sfml-graphics)
 target_link_libraries(Game PUBLIC sfml-graphics PRIVATE GodamnLib)
@@ -44,4 +45,4 @@ list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/includes")
 
 target_include_directories(Game PUBLIC ${PROJECT_BINARY_DIR} ${EXTRA_INCLUDES})
 
-file(COPY ./assets DESTINATION ${PROJECT_BINARY_DIR}/${CMAKE_CONFIGURATION_TYPES} REGEX [^.afdesign]$)
+file(COPY ./assets DESTINATION ${PROJECT_BINARY_DIR}/${CMAKE_CONFIGURATION_TYPES})

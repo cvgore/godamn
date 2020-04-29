@@ -1,5 +1,6 @@
 #pragma once
 #include <exception>
+#include <string>
 
 namespace Godamn
 {
@@ -8,7 +9,9 @@ namespace Godamn
 	 */
 	class Exception : public std::exception
 	{
+		std::string_view m_what;
 	public:
-		Exception() = default;
+		Exception(std::string_view what = "");
+		char const* what() const override;
 	};
 }
