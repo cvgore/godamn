@@ -9,4 +9,6 @@ target_sources(GodamnLib
         Container.h
         Object.cpp
         Object.h
+        Exception.h
+        Exception.cpp
 )

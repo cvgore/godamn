@@ -17,10 +17,10 @@ namespace Godamn
 	{
 		sf::Font m_mainFont;
 		sf::Font m_altFont;
-		sf::RenderWindow* m_renderer;
+		std::shared_ptr<sf::RenderWindow> m_renderer;
 		GameState* m_state;
-		TiledMap* m_map;
-		std::vector<Entity*> m_entities;
+		std::shared_ptr<TiledMap> m_map;
+		std::vector<std::shared_ptr<Entity>> m_entities;
 
 	public:
 		Engine();
@@ -40,7 +40,7 @@ namespace Godamn
 		/**
 		 * @brief Returns TiledMap instance
 		 */
-		TiledMap* getMap() const;
+		std::shared_ptr<TiledMap> getMap() const;
 
 	private:
 		/**

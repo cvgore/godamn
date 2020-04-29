@@ -5,8 +5,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 target_sources(GodamnLib
     PRIVATE
-        Utils.cpp
-        Utils.h
-        Crypto.h
-        Crypto.cpp
+        Scene.h
+        Scene.cpp
+        SceneryManager.cpp
+        SceneryManager.h
+        SceneryException.h
 )

@@ -48,14 +48,24 @@ namespace Godamn
 		}
 	}
 
-	void* Store::operator[](const std::string key)
+	void* Store::get(const std::string key)
 	{
 		return m_store.at(key);
 	}
 
-	void* Store::operator[](GUID key)
+	void* Store::get(const GUID key)
 	{
-		return (*this)[guid_to_string(key)];
+		return get(guid_to_string(key));
+	}
+
+	void* Store::operator[](const std::string key)
+	{
+		return get(key);
+	}
+
+	void* Store::operator[](const GUID key)
+	{
+		return get(key);
 	}
 }
 

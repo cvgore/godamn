@@ -15,7 +15,9 @@ namespace Godamn
 	public:
 		Store();
 		~Store();
-		void* operator[](const std::string key);
+		void* get(std::string key);
+		void* get(GUID key);
+		void* operator[](std::string key);
 		void* operator[](GUID key);
 	};
 }

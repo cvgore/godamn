@@ -3,6 +3,8 @@
 
 #include "../Foundation/Object.h"
 
+#pragma comment(lib, "Bcrypt.lib")
+
 namespace Godamn
 {
 	class Crypto : public Object
