@@ -13,9 +13,9 @@ else()
 	add_compile_definitions(__new=new)
 endif()
 
-#if(NOT SFML_DIR)
+if(NOT SFML_DIR)
 set(CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/" ${CMAKE_PREFIX_PATH})
-#endif()
+endif()
 
 add_compile_definitions(APP_NAME="${APP_NAME}" APP_VERSION="${APP_VERSION}")
 
