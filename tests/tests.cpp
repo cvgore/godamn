@@ -70,7 +70,7 @@ TEST_CASE("SceneryManager works as expected")
 		{
 			auto scene = mgr.newScene();
 
-			CHECK(mgr.contains(scene) == true);
+			CHECK(mgr.contains(scene));
 			CHECK(mgr.indexOf(scene) > -1);
 			CHECK(mgr.find(scene) != mgr.cend());
 		}
@@ -79,7 +79,7 @@ TEST_CASE("SceneryManager works as expected")
 		{
 			std::shared_ptr<Scene> scene(__new Scene);
 
-			CHECK(mgr.contains(scene) == false);
+			CHECK(!mgr.contains(scene));
 			CHECK(mgr.indexOf(scene) == -1);
 			CHECK(mgr.find(scene) == mgr.cend());
 		}

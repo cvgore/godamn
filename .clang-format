@@ -1,0 +1,55 @@
+---
+Language: Cpp
+BasedOnStyle: Microsoft
+Standard: c++20
+AccessModifierOffset: -4
+AlignAfterOpenBracket: AlwaysBreak
+AlignOperands: false
+AlignTrailingComments: false
+AllowShortFunctionsOnASingleLine: None
+AlwaysBreakTemplateDeclarations: Yes
+BinPackArguments: false
+BinPackParameters: false
+FixNamespaceComments: false
+SpaceBeforeInheritanceColon: true
+SpaceBeforeCtorInitializerColon: false
+PointerAlignment: Left
+SortUsingDeclarations: true
+AllowAllArgumentsOnNextLine: true
+AlignEscapedNewlines: Left
+SpaceBeforeCpp11BracedList: true
+Cpp11BracedListStyle: false
+BraceWrapping:
+  AfterCaseLabel: true
+  AfterClass: true
+  AfterControlStatement: Always
+  AfterEnum: true
+  AfterFunction: true
+  AfterNamespace: true
+  AfterStruct: true
+  AfterUnion: true
+  AfterExternBlock: false
+  BeforeCatch: true
+  BeforeElse: true
+  IndentBraces: false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+BreakConstructorInitializers: AfterColon
+ColumnLimit: 120
+ContinuationIndentWidth: 0
+IncludeCategories: 
+  - Regex: '^<.*'
+    Priority: 1
+  - Regex: '^".*'
+    Priority: 2
+  - Regex: '.*'
+    Priority: 3
+IncludeIsMainRegex: '([-_](test|unittest))?$'
+IndentCaseLabels: true
+IndentWidth: 4
+MaxEmptyLinesToKeep: 1
+NamespaceIndentation: All
+SpaceAfterCStyleCast: true
+TabWidth: 4
+UseTab: Always

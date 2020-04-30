@@ -38,7 +38,7 @@ add_subdirectory(Events)
 add_subdirectory(Structs)
 add_subdirectory(Entities)
 
-#add_subdirectory(lib/doctest)
+add_subdirectory(lib/doctest)
 add_subdirectory(tests)
 
 add_executable(Game main.cpp GameState.cpp Engine.cpp)

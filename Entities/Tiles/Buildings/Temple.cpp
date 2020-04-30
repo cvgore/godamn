@@ -16,7 +16,7 @@ namespace Godamn
 
 	sf::Rect<uint16_t> Temple::getRectRange() const
 	{
-		//todo
+		// todo
 		return sf::Rect<uint16_t>();
 	}
 }
