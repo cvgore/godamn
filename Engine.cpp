@@ -40,7 +40,7 @@ namespace Godamn
 	{
 		struct stat data;
 
-		for (auto* requirement : requirements)
+		for (const auto* requirement : requirements)
 		{
 			if (stat(requirement, &data) != EXIT_SUCCESS)
 			{

@@ -1,3 +1,6 @@
-[submodule "includes/doctest"]
-	path = includes/doctest
+[submodule "lib/doctest"]
+	path = lib/doctest
 	url = https://github.com/onqtam/doctest
+[submodule "lib/SFML"]
+	path = lib/SFML
+	url = https://github.com/cvgore/godamn-sfml-x32-windows
