@@ -5,12 +5,15 @@
 
 namespace Godamn
 {
+	class Store;
+
 	/**
 	 * @brief Simple & small container
 	 */
 	class Container : public Object
 	{
 		std::shared_ptr<Engine> m_engine;
+		std::shared_ptr<Store> m_store;
 
 	public:
 		/**
@@ -21,6 +24,8 @@ namespace Godamn
 		Container& operator=(const Container&) = delete;
 		Container& operator=(Container&&) = delete;
 
+		std::shared_ptr<Store> getStore() const;
+		void setStore(Store* store);
 		/**
 		 * @brief Returns current instance of container
 		 */

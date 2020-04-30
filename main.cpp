@@ -2,6 +2,7 @@
 
 #include "Utils.h"
 #include "Foundation/Container.h"
+#include "Config/Store.h"
 
 int main()
 {
@@ -19,6 +20,9 @@ int main()
 	// Creating engine & putting it in a container
 	container.setEngine(__new Godamn::Engine);
 
+	// Creating store & putting it in a container
+	container.setStore(__new Godamn::Store);
+	
 	// Storing pointer to engine from container
 	auto game = container.getEngine();
 
