@@ -6,4 +6,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 target_sources(GodamnLib
     PRIVATE
         Store.h
+        Store.cpp
 )

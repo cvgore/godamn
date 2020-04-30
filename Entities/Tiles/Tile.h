@@ -21,7 +21,7 @@ namespace Godamn
 			0x7d07691b, 0x7193, 0x4403, {0xb6, 0x68, 0xcb, 0x9b, 0x2a, 0x1c, 0xa1, 0xef}
 		};
 
-		Tile(const sf::FloatRect& rect, TileEnum type = TileEnum::VOID);
+		Tile(const sf::FloatRect& rect, TileEnum type = TileEnum::Grass);
 		TileEnum getType() const;
 		void setType(TileEnum type);
 		bool isOutdated();

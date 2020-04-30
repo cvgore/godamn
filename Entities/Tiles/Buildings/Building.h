@@ -4,6 +4,7 @@
 #include <SFML/Graphics/Transformable.hpp>
 #include <string>
 #include "../Tile.h"
+#include "../../../Structs/EntityConfig.h"
 
 namespace Godamn
 {
@@ -19,8 +20,7 @@ namespace Godamn
 		BuildingStateEnum m_state;
 		uint16_t m_buildingProgress;
 		// todo: ceny drewna i kamienia do ustalenia oraz iloœæ osób potrzebnych do budowy
-		// todo: oraz wymagan¹ liczbê pracowników 
-
+		// todo: oraz wymagan¹ liczbê pracowników
 	public:
 		// {E0DEB3EF-E55C-4088-A91F-3105FF191FC8}
 		inline static constexpr GUID entity_id = {
@@ -33,5 +33,6 @@ namespace Godamn
 		void setState(BuildingStateEnum state);
 		uint16_t getBuildingProgress();
 		void setBuildingProgress(uint16_t progress);
+		EntityConfig getEntityConfig();
 	};
 }

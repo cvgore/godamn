@@ -1,8 +1,12 @@
 #include "Store.h"
 
-#include "Utils.h"
+#include "../Utils/Utils.h"
 #include "../Entities/Tiles/Buildings/Temple.h"
+#include "../Entities/Tiles/Buildings/Chapel.h"
+#include "../Entities/Tiles/Buildings/LoggingCamp.h"
+#include "../Entities/Tiles/Buildings/Mine.h"
 #include "../Structs/EntityConfig.h"
+
 
 // Here we define some helper macros for easier config management
 
@@ -22,8 +26,8 @@ namespace Godamn
 			.requirements = {
 				.res = {
 					.faith = 0,
-					.stone = 10,
-					.wood = 10
+					.wood = 10,
+					.stone = 10
 				},
 				.people = 1
 			},
@@ -36,8 +40,66 @@ namespace Godamn
 			},
 			.workers = 5
 		END_CONFIGURING(Temple)
+
+			CONFIGURE_ENTITY(Chapel)
+			.requirements = {
+				.res = {
+					.faith = 0,
+					.wood = 5,
+					.stone = 3
+				},
+				.people = 1
+		},
+			.produces = {
+				.res = {
+					.faith = 0,
+					.wood = 0,
+					.stone = 0
+				}
+		},
+			.workers = 1
+			END_CONFIGURING(Chapel)
+
+			CONFIGURE_ENTITY(LoggingCamp)
+			.requirements = {
+				.res = {
+					.faith = 0,
+					.wood = 3,
+					.stone = 1
+				},
+				.people = 3
+		},
+			.produces = {
+				.res = {
+					.faith = 0,
+					.wood = 10,
+					.stone = 0
+				}
+		},
+			.workers = 5
+			END_CONFIGURING(LoggingCamp)
+
+			CONFIGURE_ENTITY(Mine)
+			.requirements = {
+				.res = {
+					.faith = 0,
+					.wood = 1,
+					.stone = 3
+				},
+				.people = 3
+		},
+			.produces = {
+				.res = {
+					.faith = 0,
+					.wood = 0,
+					.stone = 10
+				}
+		},
+			.workers = 5
+			END_CONFIGURING(Mine)
 		
 		// @formatter:on
+		
 	}
 
 	Store::~Store()

@@ -1,4 +1,6 @@
 #include "Building.h"
+#include "../../../Foundation/Container.h"
+#include "../../../Config/Store.h"
 
 namespace Godamn
 {
@@ -36,5 +38,10 @@ namespace Godamn
 		}
 
 		m_buildingProgress = progress;
+	}
+
+	EntityConfig Building::getEntityConfig()
+	{
+		return *static_cast<EntityConfig*>(getContainer().getStore()->get(getEntityId()));
 	}
 }
