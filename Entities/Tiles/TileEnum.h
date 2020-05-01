@@ -4,15 +4,17 @@ namespace Godamn
 {
 	enum class TileEnum
 	{
-		Grass_Stone,
-		Grass_Forest,
 		Grass,
+		Grass_Temple,
+		Grass_Forest,
 		Grass_Lumber,
+		Grass_Stone,
 		Grass_Miner,
-		Grass_Temples,
+		Grass_Chample,
 		Moutain,
 		Moutain_Temples,
 		Moutain_Miner,
 		Moutain_Stone,
+		Moutain_Chample,
 	};
 }

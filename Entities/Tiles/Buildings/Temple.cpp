@@ -2,6 +2,10 @@
 
 namespace Godamn
 {
+	Temple::Temple(const sf::FloatRect& rect): Building(rect)
+	{
+	}
+
 	uint16_t Temple::getRange() const
 	{
 		switch (m_level)

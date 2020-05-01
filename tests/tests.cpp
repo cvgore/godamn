@@ -5,6 +5,8 @@
 #include "Utils/Utils.h"
 #include "Scenery/SceneryManager.h"
 #include "Scenery/SceneryException.h"
+#include "Config/Store.h"
+#include "Entities/Tiles/Buildings/Temple.h"
 
 using namespace Godamn;
 
@@ -132,4 +134,13 @@ TEST_CASE("SceneryManager works as expected")
 			CHECK_THROWS_AS(mgr.setActiveScene(scene), SceneryException);
 		}
 	}
+}
+
+/* === Store === */
+
+TEST_CASE("check if we have correct prices and resources")
+{
+	Temple temple(sf::FloatRect(0,0,0,0));
+	CHECK_NOTHROW(temple.getEntityConfig());
+
 }
