@@ -13,13 +13,20 @@ else()
 	add_compile_definitions(__new=new)
 endif()
 
+if(NOT SFML_DIR)
+set(CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/" ${CMAKE_PREFIX_PATH})
+endif()
+
 add_compile_definitions(APP_NAME="${APP_NAME}" APP_VERSION="${APP_VERSION}")
 
-project (Gra VERSION ${APP_VERSION} LANGUAGES CXX)
+project(Gra VERSION ${APP_VERSION} LANGUAGES CXX)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 
 find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
+
+include_directories(lib/SFML)
+include_directories(lib/doctest)
 
 add_library(GodamnLib "")
 
@@ -31,8 +38,7 @@ add_subdirectory(Events)
 add_subdirectory(Structs)
 add_subdirectory(Entities)
 
-add_subdirectory(includes/doctest)
-
+add_subdirectory(lib/doctest)
 add_subdirectory(tests)
 
 add_executable(Game main.cpp GameState.cpp Engine.cpp)
@@ -41,9 +47,8 @@ target_link_libraries(GodamnLib PUBLIC sfml-graphics)
 target_link_libraries(Game PUBLIC sfml-graphics PRIVATE GodamnLib)
 
 list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/Utils")
-list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/includes")
+list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/lib")
 
 target_include_directories(Game PUBLIC ${PROJECT_BINARY_DIR} ${EXTRA_INCLUDES})
 
 file(COPY ./assets DESTINATION ${PROJECT_BINARY_DIR}/${CMAKE_CONFIGURATION_TYPES})
-

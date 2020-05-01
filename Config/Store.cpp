@@ -1,27 +1,28 @@
 #include "Store.h"
 
-#include "../Utils/Utils.h"
-#include "../Entities/Tiles/Buildings/Temple.h"
 #include "../Entities/Tiles/Buildings/Chapel.h"
 #include "../Entities/Tiles/Buildings/LoggingCamp.h"
 #include "../Entities/Tiles/Buildings/Mine.h"
+#include "../Entities/Tiles/Buildings/Temple.h"
 #include "../Structs/EntityConfig.h"
-
+#include "../Utils/Utils.h"
 
 // Here we define some helper macros for easier config management
 
 #define KVPAIR(key, value) std::pair<std::string, void*>(key, static_cast<void*>(value))
 #define GVPAIR(key, value) KVPAIR(guid_to_string(key), value)
 #define CONFIGURE_ENTITY(entityClass) m_store.insert(std::pair<std::string, void*>(guid_to_string(##entityClass::getEntityId()),static_cast<void*>(__new EntityConfig {
-#define END_CONFIGURING(entityClass) })));
+#define END_CONFIGURING(entityClass) \
+	})));
 
 namespace Godamn
 {
-	Store::Store()
-	{
+	Store::Store() {
+
 		// ReSharper fks up indentation due to macros, so disabling it right now
 		// @formatter:off
-		
+		// clang-format off
+
 		CONFIGURE_ENTITY(Temple)
 			.requirements = {
 				.res = {
@@ -97,9 +98,9 @@ namespace Godamn
 		},
 			.workers = 5
 			END_CONFIGURING(Mine)
-		
+
 		// @formatter:on
-		
+		// clang-format on
 	}
 
 	Store::~Store()
