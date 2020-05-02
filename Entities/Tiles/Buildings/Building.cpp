@@ -1,6 +1,6 @@
 #include "Building.h"
 #include "../../../Foundation/Container.h"
-#include "../../../Config/Store.h"
+#include "../../../Config/EntityConfigStore.h"
 
 namespace Godamn
 {
@@ -42,6 +42,6 @@ namespace Godamn
 
 	EntityConfig Building::getEntityConfig()
 	{
-		return *static_cast<EntityConfig*>(getContainer().getStore()->get(getEntityId()));
+		return getContainer().getEntityConfigStore()->get(getEntityId());
 	}
 }

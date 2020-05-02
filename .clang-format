@@ -19,6 +19,7 @@ AllowAllArgumentsOnNextLine: true
 AlignEscapedNewlines: Left
 SpaceBeforeCpp11BracedList: true
 Cpp11BracedListStyle: false
+SpaceAfterTemplateKeyword: false
 BraceWrapping:
   AfterCaseLabel: true
   AfterClass: true
@@ -33,7 +34,7 @@ BraceWrapping:
   BeforeElse: true
   IndentBraces: false
   SplitEmptyFunction: true
-  SplitEmptyRecord: true
+  SplitEmptyRecord: false
   SplitEmptyNamespace: true
 BreakConstructorInitializers: AfterColon
 ColumnLimit: 120

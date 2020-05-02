@@ -1,7 +1,7 @@
 ﻿#include "main.h"
 
+#include "Config/EntityConfigStore.h"
 #include "Foundation/Container.h"
-#include "Config/Store.h"
 
 int main()
 {
@@ -12,16 +12,16 @@ int main()
 #if defined(_MSC_VER) && _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
-	
+
 	// Storing reference to container instance
 	auto& container = Godamn::Container::getInstance();
 
 	// Creating engine & putting it in a container
 	container.setEngine(__new Godamn::Engine);
 
-	// Creating store & putting it in a container
-	container.setStore(__new Godamn::Store);
-	
+	// Creating entity config store & putting it in a container
+	container.setEntityConfigStore(__new Godamn::EntityConfigStore);
+
 	// Storing pointer to engine from container
 	auto game = container.getEngine();
 
@@ -33,6 +33,6 @@ int main()
 	// Right before exiting, we're disposing any resources
 	// NOTE: container is not usable after disposing
 	container.dispose();
-	
+
 	return exitCode;
 }

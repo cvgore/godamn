@@ -1,17 +1,11 @@
 #include "Container.h"
-#include "../Config/Store.h"
+#include "../Config/EntityConfigStore.h"
+#include "../Engine.h"
 
 namespace Godamn
 {
-	std::shared_ptr<Store> Container::getStore() const
-	{
-		return m_store;
-	}
-
-	void Container::setStore(Store* store)
-	{
-		m_store.reset(store);
-	}
+	Container::Container(): m_engine(nullptr), m_entityStore(nullptr)
+	{}
 
 	Container& Container::getInstance()
 	{
@@ -22,8 +16,8 @@ namespace Godamn
 
 	void Container::dispose()
 	{
-		m_engine.reset();
-		m_store.reset();
+		// todo - might remove
+		// no longer needed due to usage of smart pointers
 	}
 
 	std::shared_ptr<Engine> Container::getEngine() const
@@ -36,7 +30,13 @@ namespace Godamn
 		m_engine.reset(engine);
 	}
 
-	Container::Container() : m_engine(NULL)
+	std::shared_ptr<EntityConfigStore> Container::getEntityConfigStore() const
 	{
+		return m_entityStore;
+	}
+
+	void Container::setEntityConfigStore(EntityConfigStore* store)
+	{
+		m_entityStore.reset(store);
 	}
 }

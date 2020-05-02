@@ -5,8 +5,9 @@
 #include "Utils/Utils.h"
 #include "Scenery/SceneryManager.h"
 #include "Scenery/SceneryException.h"
-#include "Config/Store.h"
+#include "Config/EntityConfigStore.h"
 #include "Entities/Tiles/Buildings/Temple.h"
+#include "Foundation/Container.h"
 
 using namespace Godamn;
 
@@ -138,9 +139,10 @@ TEST_CASE("SceneryManager works as expected")
 
 /* === Store === */
 
-TEST_CASE("check if we have correct prices and resources")
+TEST_CASE("check if EntityConfigStore works")
 {
+	Container::getInstance().setEntityConfigStore(__new EntityConfigStore);
 	Temple temple(sf::FloatRect(0,0,0,0));
-	CHECK_NOTHROW(temple.getEntityConfig());
 
+	CHECK_NOTHROW(temple.getEntityConfig());
 }

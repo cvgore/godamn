@@ -32,10 +32,10 @@ add_library(GodamnLib "")
 
 add_subdirectory(Utils)
 add_subdirectory(Foundation)
+add_subdirectory(Structs)
 add_subdirectory(Config)
 add_subdirectory(Scenery)
 add_subdirectory(Events)
-add_subdirectory(Structs)
 add_subdirectory(Entities)
 
 add_subdirectory(lib/doctest)

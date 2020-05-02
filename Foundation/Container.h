@@ -1,11 +1,13 @@
 #pragma once
 
-#include "../Engine.h"
+#include "../Structs/EntityConfig.h"
 #include "Object.h"
+#include <memory>
 
 namespace Godamn
 {
-	class Store;
+	class Engine;
+	class EntityConfigStore;
 
 	/**
 	 * @brief Simple & small container
@@ -13,7 +15,7 @@ namespace Godamn
 	class Container : public Object
 	{
 		std::shared_ptr<Engine> m_engine;
-		std::shared_ptr<Store> m_store;
+		std::shared_ptr<EntityConfigStore> m_entityStore;
 
 	public:
 		/**
@@ -24,8 +26,6 @@ namespace Godamn
 		Container& operator=(const Container&) = delete;
 		Container& operator=(Container&&) = delete;
 
-		std::shared_ptr<Store> getStore() const;
-		void setStore(Store* store);
 		/**
 		 * @brief Returns current instance of container
 		 */
@@ -37,6 +37,10 @@ namespace Godamn
 
 		std::shared_ptr<Engine> getEngine() const;
 		void setEngine(Engine* engine);
+
+		void setEntityConfigStore(EntityConfigStore* store);
+
+		std::shared_ptr<EntityConfigStore> getEntityConfigStore() const;
 
 	private:
 		/**
