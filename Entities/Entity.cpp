@@ -1,7 +1,7 @@
 #include "Entity.h"
-#include "../Events/EventMethodsInterfaces.h"
-#include "../Events/Event.h"
 #include <SFML/Window/Event.hpp>
+#include "../Events/Event.h"
+#include "../Events/EventMethodsInterfaces.h"
 
 namespace Godamn
 {
@@ -25,11 +25,13 @@ namespace Godamn
 
 	void Entity::onEvent(Event& ev)
 	{
-#pragma region <Helper macros
+#pragma region < Helper macros
 #define CAST_VAR(name) castTo##name
-#define CAST_AND_CALL(name) auto* CAST_VAR(name) = dynamic_cast<EVINAME(name)*>(this); \
-	if (CAST_VAR(name) != NULL) { \
-		CAST_VAR(name)->on##name(ev); \
+#define CAST_AND_CALL(name)                                    \
+	auto* CAST_VAR(name) = dynamic_cast<EVINAME(name)*>(this); \
+	if (CAST_VAR(name) != NULL)                                \
+	{                                                          \
+		CAST_VAR(name)->on##name(ev);                          \
 	}
 #pragma endregion
 
@@ -60,7 +62,7 @@ namespace Godamn
 				break;
 		}
 
-#pragma region </Helper macros
+#pragma region < / Helper macros
 #undef CAST_AND_CALL
 #undef CAST_VAR
 #pragma endregion
@@ -74,5 +76,10 @@ namespace Godamn
 	GUID Entity::getEntityId()
 	{
 		return entity_id;
+	}
+
+	void Entity::beforeDraw()
+	{
+		// noop
 	}
 }

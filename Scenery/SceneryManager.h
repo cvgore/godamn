@@ -1,15 +1,20 @@
 #pragma once
 
-#include "Scene.h"
 #include <memory>
 #include <vector>
+#include "Scene.h"
+
 namespace Godamn
 {
 	class SceneryManager
 	{
-		std::vector<std::shared_ptr<Scene>> m_scenes;
+	public:
+		typedef std::vector<std::shared_ptr<Scene>> SceneArray;
+
+	private:
+		SceneArray m_scenes;
 		std::shared_ptr<Scene> m_activeScene;
-		
+
 	public:
 		SceneryManager();
 		SceneryManager(const SceneryManager&) = delete;
@@ -25,15 +30,15 @@ namespace Godamn
 		/**
 		 * @brief Returns array of scenes
 		 */
-		std::vector<std::shared_ptr<Scene>> getScenes() const;
+		SceneArray getScenes() const;
 		/**
 		 * @brief Sets current scene
 		 */
-		void setActiveScene(const std::shared_ptr<Scene>& scene);
+		void setActiveScene(std::shared_ptr<Scene> scene);
 		/**
 		 * @brief Creates new scene and pushes it into array
 		 */
-		std::shared_ptr<Scene> newScene();
+		std::shared_ptr<Scene>& newScene();
 		/**
 		 * @brief Removes scene from array. Only non-active scenes can be removed
 		 */
@@ -45,12 +50,12 @@ namespace Godamn
 		/**
 		 * @brief Finds scene within array
 		 */
-		std::vector<std::shared_ptr<Scene>>::const_iterator find(const std::shared_ptr<Scene>& scene) const;
+		SceneArray::const_iterator find(const std::shared_ptr<Scene>& scene) const;
 		/**
 		 * @brief Checks if array contains scene
 		 */
 		bool contains(const std::shared_ptr<Scene>& scene) const;
-		std::vector<std::shared_ptr<Scene>>::const_iterator cbegin() const;
-		std::vector<std::shared_ptr<Scene>>::const_iterator cend() const;
+		SceneArray::const_iterator cbegin() const;
+		SceneArray::const_iterator cend() const;
 	};
 }

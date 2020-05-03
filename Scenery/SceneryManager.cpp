@@ -23,12 +23,12 @@ namespace Godamn
 		return m_activeScene;
 	}
 
-	std::vector<std::shared_ptr<Scene>> SceneryManager::getScenes() const
+	SceneryManager::SceneArray SceneryManager::getScenes() const
 	{
 		return m_scenes;
 	}
 
-	void SceneryManager::setActiveScene(const std::shared_ptr<Scene>& scene)
+	void SceneryManager::setActiveScene(std::shared_ptr<Scene> scene)
 	{
 		if (scene != nullptr && !contains(scene))
 		{
@@ -38,9 +38,9 @@ namespace Godamn
 		m_activeScene = scene;
 	}
 
-	std::shared_ptr<Scene> SceneryManager::newScene()
+	std::shared_ptr<Scene>& SceneryManager::newScene()
 	{
-		m_scenes.emplace_back(new Scene);
+		m_scenes.emplace_back(__new Scene);
 
 		return m_scenes.back();
 	}
@@ -70,12 +70,12 @@ namespace Godamn
 		return find(scene) != cend();
 	}
 
-	std::vector<std::shared_ptr<Scene>>::const_iterator SceneryManager::cbegin() const
+	SceneryManager::SceneArray::const_iterator SceneryManager::cbegin() const
 	{
 		return m_scenes.cbegin();
 	}
 
-	std::vector<std::shared_ptr<Scene>>::const_iterator SceneryManager::cend() const
+	SceneryManager::SceneArray::const_iterator SceneryManager::cend() const
 	{
 		return m_scenes.cend();
 	}
@@ -87,7 +87,7 @@ namespace Godamn
 		return it != cend() ? std::distance(cbegin(), it) : -1;
 	}
 
-	std::vector<std::shared_ptr<Scene>>::const_iterator SceneryManager::find(const std::shared_ptr<Scene>& scene) const
+	SceneryManager::SceneArray::const_iterator SceneryManager::find(const std::shared_ptr<Scene>& scene) const
 	{
 		return scene != nullptr ? std::find(cbegin(), cend(), scene) : cend();
 	}

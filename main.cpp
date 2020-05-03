@@ -1,6 +1,7 @@
 ﻿#include "main.h"
 
 #include "Config/EntityConfigStore.h"
+#include "Scenery/SceneryManager.h"
 #include "Foundation/Container.h"
 
 int main()
@@ -21,6 +22,9 @@ int main()
 
 	// Creating entity config store & putting it in a container
 	container.setEntityConfigStore(__new Godamn::EntityConfigStore);
+
+	// Creating scenery manager & putting it in a container
+	container.setSceneryManager(__new Godamn::SceneryManager);
 
 	// Storing pointer to engine from container
 	auto game = container.getEngine();

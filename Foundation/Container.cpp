@@ -1,5 +1,6 @@
 #include "Container.h"
 #include "../Config/EntityConfigStore.h"
+#include "../Scenery/SceneryManager.h"
 #include "../Engine.h"
 
 namespace Godamn
@@ -38,5 +39,15 @@ namespace Godamn
 	void Container::setEntityConfigStore(EntityConfigStore* store)
 	{
 		m_entityStore.reset(store);
+	}
+
+	void Container::setSceneryManager(SceneryManager* manager)
+	{
+		m_sceneryManager.reset(manager);
+	}
+
+	std::shared_ptr<SceneryManager> Container::getSceneryManager() const
+	{
+		return m_sceneryManager;
 	}
 }

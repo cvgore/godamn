@@ -13,14 +13,13 @@ namespace Godamn
 	 * 
 	 * @brief Main class holding and combining everything within game, manages event loop
 	 */
-	class Engine : sf::NonCopyable, public sf::Drawable, public sf::Transformable, public Object
+	class Engine : sf::NonCopyable, public Object
 	{
 		sf::Font m_mainFont;
 		sf::Font m_altFont;
 		std::shared_ptr<sf::RenderWindow> m_renderer;
 		GameState* m_state;
-		std::shared_ptr<TiledMap> m_map;
-		std::vector<std::shared_ptr<Entity>> m_entities;
+
 
 	public:
 		Engine();
@@ -37,10 +36,6 @@ namespace Godamn
 		 * @brief Spawns game engine and enters event loop
 		 */
 		int spawn();
-		/**
-		 * @brief Returns TiledMap instance
-		 */
-		std::shared_ptr<TiledMap> getMap() const;
 
 	private:
 		/**
@@ -53,6 +48,5 @@ namespace Godamn
 		 * @brief Propagates event from event loop to concrete entities
 		 */
 		void propagateEvent(const sf::Event& event);
-		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	};
 }

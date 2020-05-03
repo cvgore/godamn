@@ -1,13 +1,14 @@
 #pragma once
 
+#include <memory>
 #include "../Structs/EntityConfig.h"
 #include "Object.h"
-#include <memory>
 
 namespace Godamn
 {
 	class Engine;
 	class EntityConfigStore;
+	class SceneryManager;
 
 	/**
 	 * @brief Simple & small container
@@ -16,6 +17,7 @@ namespace Godamn
 	{
 		std::shared_ptr<Engine> m_engine;
 		std::shared_ptr<EntityConfigStore> m_entityStore;
+		std::shared_ptr<SceneryManager> m_sceneryManager;
 
 	public:
 		/**
@@ -39,8 +41,10 @@ namespace Godamn
 		void setEngine(Engine* engine);
 
 		void setEntityConfigStore(EntityConfigStore* store);
-
 		std::shared_ptr<EntityConfigStore> getEntityConfigStore() const;
+
+		void setSceneryManager(SceneryManager* manager);
+		std::shared_ptr<SceneryManager> getSceneryManager() const;
 
 	private:
 		/**

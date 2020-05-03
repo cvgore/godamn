@@ -113,4 +113,8 @@ namespace Godamn
 
 		m_verticesOutdated = false;
 	}
+	void TiledMap::beforeDraw()
+	{
+		updateIfOutdated();
+	}
 }
