@@ -25,7 +25,8 @@ namespace Godamn
 
 	void Entity::onEvent(Event& ev)
 	{
-#pragma region < Helper macros
+		// todo - optimize, dynamic_cast costs enormous amount of cycles
+#pragma region Helper macros
 #define CAST_VAR(name) castTo##name
 #define CAST_AND_CALL(name)                                    \
 	auto* CAST_VAR(name) = dynamic_cast<EVINAME(name)*>(this); \
@@ -62,7 +63,7 @@ namespace Godamn
 				break;
 		}
 
-#pragma region < / Helper macros
+#pragma region Helper macros
 #undef CAST_AND_CALL
 #undef CAST_VAR
 #pragma endregion
@@ -78,8 +79,13 @@ namespace Godamn
 		return entity_id;
 	}
 
-	void Entity::beforeDraw()
+	uint16_t Entity::getZIndex() const
 	{
-		// noop
+		return m_zIndex;
+	}
+
+	void Entity::setZIndex(uint16_t zIndex)
+	{
+		m_zIndex = zIndex;
 	}
 }

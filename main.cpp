@@ -1,10 +1,10 @@
 ﻿#include "main.h"
 
 #include "Config/EntityConfigStore.h"
-#include "Scenery/SceneryManager.h"
 #include "Foundation/Container.h"
+#include "Scenery/SceneryManager.h"
 
-int main()
+ int main()
 {
 	/**
 	 * @brief Setting memory leak detector, only if using debug mode

@@ -1,19 +1,19 @@
 // ReSharper disable CppClangTidyCppcoreguidelinesSpecialMemberFunctions
 #pragma once
 
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/Transformable.hpp>
 #include <guiddef.h>
 #include <string>
 #include "../Foundation/Object.h"
+#include "../Screen/ScreenObject.h"
 
 namespace Godamn
 {
 	class Event;
 
-	class Entity : public sf::Drawable, public sf::Transformable, public Object
+	class Entity : public ScreenObject
 	{
 		sf::FloatRect m_rect;
+		uint16_t m_zIndex;
 
 	public:
 		// {E7102D28-1EBB-43FA-AB95-212B25ACF37E}
@@ -27,7 +27,15 @@ namespace Godamn
 		virtual std::string getName() const;
 		void onEvent(Event& ev);
 		const sf::FloatRect& getRect() const;
+		/**
+		 * @brief Determines priority of drawing of element, the higher value, the later element would be drawn
+		 * Leave 0 for automatic priority
+		 */
+		uint16_t getZIndex() const;
+		void setZIndex(uint16_t zIndex);
+		/**
+		 * @brief Returns unique entity type ID
+		 */
 		static GUID getEntityId();
-		virtual void beforeDraw();
 	};
 }

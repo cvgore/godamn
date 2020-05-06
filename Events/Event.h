@@ -12,12 +12,13 @@ namespace Godamn
 	/**
 	 * @class Event
 	 *
-	 * @brief Neat little wrapper over sf::Event, providing 
+	 * @brief Neat little wrapper over sf::Event, providing
 	 */
 	class Event : public Object
 	{
 		const sf::Event& m_originalEvent;
 		sf::Vector2f m_pos;
+
 	public:
 		Event(const sf::Event& originalEvent, sf::Vector2f& pos);
 		/**
@@ -25,15 +26,15 @@ namespace Godamn
 		 */
 		const sf::Event& getOriginalEvent();
 		/**
-		 * @brief Returns absolute to renderer position where event occured
+		 * @brief Returns absolute to renderer position where event occurred
 		 */
 		const sf::Vector2f& getPos();
 		/**
-		 * @brief Returns relative to given rectangle position where event occured
+		 * @brief Returns relative to given rectangle position where event occurred
 		 */
 		sf::Vector2f getRelativePos(const sf::FloatRect& rect);
 		/**
-		 * @brief Returns relative to given entity position where event occured
+		 * @brief Returns relative to given entity position where event occurred
 		 */
 		sf::Vector2f getRelativePos(const Entity& ent);
 		/**

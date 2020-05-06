@@ -34,6 +34,7 @@ add_subdirectory(Utils)
 add_subdirectory(Foundation)
 add_subdirectory(Structs)
 add_subdirectory(Config)
+add_subdirectory(Screen)
 add_subdirectory(Scenery)
 add_subdirectory(Events)
 add_subdirectory(Entities)
@@ -51,4 +52,7 @@ list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/lib")
 
 target_include_directories(Game PUBLIC ${PROJECT_BINARY_DIR} ${EXTRA_INCLUDES})
 
-file(COPY ./assets DESTINATION ${PROJECT_BINARY_DIR}/${CMAKE_CONFIGURATION_TYPES})
+# Copy assets
+add_custom_command(TARGET Game POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_directory
+		${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:Game>/assets)

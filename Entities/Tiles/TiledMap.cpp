@@ -1,6 +1,6 @@
 #include "TiledMap.h"
-#include "../../Utils/Utils.h"
 #include "../../Events/Event.h"
+#include "../../Utils/Utils.h"
 
 namespace Godamn
 {
@@ -113,7 +113,8 @@ namespace Godamn
 
 		m_verticesOutdated = false;
 	}
-	void TiledMap::beforeDraw()
+
+	void TiledMap::beforeDraw(const Renderer& renderer)
 	{
 		updateIfOutdated();
 	}

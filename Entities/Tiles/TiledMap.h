@@ -32,10 +32,10 @@ namespace Godamn
 		void setRenderSize(sf::Vector2<uint8_t> renderSize);
 		void updateIfOutdated();
 		void onMouseButtonClick(Event& ev) override;
-		void beforeDraw() override;
 
-	private:
+	protected:
 		void redraw();
+		void beforeDraw(const Renderer& renderer) override;
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	};
 }

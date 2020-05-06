@@ -1,10 +1,12 @@
 #pragma once
 
-#include <SFML/System/NonCopyable.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/System/NonCopyable.hpp>
 #include "Entities/Tiles/TiledMap.h"
 #include "Foundation/Object.h"
 #include "GameState.h"
+#include "Screen/Renderer.h"
+#include "Screen/ScreenObject.h"
 
 namespace Godamn
 {
@@ -13,13 +15,12 @@ namespace Godamn
 	 * 
 	 * @brief Main class holding and combining everything within game, manages event loop
 	 */
-	class Engine : sf::NonCopyable, public Object
+	class Engine : sf::NonCopyable, public Object, public Renderer
 	{
 		sf::Font m_mainFont;
 		sf::Font m_altFont;
 		std::shared_ptr<sf::RenderWindow> m_renderer;
 		GameState* m_state;
-
 
 	public:
 		Engine();

@@ -56,8 +56,13 @@ namespace Godamn
 			PANIC("Could not find roboto font");
 		}
 
-		m_renderer = std::shared_ptr<sf::RenderWindow>(__new sf::RenderWindow(
-		sf::VideoMode(800, 600), APP_NAME " " APP_VERSION, sf::Style::Default ^ sf::Style::Resize));
+		m_renderer = std::shared_ptr<sf::RenderWindow>(
+			__new sf::RenderWindow(
+				sf::VideoMode(800, 600),
+				APP_NAME " " APP_VERSION,
+				sf::Style::Default ^ sf::Style::Resize
+			)
+		);
 	}
 
 	int Engine::spawn()
@@ -74,11 +79,8 @@ namespace Godamn
 
 		scene->addEntity(__new TiledMap(tiledMapRect));
 
-		// Finding map within scene entities
-		auto& mapEnt = *std::find_if(scene->begin(), scene->end(), [](std::shared_ptr<Entity>& ptr) {
-			return dynamic_cast<TiledMap*>(ptr.get()) != nullptr;
-		});
-		auto map = dynamic_cast<TiledMap*>(mapEnt.get());
+		auto& mapEnt = *scene->findEntityByGuid(TiledMap::getEntityId());
+		auto map = static_cast<TiledMap*>(mapEnt.get());
 
 		map->loadTileset(FF_TILESET, sf::Vector2<uint8_t>(32, 32));
 		map->setRenderSize(sf::Vector2<uint8_t>(24, 15));
@@ -100,27 +102,16 @@ namespace Godamn
 			auto& activeScene = *getContainer().getSceneryManager()->getActiveScene();
 
 			m_renderer->clear(sf::Color::Black);
+
+			beforeDraw(activeScene);
 			m_renderer->draw(activeScene);
+			afterDraw(activeScene);
+
 			m_renderer->display();
 		}
 
 		return 0;
 	}
-
-	//	std::shared_ptr<TiledMap> Engine::getMap() const
-	//	{
-	//		return m_map;
-	//	}
-
-	//	void Engine::draw(sf::RenderTarget& target, sf::RenderStates states) const
-	//	{
-	////		m_map->updateIfOutdated();
-	//
-	//		for (const auto& entity : m_entities)
-	//		{
-	//			target.draw(*entity);
-	//		}
-	//	}
 
 	sf::Vector2f Engine::translateEventPosition(const sf::Event& event)
 	{
