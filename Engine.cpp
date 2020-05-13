@@ -56,13 +56,8 @@ namespace Godamn
 			PANIC("Could not find roboto font");
 		}
 
-		m_renderer = std::shared_ptr<sf::RenderWindow>(
-			__new sf::RenderWindow(
-				sf::VideoMode(800, 600),
-				APP_NAME " " APP_VERSION,
-				sf::Style::Default ^ sf::Style::Resize
-			)
-		);
+		m_renderer = std::shared_ptr<sf::RenderWindow>(__new sf::RenderWindow(
+		sf::VideoMode(800, 600), APP_NAME " " APP_VERSION, sf::Style::Default ^ sf::Style::Resize));
 	}
 
 	int Engine::spawn()
@@ -157,5 +152,17 @@ namespace Godamn
 				entity->onEvent(wrapper);
 			}
 		}
+	}
+
+	const sf::FloatRect Engine::getGeometry() const
+	{
+		auto size = getRenderWindow().getSize();
+
+		return { 0.f, 0.f, static_cast<float>(size.x), static_cast<float>(size.y) };
+	}
+
+	const sf::RenderWindow& Engine::getRenderWindow() const
+	{
+		return *m_renderer;
 	}
 }

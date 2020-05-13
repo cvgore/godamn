@@ -2,7 +2,7 @@
 
 namespace Godamn
 {
-	class ScreenObject;
+	class Entity;
 
 	/**
 	 * @brief Handles beforeDraw & afterDraw events, currently it's only purpose is to
@@ -12,7 +12,7 @@ namespace Godamn
 	{
 	public:
 		virtual ~Renderer() = default;
-		void beforeDraw(ScreenObject& object) const;
-		void afterDraw(ScreenObject& object) const;
+		void beforeDraw(Entity& object) const;
+		void afterDraw(Entity& object) const;
 	};
 }

@@ -6,7 +6,6 @@
 #include "Foundation/Object.h"
 #include "GameState.h"
 #include "Screen/Renderer.h"
-#include "Screen/ScreenObject.h"
 
 namespace Godamn
 {
@@ -37,10 +36,18 @@ namespace Godamn
 		 * @brief Spawns game engine and enters event loop
 		 */
 		int spawn();
+		/**
+		 * @brief Returns geometry of the window
+		 */
+		 const sf::FloatRect getGeometry() const;
+		 /**
+		  * @brief Returns underlying renderer window instance
+		  */
+		  const sf::RenderWindow& getRenderWindow() const;
 
 	private:
 		/**
-		 * @brief Returns common event occurence position
+		 * @brief Returns common event occurrence position
 		 *
 		 * @remarks Built-in sf::Event has many event types and each has own mouse struct, so translator is required 
 		 */

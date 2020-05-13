@@ -1,17 +1,20 @@
 // ReSharper disable CppClangTidyCppcoreguidelinesSpecialMemberFunctions
 #pragma once
 
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/Transformable.hpp>
 #include <guiddef.h>
 #include <string>
 #include "../Foundation/Object.h"
-#include "../Screen/ScreenObject.h"
 
 namespace Godamn
 {
 	class Event;
 
-	class Entity : public ScreenObject
+	class Entity : public sf::Drawable, public sf::Transformable, public Object
 	{
+		friend class Renderer;
+
 		sf::FloatRect m_rect;
 		uint16_t m_zIndex;
 
@@ -34,8 +37,18 @@ namespace Godamn
 		uint16_t getZIndex() const;
 		void setZIndex(uint16_t zIndex);
 		/**
-		 * @brief Returns unique entity type ID
+		 * @brief Returns unique screen object type ID
 		 */
 		static GUID getEntityId();
+
+	protected:
+		/**
+		 * @brief Called right before drawing on screen object
+		 */
+		virtual void beforeDraw(const Renderer& renderer);
+		/**
+		 * @brief Called right after drawing on screen object
+		 */
+		virtual void afterDraw(const Renderer& renderer);
 	};
 }

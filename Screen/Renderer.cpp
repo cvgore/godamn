@@ -1,14 +1,14 @@
 #include "Renderer.h"
-#include "ScreenObject.h"
+#include "../Entities/Entity.h"
 
 namespace Godamn
 {
-	void Renderer::beforeDraw(ScreenObject& object) const
+	void Renderer::beforeDraw(Entity& object) const
 	{
 		object.beforeDraw(*this);
 	}
 
-	void Renderer::afterDraw(ScreenObject& object) const
+	void Renderer::afterDraw(Entity& object) const
 	{
 		object.beforeDraw(*this);
 	}

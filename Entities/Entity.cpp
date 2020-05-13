@@ -1,5 +1,6 @@
 #include "Entity.h"
 #include <SFML/Window/Event.hpp>
+#include "../../Screen/Renderer.h"
 #include "../Events/Event.h"
 #include "../Events/EventMethodsInterfaces.h"
 
@@ -30,7 +31,7 @@ namespace Godamn
 #define CAST_VAR(name) castTo##name
 #define CAST_AND_CALL(name)                                    \
 	auto* CAST_VAR(name) = dynamic_cast<EVINAME(name)*>(this); \
-	if (CAST_VAR(name) != NULL)                                \
+	if (CAST_VAR(name) != nullptr)                             \
 	{                                                          \
 		CAST_VAR(name)->on##name(ev);                          \
 	}
@@ -74,9 +75,14 @@ namespace Godamn
 		return m_rect;
 	}
 
-	GUID Entity::getEntityId()
+	void Entity::afterDraw(const Renderer& renderer)
 	{
-		return entity_id;
+		renderer.afterDraw(*this);
+	}
+
+	void Entity::beforeDraw(const Renderer& renderer)
+	{
+		renderer.beforeDraw(*this);
 	}
 
 	uint16_t Entity::getZIndex() const
@@ -86,6 +92,11 @@ namespace Godamn
 
 	void Entity::setZIndex(uint16_t zIndex)
 	{
-		m_zIndex = zIndex;
+		zIndex = m_zIndex;
+	}
+
+	GUID Entity::getEntityId()
+	{
+		return entity_id;
 	}
 }
