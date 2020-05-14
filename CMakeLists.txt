@@ -38,11 +38,12 @@ add_subdirectory(Screen)
 add_subdirectory(Scenery)
 add_subdirectory(Events)
 add_subdirectory(Entities)
+add_subdirectory(MapGenerator)
 
 add_subdirectory(lib/doctest)
 add_subdirectory(tests)
 
-add_executable(Game main.cpp GameState.cpp Engine.cpp)
+add_executable(Game main.cpp GameState.cpp Engine.cpp "MapGenerator/Generator.cpp" "MapGenerator/IPoint.cpp")
 
 target_link_libraries(GodamnLib PUBLIC sfml-graphics)
 target_link_libraries(Game PUBLIC sfml-graphics PRIVATE GodamnLib)
