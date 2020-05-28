@@ -2,11 +2,11 @@
 
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Window/Event.hpp>
-#include "../Entities/Entity.h"
 #include "../Foundation/Object.h"
 
 namespace Godamn
 {
+	class Entity;
 	class Engine;
 
 	/**

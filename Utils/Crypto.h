@@ -1,8 +1,9 @@
 #pragma once
-#include <cstdint>
 
+#include <cstdint>
 #include "../Foundation/Object.h"
 
+// Indicates that we're using `Bcrypt.lib` external static library
 #pragma comment(lib, "Bcrypt.lib")
 
 namespace Godamn

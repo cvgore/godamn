@@ -1,13 +1,8 @@
 #pragma once
 
-#include <ctime>
-#include <cstdio>
-#include <cstring>
+#include <string>
 #include <guiddef.h>
 #include <stdexcept>
-#include <iostream>
-#include <sstream>
-#include <iomanip>
 
 void debug_print(const char* file, const int line, const char* severity, const char* content);
 std::string guid_to_string(GUID guid);

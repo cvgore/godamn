@@ -1,4 +1,5 @@
 #pragma once
+
 #include "ResPeople.h"
 
 namespace Godamn

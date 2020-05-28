@@ -1,10 +1,10 @@
 #include "Building.h"
-#include "../../../Foundation/Container.h"
 #include "../../../Config/EntityConfigStore.h"
+#include "../../../Foundation/Container.h"
 
 namespace Godamn
 {
-	Building::Building(const sf::FloatRect& rect) : Tile(rect)
+	Building::Building(const sf::FloatRect& rect): Tile(rect)
 	{
 		m_buildingProgress = 0;
 		m_state = BuildingStateEnum::IN_BUILDING;

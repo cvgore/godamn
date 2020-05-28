@@ -1,6 +1,5 @@
 #include "Scene.h"
 #include <SFML/Graphics/RenderTarget.hpp>
-#include "../Entities/Entity.h"
 #include "../Engine.h"
 #include "../Foundation/Container.h"
 
@@ -8,7 +7,6 @@ namespace Godamn
 {
 	Scene::Scene(): Entity(getContainer().getEngine()->getGeometry())
 	{
-
 	}
 
 	void Scene::draw(sf::RenderTarget& target, sf::RenderStates states) const

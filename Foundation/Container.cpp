@@ -1,7 +1,6 @@
 #include "Container.h"
 #include "../Config/EntityConfigStore.h"
 #include "../Scenery/SceneryManager.h"
-#include "../Engine.h"
 
 namespace Godamn
 {

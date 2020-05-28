@@ -1,4 +1,5 @@
 #include "Event.h"
+#include "../Entities/Entity.h"
 
 using EventType = sf::Event::EventType;
 

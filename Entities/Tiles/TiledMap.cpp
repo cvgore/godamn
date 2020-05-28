@@ -1,6 +1,7 @@
 #include "TiledMap.h"
 #include "../../Events/Event.h"
 #include "../../Utils/Utils.h"
+#include "Tile.h"
 
 namespace Godamn
 {

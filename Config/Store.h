@@ -3,7 +3,6 @@
 #include <guiddef.h>
 #include <map>
 #include <string>
-
 #include "../Foundation/Object.h"
 #include "../Utils/Utils.h"
 

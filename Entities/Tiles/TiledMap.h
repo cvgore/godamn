@@ -1,16 +1,19 @@
 #pragma once
 
 #include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/VertexArray.hpp>
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
 #include <string>
 #include <vector>
-#include "Tile.h"
+#include "../../Events/EventMethodsInterfaces.h"
+#include "../Entity.h"
 
 namespace Godamn
 {
+	class Tile;
+
 	class TiledMap : public Entity, public IEvMouseButtonClick
 	{
 		sf::Texture m_tileset;

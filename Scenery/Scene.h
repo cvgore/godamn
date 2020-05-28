@@ -2,11 +2,11 @@
 
 #include <memory>
 #include <vector>
-#include "../Engine.h"
+#include "../Entities/Entity.h"
 
 namespace Godamn
 {
-	class Entity;
+	class Engine;
 
 	class Scene : public Entity
 	{

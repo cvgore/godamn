@@ -33,6 +33,7 @@ namespace Godamn
 		 */
 		static Container& getInstance();
 		/**
+		 * @deprecated
 		 * @brief Disposes current instance resources, making container unusable
 		 */
 		void dispose();
