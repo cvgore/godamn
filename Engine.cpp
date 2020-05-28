@@ -2,12 +2,15 @@
 #include "Events/Event.h"
 #include "Foundation/Container.h"
 #include "Scenery/SceneryManager.h"
-#include "Utils.h"
+#include "Utils/Crypto.h"
+#include "Utils/Utils.h"
 
 using EventType = sf::Event::EventType;
 
 namespace Godamn
 {
+	constexpr uint32_t TIMER_INTERVAL_MIN = 100;
+
 	constexpr char FF_MAIN_FONT[] = "assets/fonts/tradewinds.ttf";
 	constexpr char FF_ALT_FONT[] = "assets/fonts/roboto.ttf";
 	constexpr char FF_TILESET[] = "assets/Graphics/Mix.png";
@@ -17,7 +20,8 @@ namespace Godamn
 	 */
 	const char* requirements[] = { FF_ALT_FONT, FF_MAIN_FONT, FF_TILESET };
 
-	Engine::Engine(): m_renderer(nullptr), m_state(nullptr)
+	Engine::Engine() :
+		m_renderer(nullptr), m_state(nullptr), m_threadPool(nullptr)
 	{}
 
 	Engine::~Engine()
@@ -58,6 +62,16 @@ namespace Godamn
 
 		m_renderer = std::shared_ptr<sf::RenderWindow>(__new sf::RenderWindow(
 		sf::VideoMode(800, 600), APP_NAME " " APP_VERSION, sf::Style::Default ^ sf::Style::Resize));
+
+		m_threadPool = CreateThreadpool(nullptr);
+
+		SetThreadpoolThreadMaximum(m_threadPool, 2);
+		SetThreadpoolThreadMinimum(m_threadPool, 1);
+
+		FILETIME ft = {0, 0};
+
+		m_timer = CreateThreadpoolTimer(timerCallback, nullptr, nullptr);
+		SetThreadpoolTimerEx(m_timer, &ft, TIMER_INTERVAL_MIN, TIMER_INTERVAL_MIN / 10);
 	}
 
 	int Engine::spawn()
@@ -104,6 +118,11 @@ namespace Godamn
 
 			m_renderer->display();
 		}
+
+		CloseThreadpoolTimer(m_timer);
+		m_timer = nullptr;
+		CloseThreadpool(m_threadPool);
+		m_threadPool = nullptr;
 
 		return 0;
 	}
@@ -164,5 +183,43 @@ namespace Godamn
 	const sf::RenderWindow& Engine::getRenderWindow() const
 	{
 		return *m_renderer;
+	}
+
+	void Engine::timerCallback(PTP_CALLBACK_INSTANCE hInst, PVOID ctx, PTP_TIMER timer)
+	{
+		auto& callbacks = getContainer().getEngine()->m_timerCallbacks;
+
+		for (auto& data : callbacks) {
+			auto [id, callbackData] = data;
+			auto [lastCalled, interval, callback] = callbackData;
+			const auto now = getCurrentTimestamp();
+
+			if ((lastCalled + interval) <= now) {
+				callback(getCurrentTimestamp() - lastCalled, id);
+				std::get<0>(data.second) = getCurrentTimestamp();
+			}
+		}
+	}
+
+	uint64_t Engine::getCurrentTimestamp()
+	{
+		return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+	}
+
+	uint64_t Engine::listenTimer(uint32_t interval, Engine::TimerCallback callback)
+	{
+		const auto id = Crypto::getRandomNumber();
+
+		m_timerCallbacks.emplace(
+			id,
+		  	std::tuple<uint64_t, uint64_t, Engine::TimerCallback>(getCurrentTimestamp(), interval, callback)
+		);
+
+		return id;
+	}
+
+	void Engine::removeTimer(uint64_t id)
+	{
+		m_timerCallbacks.erase(id);
 	}
 }

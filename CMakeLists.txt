@@ -13,6 +13,8 @@ else()
 	add_compile_definitions(__new=new)
 endif()
 
+add_compile_definitions(_WIN32_WINNT=0x6000)
+
 if(NOT SFML_DIR)
 set(CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/" ${CMAKE_PREFIX_PATH})
 endif()
