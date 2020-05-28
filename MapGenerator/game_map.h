@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include "IPoint.h"
-#include "../Entities/Tiles/TileEnum.h"
 
 
 

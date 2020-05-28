@@ -3,6 +3,7 @@
 #include "Foundation/Container.h"
 #include "Scenery/SceneryManager.h"
 #include "Utils.h"
+#include "MapGenerator/Generator.h"
 
 using EventType = sf::Event::EventType;
 
@@ -77,8 +78,11 @@ namespace Godamn
 		auto& mapEnt = *scene->findEntityByGuid(TiledMap::getEntityId());
 		auto map = static_cast<TiledMap*>(mapEnt.get());
 
+		generator();
+		
 		map->loadTileset(FF_TILESET, sf::Vector2<uint8_t>(32, 32));
 		map->setRenderSize(sf::Vector2<uint8_t>(24, 15));
+		map->setTilesConfig(m_map);
 
 		while (m_renderer->isOpen())
 		{

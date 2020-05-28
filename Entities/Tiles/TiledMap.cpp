@@ -4,7 +4,7 @@
 
 namespace Godamn
 {
-	TiledMap::TiledMap(sf::FloatRect& rect): Entity(rect), m_verticesOutdated(true)
+	TiledMap::TiledMap(sf::FloatRect& rect) : Entity(rect), m_verticesOutdated(true)
 	{
 		// resize the vertex array to fit the level size
 		m_vertices.setPrimitiveType(sf::Quads);
@@ -24,9 +24,13 @@ namespace Godamn
 		return true;
 	}
 
-	void TiledMap::setTilesConfig(std::vector<Tile>& tilesConfig)
+	void TiledMap::setTilesConfig(std::vector<TileEnum>& tilesConfig)
 	{
-		m_tiles = tilesConfig;
+		for (size_t i = 0; i < tilesConfig.size(); i++)
+		{
+			m_tiles.at(i).setType(tilesConfig.at(i));
+		}
+
 		m_verticesOutdated = true;
 	}
 

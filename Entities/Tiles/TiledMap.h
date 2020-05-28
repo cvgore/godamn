@@ -28,7 +28,7 @@ namespace Godamn
 
 		TiledMap(sf::FloatRect& rect);
 		bool loadTileset(const std::string& tilesetPath, sf::Vector2<uint8_t> tileSize);
-		void setTilesConfig(std::vector<Tile>& tilesConfig);
+		void setTilesConfig(std::vector<TileEnum>& tilesConfig);
 		void setRenderSize(sf::Vector2<uint8_t> renderSize);
 		void updateIfOutdated();
 		void onMouseButtonClick(Event& ev) override;
