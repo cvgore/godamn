@@ -1,8 +1,9 @@
+#pragma once
 #include <iostream>
 #include "IPoint.h"
 #include "../Entities/Tiles/TileEnum.h"
 
-#pragma 
+
 
 namespace Godamn
 {
@@ -13,7 +14,7 @@ namespace Godamn
 	private:
 		int n_lenght;
 		int n_width;
-		TileEnum** n_tab;
+		char** n_tab;
 		char n_default_value;
 	public:
 		game_map(int lenght, int width, char default_value);

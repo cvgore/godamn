@@ -29,8 +29,8 @@ namespace Godamn
 	{
 		return getRandomNumber() % (right - left + 1) + left;
 	}
-
 	int64_t Crypto::getRandomNumber(int64_t max)
+
 	{
 		return getRandomNumber(0, max);
 	}
