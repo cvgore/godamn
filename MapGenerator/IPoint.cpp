@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-IPoint::IPoint() // :: = nale�y do klasy IPoint
+IPoint::IPoint() // :: = należy do klasy IPoint
 {
 	this->x = 0;
 	this->y = 0;
