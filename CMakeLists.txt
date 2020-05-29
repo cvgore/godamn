@@ -38,6 +38,7 @@ add_subdirectory(Screen)
 add_subdirectory(Scenery)
 add_subdirectory(Events)
 add_subdirectory(Entities)
+add_subdirectory(MapGenerator)
 
 add_subdirectory(lib/doctest)
 add_subdirectory(tests)

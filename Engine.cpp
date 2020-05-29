@@ -3,6 +3,7 @@
 #include "Foundation/Container.h"
 #include "Scenery/SceneryManager.h"
 #include "Utils.h"
+#include "MapGenerator/Generator.h"
 
 using EventType = sf::Event::EventType;
 
@@ -58,6 +59,8 @@ namespace Godamn
 
 		m_renderer = std::shared_ptr<sf::RenderWindow>(__new sf::RenderWindow(
 		sf::VideoMode(800, 600), APP_NAME " " APP_VERSION, sf::Style::Default ^ sf::Style::Resize));
+		
+		m_renderer->setFramerateLimit(60);
 	}
 
 	int Engine::spawn()
@@ -77,8 +80,11 @@ namespace Godamn
 		auto& mapEnt = *scene->findEntityByGuid(TiledMap::getEntityId());
 		auto map = static_cast<TiledMap*>(mapEnt.get());
 
+		auto tilesArray = Generator::generator();
+		
 		map->loadTileset(FF_TILESET, sf::Vector2<uint8_t>(32, 32));
 		map->setRenderSize(sf::Vector2<uint8_t>(24, 15));
+		map->setTilesConfig(tilesArray);
 
 		while (m_renderer->isOpen())
 		{
