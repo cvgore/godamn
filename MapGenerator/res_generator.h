@@ -7,7 +7,6 @@ namespace Godamn
 {
 
 
-	int los(int min, int max);
 
 	class res_generator
 	{

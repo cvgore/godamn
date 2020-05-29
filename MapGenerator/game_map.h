@@ -29,6 +29,5 @@ namespace Godamn
 		int getResourceCount(char res_type);
 
 		char* operator[](int index);
-		friend std::ostream& operator<<(std::ostream& out, const game_map& m);
 	};
 }

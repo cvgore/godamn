@@ -89,16 +89,5 @@ namespace Godamn {
 		return this->n_tab[index];
 	}
 
-	std::ostream& operator<<(std::ostream& out, const game_map& m)
-	{
-		for (int i = 0; i < m.getLenght(); i++)
-		{
-			for (int j = 0; j < m.getWidth(); j++)
-			{
-				out << m.n_tab[i][j] << ' ';
-			}
-			out << std::endl;
-		}
-		return out;
-	}
+
 }
