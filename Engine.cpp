@@ -94,13 +94,6 @@ namespace Godamn
 		map->loadTileset(FF_TILESET, sf::Vector2<uint8_t>(32, 32));
 		map->setRenderSize(sf::Vector2<uint8_t>(24, 15));
 
-		listenTimer(
-		1000,
-		[](uint64_t elapsed, auto deleteTimer) -> void {
-			DEBUG("Deleting called timer");
-			deleteTimer();
-		});
-
 		while (m_renderer->isOpen())
 		{
 			sf::Event event;
