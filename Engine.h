@@ -29,8 +29,9 @@ namespace Godamn
 	class Engine : sf::NonCopyable, public Object, public Renderer
 	{
 	public:
-		typedef std::function<void(uint64_t, uint64_t)> TimerCallback;
-
+		typedef std::function<void(uint64_t, std::function<void()>)> TimerCallback;
+		typedef std::tuple<uint64_t, uint64_t, TimerCallback, bool> TimerTuple;
+		typedef std::map<uint64_t, TimerTuple> TimerMap;
 	private:
 		sf::Font m_mainFont;
 		sf::Font m_altFont;
@@ -38,7 +39,7 @@ namespace Godamn
 		GameState* m_state;
 		PTP_POOL m_threadPool;
 		PTP_TIMER m_timer;
-		std::map<uint64_t, std::tuple<uint64_t, uint64_t, TimerCallback>> m_timerCallbacks;
+		TimerMap m_timerCallbacks;
 
 	public:
 		Engine();
@@ -70,15 +71,11 @@ namespace Godamn
 		 * @return Timer identifier used to remove it from callback map
 		 * @example
 		 *
-		 * listenTimer(1000, [](uint64_t elapsedTimeSinceLastCall, uint64_t timerId) -> void {
+		 * listenTimer(1000, [](uint64_t elapsedTimeSinceLastCall, auto deleteTimer) -> void {
 		 *     // timer will eval every 1000 milliseconds = 1s
 		 * })
 		 */
 		uint64_t listenTimer(uint32_t interval, TimerCallback callback);
-		/**
-		 * @brief Removes timer
-		 */
-		void removeTimer(uint64_t id);
 		/**
 		 * @brief Returns current time in unix timestamp
 		 */

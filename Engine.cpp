@@ -94,6 +94,13 @@ namespace Godamn
 		map->loadTileset(FF_TILESET, sf::Vector2<uint8_t>(32, 32));
 		map->setRenderSize(sf::Vector2<uint8_t>(24, 15));
 
+		listenTimer(
+		1000,
+		[](uint64_t elapsed, auto deleteTimer) -> void {
+			DEBUG("Deleting called timer");
+			deleteTimer();
+		});
+
 		while (m_renderer->isOpen())
 		{
 			sf::Event event;
@@ -187,17 +194,33 @@ namespace Godamn
 
 	void Engine::timerCallback(PTP_CALLBACK_INSTANCE hInst, PVOID ctx, PTP_TIMER timer)
 	{
-		auto& callbacks = getContainer().getEngine()->m_timerCallbacks;
+		static std::vector<TimerMap::key_type> timersToRemove;
+		auto engine = getContainer().getEngine();
+		auto& callbacks = engine->m_timerCallbacks;
 
 		for (auto& data : callbacks) {
 			auto [id, callbackData] = data;
-			auto [lastCalled, interval, callback] = callbackData;
+			auto [lastCalled, interval, callback, _] = callbackData;
+
 			const auto now = getCurrentTimestamp();
 
 			if ((lastCalled + interval) <= now) {
-				callback(getCurrentTimestamp() - lastCalled, id);
 				std::get<0>(data.second) = getCurrentTimestamp();
+
+				callback(now - lastCalled, [id = data.first]() -> void {
+					DEBUG("Scheduling deletion of timer %lld", id);
+				  	timersToRemove.emplace_back(id);
+				});
 			}
+		}
+
+		if (timersToRemove.size() > 0) {
+			for (const auto& key : timersToRemove) {
+				DEBUG("Removing timer %lld", key);
+				callbacks.erase(key);
+			}
+
+			timersToRemove.clear();
 		}
 	}
 
@@ -212,14 +235,9 @@ namespace Godamn
 
 		m_timerCallbacks.emplace(
 			id,
-		  	std::tuple<uint64_t, uint64_t, Engine::TimerCallback>(getCurrentTimestamp(), interval, callback)
+		  	std::tuple<uint64_t, uint64_t, Engine::TimerCallback, bool>(getCurrentTimestamp(), interval, callback, false)
 		);
 
 		return id;
-	}
-
-	void Engine::removeTimer(uint64_t id)
-	{
-		m_timerCallbacks.erase(id);
 	}
 }

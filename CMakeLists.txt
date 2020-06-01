@@ -49,7 +49,6 @@ add_executable(Game main.cpp GameState.cpp Engine.cpp)
 target_link_libraries(GodamnLib PUBLIC sfml-graphics)
 target_link_libraries(Game PUBLIC sfml-graphics PRIVATE GodamnLib)
 
-list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/Utils")
 list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/lib")
 
 target_include_directories(Game PUBLIC ${PROJECT_BINARY_DIR} ${EXTRA_INCLUDES})
