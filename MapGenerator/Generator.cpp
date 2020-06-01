@@ -9,30 +9,36 @@ namespace Godamn
 
 		int sizex = 15, sizey = 24;
 		game_map mapa(sizex, sizey, '0');
-		//mapa.setBase();
+
+		mapa.setBase();
+
 		res_generator wood(&mapa, 5, 7, 4, 6, '2');
 		res_generator stone(&mapa, 5, 7, 4, 6, '4');
 
-		//todo: naniesienie obszaru startowego na mape
+		mapa.replaceBaseWithStandardObjects();
 
 		for (int i = 0; i < sizex; i++) {
 			for (int j = 0; j < sizey; j++) {
-				if (mapa[i][j] == '0')
+				switch (mapa[i][j])
 				{
-					m_map.push_back(TileEnum::Grass);
-				}
-				else if (mapa[i][j] == '2')
-				{
-					m_map.push_back(TileEnum::Grass_Forest);
-				}
-
-				else if (mapa[i][j] == '4')
-				{
-					m_map.push_back(TileEnum::Grass_Stone);
-				}
-				else
-				{
-					m_map.push_back(TileEnum::Grass);
+					case '2':
+						m_map.push_back(TileEnum::Grass_Forest);
+						break;
+					case '4':
+						m_map.push_back(TileEnum::Grass_Stone);
+						break;
+					case 's':
+						m_map.push_back(TileEnum::Grass_Miner);
+						break;
+					case 'l':
+						m_map.push_back(TileEnum::Grass_Lumber);
+						break;
+					case 't':
+						m_map.push_back(TileEnum::Grass_Temple);
+						break;
+					default:
+						m_map.push_back(TileEnum::Grass);
+						break;
 				}
 			}
 		}

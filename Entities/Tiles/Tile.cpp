@@ -24,13 +24,12 @@ namespace Godamn
 		return m_vertexOutdated;
 	}
 
-	void Tile::onMouseButtonClick(Event& ev)
-	{
-		m_type = static_cast<TileEnum>((static_cast<int>(m_type) + 1) % 12);
-		m_vertexOutdated = true;
-	}
-
 	void Tile::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
+	}
+
+	void Tile::onMouseButtonClick(Event& ev)
+	{
+		// noop
 	}
 }

@@ -16,7 +16,7 @@ namespace Godamn
 		typedef std::shared_ptr<Entity> SPEntity;
 		typedef std::vector<SPEntity> EntitiesArray;
 
-	private:
+	protected:
 		EntitiesArray m_entities;
 		bool m_zIndexOutdated;
 
@@ -27,12 +27,15 @@ namespace Godamn
 		};
 
 		Scene();
-		void addEntity(Entity* entity);
+
+		SPEntity addEntity(Entity* entity);
 		EntitiesArray::iterator begin();
 		EntitiesArray::iterator end();
 		EntitiesArray::iterator findEntityByGuid(const GUID& guid);
 
 	protected:
+		Scene(const sf::FloatRect& rect);
+
 		void beforeDraw(const Renderer& renderer) override;
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	};

@@ -9,6 +9,7 @@
 #include <vector>
 #include "../../Events/EventMethodsInterfaces.h"
 #include "../Entity.h"
+#include "TileEnum.h"
 
 namespace Godamn
 {

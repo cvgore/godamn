@@ -6,8 +6,7 @@
 namespace Godamn
 {
 	Scene::Scene(): Entity(getContainer().getEngine()->getGeometry())
-	{
-	}
+	{}
 
 	void Scene::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
@@ -17,9 +16,9 @@ namespace Godamn
 		}
 	}
 
-	void Scene::addEntity(Entity* entity)
+    Scene::SPEntity Scene::addEntity(Entity* entity)
 	{
-		m_entities.emplace_back(entity);
+		return m_entities.emplace_back(entity);
 	}
 
 	Scene::EntitiesArray::iterator Scene::begin()
@@ -51,8 +50,10 @@ namespace Godamn
 
 	Scene::EntitiesArray::iterator Scene::findEntityByGuid(const GUID& guid)
 	{
-		return std::find_if(begin(), end(), [&guid](const std::shared_ptr<Entity>& ptr) {
-			return ptr->getEntityId() == guid;
-		});
+		return std::find_if(
+		begin(), end(), [&guid](const std::shared_ptr<Entity>& ptr) { return ptr->getEntityId() == guid; });
 	}
+
+	Scene::Scene(const sf::FloatRect& rect): Entity(rect)
+	{}
 }

@@ -100,6 +100,8 @@ namespace Godamn
 		map->setRenderSize(sf::Vector2<uint8_t>(24, 15));
 		map->setTilesConfig(tilesArray);
 
+//		scene->addEntity(__new Hud())
+
 		while (m_renderer->isOpen())
 		{
 			sf::Event event;
@@ -234,7 +236,7 @@ namespace Godamn
 
 		m_timerCallbacks.emplace(
 			id,
-		  	std::tuple<uint64_t, uint64_t, Engine::TimerCallback, bool>(getCurrentTimestamp(), interval, callback)
+		  	TimerTuple(getCurrentTimestamp(), interval, callback)
 		);
 
 		return id;

@@ -99,4 +99,9 @@ namespace Godamn
 	{
 		return entity_id;
 	}
+
+	void Entity::draw(sf::RenderTarget& target, RenderStates states) const
+	{
+		// noop
+	}
 }

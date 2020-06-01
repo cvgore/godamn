@@ -27,6 +27,7 @@ namespace Godamn
 		void set_Indexed_Position(IPoint index, char new_Value);
 		void setBase();
 		int getResourceCount(char res_type);
+		void replaceBaseWithStandardObjects();
 
 		char* operator[](int index);
 	};

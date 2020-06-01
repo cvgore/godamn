@@ -50,5 +50,6 @@ namespace Godamn
 		 * @brief Called right after drawing on screen object
 		 */
 		virtual void afterDraw(const Renderer& renderer);
+		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 	};
 }
