@@ -30,7 +30,7 @@ namespace Godamn
 	{
 	public:
 		typedef std::function<void(uint64_t, std::function<void()>)> TimerCallback;
-		typedef std::tuple<uint64_t, uint64_t, TimerCallback, bool> TimerTuple;
+		typedef std::tuple<uint64_t, uint64_t, TimerCallback> TimerTuple;
 		typedef std::map<uint64_t, TimerTuple> TimerMap;
 	private:
 		sf::Font m_mainFont;

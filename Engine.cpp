@@ -193,7 +193,7 @@ namespace Godamn
 
 		for (auto& data : callbacks) {
 			auto [id, callbackData] = data;
-			auto [lastCalled, interval, callback, _] = callbackData;
+			auto [lastCalled, interval, callback] = callbackData;
 
 			const auto now = getCurrentTimestamp();
 
@@ -228,7 +228,7 @@ namespace Godamn
 
 		m_timerCallbacks.emplace(
 			id,
-		  	std::tuple<uint64_t, uint64_t, Engine::TimerCallback, bool>(getCurrentTimestamp(), interval, callback, false)
+		  	std::tuple<uint64_t, uint64_t, Engine::TimerCallback, bool>(getCurrentTimestamp(), interval, callback)
 		);
 
 		return id;
