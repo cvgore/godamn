@@ -4,6 +4,7 @@
 #include "Scenery/SceneryManager.h"
 #include "Utils/Crypto.h"
 #include "Utils/Utils.h"
+#include "MapGenerator/Generator.h"
 
 using EventType = sf::Event::EventType;
 
@@ -72,6 +73,8 @@ namespace Godamn
 
 		m_timer = CreateThreadpoolTimer(timerCallback, nullptr, nullptr);
 		SetThreadpoolTimerEx(m_timer, &ft, TIMER_INTERVAL_MIN, TIMER_INTERVAL_MIN / 10);
+		
+		m_renderer->setFramerateLimit(60);
 	}
 
 	int Engine::spawn()
@@ -91,8 +94,11 @@ namespace Godamn
 		auto& mapEnt = *scene->findEntityByGuid(TiledMap::getEntityId());
 		auto map = static_cast<TiledMap*>(mapEnt.get());
 
+		auto tilesArray = Generator::generator();
+		
 		map->loadTileset(FF_TILESET, sf::Vector2<uint8_t>(32, 32));
 		map->setRenderSize(sf::Vector2<uint8_t>(24, 15));
+		map->setTilesConfig(tilesArray);
 
 		while (m_renderer->isOpen())
 		{
