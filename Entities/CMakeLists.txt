@@ -9,4 +9,7 @@ target_sources(GodamnLib
     PRIVATE
         Entity.cpp
         Entity.h
+        Hud.cpp
+        Hud.h
+        AnonymousEntity.h
 )

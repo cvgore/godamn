@@ -5,12 +5,16 @@
 namespace Godamn
 {
 	Tile::Tile(const sf::FloatRect& rect, const TileEnum type)
-		: Entity(rect), m_type(type), m_vertexOutdated(true)
+		: Entity(rect), m_type(type), m_vertexOutdated(true), m_unveiled(false)
 	{
 	}
 
 	TileEnum Tile::getType() const
 	{
+		if (!m_unveiled) {
+			return TileEnum::Not_Unveiled;
+		}
+
 		return m_type;
 	}
 
@@ -26,10 +30,21 @@ namespace Godamn
 
 	void Tile::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
+		// noop
 	}
 
 	void Tile::onMouseButtonClick(Event& ev)
 	{
 		// noop
+	}
+
+	bool Tile::isUnveiled() const
+	{
+		return m_unveiled;
+	}
+
+	void Tile::unveil()
+	{
+		m_unveiled = true;
 	}
 }

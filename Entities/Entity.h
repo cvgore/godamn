@@ -5,6 +5,7 @@
 #include <SFML/Graphics/Transformable.hpp>
 #include <guiddef.h>
 #include <string>
+#include "../Events/EventMethodsInterfaces.h"
 #include "../Foundation/Object.h"
 
 namespace Godamn
@@ -17,6 +18,9 @@ namespace Godamn
 
 		sf::FloatRect m_rect;
 		uint16_t m_zIndex;
+
+		/** @debugging */
+		static int m_debug;
 
 	public:
 		// {E7102D28-1EBB-43FA-AB95-212B25ACF37E}
@@ -40,6 +44,7 @@ namespace Godamn
 		 * @brief Returns unique screen object type ID
 		 */
 		static GUID getEntityId();
+		void keyboardDebug(Event& ev);
 
 	protected:
 		/**

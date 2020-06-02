@@ -1,8 +1,14 @@
 #include "Entity.h"
 #include <SFML/Window/Event.hpp>
+#include <include/SFML/Graphics/RectangleShape.hpp>
 #include "../../Screen/Renderer.h"
 #include "../Events/Event.h"
 #include "../Events/EventMethodsInterfaces.h"
+#include "../Utils/Utils.h"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+
+int Godamn::Entity::m_debug = 0;
 
 namespace Godamn
 {
@@ -60,6 +66,11 @@ namespace Godamn
 				CAST_AND_CALL(MouseOver);
 			}
 			break;
+			case sf::Event::KeyPressed:
+			{
+				keyboardDebug(ev);
+				CAST_AND_CALL(KeyPress);
+			}
 			default:
 				break;
 		}
@@ -82,7 +93,7 @@ namespace Godamn
 
 	void Entity::beforeDraw(const Renderer& renderer)
 	{
-		renderer.beforeDraw(*this);
+//		renderer.beforeDraw(*this);
 	}
 
 	uint16_t Entity::getZIndex() const
@@ -100,8 +111,24 @@ namespace Godamn
 		return entity_id;
 	}
 
-	void Entity::draw(sf::RenderTarget& target, RenderStates states) const
+	void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
-		// noop
+//		if ((m_debug & 1) == 1) {
+//			sf::RectangleShape dbgRectOutline({ getRect().width, getRect().height });
+//			dbgRectOutline.setPosition({ getRect().top, getRect().left });
+//			dbgRectOutline.setOutlineThickness(1.f);
+//			dbgRectOutline.setFillColor(sf::Color::Black);
+//			dbgRectOutline.setOutlineColor(sf::Color::Red);
+//
+//			target.draw(dbgRectOutline);
+//		}
+	}
+
+	void Entity::keyboardDebug(Event& ev)
+	{
+//		if (ev.getOriginalEvent().key.code == sf::Keyboard::F9) {
+//			m_debug ^= 1;
+//			DEBUG("Toggled entity outline, current m_debug value: %x", m_debug);
+//		}
 	}
 }

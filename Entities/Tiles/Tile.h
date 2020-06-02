@@ -15,6 +15,7 @@ namespace Godamn
 	{
 		TileEnum m_type;
 		bool m_vertexOutdated;
+		bool m_unveiled;
 
 	public:
 		// {7D07691B-7193-4403-B668-CB9B2A1CA1EF}
@@ -26,6 +27,8 @@ namespace Godamn
 		TileEnum getType() const;
 		void setType(TileEnum type);
 		bool isOutdated();
+		bool isUnveiled() const;
+		void unveil();
 		void onMouseButtonClick(Event& ev) override;
 
 	private:

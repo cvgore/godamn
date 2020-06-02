@@ -2,10 +2,11 @@
 #include "../../Events/Event.h"
 #include "../../Utils/Utils.h"
 #include "Tile.h"
+#include <algorithm>
 
 namespace Godamn
 {
-	TiledMap::TiledMap(sf::FloatRect& rect) : Entity(rect), m_verticesOutdated(true)
+	TiledMap::TiledMap(sf::FloatRect& rect): Entity(rect), m_verticesOutdated(true)
 	{
 		// resize the vertex array to fit the level size
 		m_vertices.setPrimitiveType(sf::Quads);
@@ -122,5 +123,28 @@ namespace Godamn
 	void TiledMap::beforeDraw(const Renderer& renderer)
 	{
 		updateIfOutdated();
+	}
+
+	void TiledMap::unveilTile(sf::Vector2<uint8_t> pos)
+	{
+		m_tiles.at(pos.x + pos.y * m_renderSize.x).unveil();
+	}
+
+	void TiledMap::unveilBase()
+	{
+		for (uint8_t i = 0; i < 3; ++i)
+		{
+			for (uint8_t j = 0; j < 3; ++j)
+			{
+				unveilTile(sf::Vector2<uint8_t>(j, m_renderSize.y - i - 1));
+			}
+		}
+	}
+
+	uint16_t TiledMap::countTilesOfType(TileEnum type)
+	{
+		return std::count_if(m_tiles.cbegin(), m_tiles.cend(), [&type](const Tile& tile) -> bool {
+			return tile.getType() == type;
+		});
 	}
 }

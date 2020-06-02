@@ -52,6 +52,7 @@ namespace Godamn {
 
 	char game_map::getChar(IPoint index) const
 	{
+		// FIXME: shit happens here
 		return this->n_tab[index.getX()][index.getY()];
 	}
 

@@ -36,6 +36,9 @@ namespace Godamn
 		void setRenderSize(sf::Vector2<uint8_t> renderSize);
 		void updateIfOutdated();
 		void onMouseButtonClick(Event& ev) override;
+		void unveilTile(sf::Vector2<uint8_t> pos);
+		void unveilBase();
+		uint16_t countTilesOfType(TileEnum type);
 
 	protected:
 		void redraw();

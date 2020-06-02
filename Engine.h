@@ -36,7 +36,6 @@ namespace Godamn
 		sf::Font m_mainFont;
 		sf::Font m_altFont;
 		std::shared_ptr<sf::RenderWindow> m_renderer;
-		GameState* m_state;
 		PTP_POOL m_threadPool;
 		PTP_TIMER m_timer;
 		TimerMap m_timerCallbacks;
@@ -80,6 +79,7 @@ namespace Godamn
 		 * @brief Returns current time in unix timestamp
 		 */
 		static uint64_t getCurrentTimestamp();
+		const sf::Font& getMainFont() const;
 
 	private:
 		/**
