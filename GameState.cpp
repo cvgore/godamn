@@ -1,35 +1,47 @@
 #include "GameState.h"
+#include "Config/EntityConfigStore.h"
 #include "Engine.h"
+#include "Entities/Tiles/Buildings/LoggingCamp.h"
+#include "Entities/Tiles/Buildings/Mine.h"
+#include "Entities/Tiles/Buildings/Temple.h"
+#include "Entities/Tiles/TileEnum.h"
 #include "Foundation/Container.h"
 #include "Scenery/Scene.h"
 #include "Scenery/SceneryManager.h"
-#include "Entities/Tiles/TileEnum.h"
-#include "Entities/Tiles/Buildings/Temple.h"
-#include "Entities/Tiles/Buildings/LoggingCamp.h"
-#include "Entities/Tiles/Buildings/Mine.h"
-#include "Config/EntityConfigStore.h"
-
-#include <algorithm>
 
 namespace Godamn
 {
-	GameState::GameState(): m_paused(false), m_resources({ 0, 0, 0 })
+	GameState::GameState(): m_paused(false), m_resources({ 0, 0, 0 }), m_mode(0), m_currentlyHoveredTile(nullptr), m_currentlySelectedTile(nullptr)
 	{
 		auto engine = getContainer().getEngine();
-		auto cfgStore = getContainer().getEntityConfigStore();
 
-		engine->listenTimer(1 * 1000, [&, this](uint64_t elapsed, auto delTimer) -> void {
-			auto scene = getContainer().getSceneryManager()->getActiveScene();
-			auto& mapEnt = *scene->findEntityByGuid(TiledMap::getEntityId());
-			auto map = static_cast<TiledMap*>(mapEnt.get());
+		engine->listenEvent(Engine::EngineEvent::Initialized, [this](Engine::RemoveElementCallback removeListener) -> void {
+		  	auto engine = getContainer().getEngine();
 
-			uint16_t temples = map->countTilesOfType(TileEnum::Grass_Temple);
-			uint16_t lumbers = map->countTilesOfType(TileEnum::Grass_Lumber);
-			uint16_t mines = map->countTilesOfType(TileEnum::Grass_Miner);
+		  DEBUG("EntId of TiledMap: %X",TiledMap::entity_id);
+		  DEBUG("EntId of Entity: %X", Entity::entity_id);
 
-			m_resources.faith += temples * cfgStore->get(Temple::getEntityId()).produces.res.faith;
-			m_resources.wood += lumbers * cfgStore->get(LoggingCamp::getEntityId()).produces.res.wood;
-			m_resources.stone += mines * cfgStore->get(Mine::getEntityId()).produces.res.stone;
+			engine->listenTimer(1 * 1000, [this](uint64_t elapsed, Engine::RemoveElementCallback delTimer) -> void {
+			  	static auto cfgStore = getContainer().getEntityConfigStore();
+			    auto scene = getContainer().getSceneryManager()->getActiveScene();
+				auto mapEntIt = scene->findEntityByEntityId("TiledMap");
+			  	auto& mapEnt = *mapEntIt;
+				auto map = static_cast<TiledMap*>(mapEnt.get());
+
+				uint16_t temples = map->countTilesOfType(TileEnum::Grass_Temple);
+				uint16_t lumbers = map->countTilesOfType(TileEnum::Grass_Lumber);
+				uint16_t mines = map->countTilesOfType(TileEnum::Grass_Miner);
+
+				DEBUG("There are currently %d temples, %d lumbers, %d mines unveiled", temples, lumbers, mines);
+
+				auto faithPerTemple = cfgStore->get("Temple").produces.res.faith;
+				auto woodPerCamp = cfgStore->get("LoggingCamp").produces.res.wood;
+				auto stonePerMine = cfgStore->get("Mine").produces.res.stone;
+
+			  	m_resources.faith += temples * faithPerTemple;
+				m_resources.wood += lumbers * woodPerCamp;
+				m_resources.stone += mines * stonePerMine;
+			});
 		});
 	}
 
@@ -41,5 +53,35 @@ namespace Godamn
 	Resources& GameState::getResources()
 	{
 		return m_resources;
+	}
+
+	void GameState::setMode(int mode)
+	{
+		m_mode = mode;
+	}
+
+	int GameState::getMode() const
+	{
+		return m_mode;
+	}
+
+	Tile* GameState::getCurrentlySelectedTile() const
+	{
+		return m_currentlySelectedTile;
+	}
+
+	Tile* GameState::getCurrentlyHoveredTile() const
+	{
+		return m_currentlyHoveredTile;
+	}
+
+	void GameState::setCurrentlySelectedTile(Tile* tile)
+	{
+		m_currentlySelectedTile = tile;
+	}
+
+	void GameState::setCurrentlyHoveredTile(Tile* tile)
+	{
+		m_currentlyHoveredTile = tile;
 	}
 }

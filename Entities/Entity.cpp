@@ -106,7 +106,7 @@ namespace Godamn
 		zIndex = m_zIndex;
 	}
 
-	GUID Entity::getEntityId()
+	Entity::EntityID Entity::getEntityId()
 	{
 		return entity_id;
 	}

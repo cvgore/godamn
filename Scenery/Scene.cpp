@@ -2,6 +2,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "../Engine.h"
 #include "../Foundation/Container.h"
+#include "../Utils/Utils.h"
 
 namespace Godamn
 {
@@ -48,10 +49,14 @@ namespace Godamn
 		}
 	}
 
-	Scene::EntitiesArray::iterator Scene::findEntityByGuid(const GUID& guid)
+	Scene::EntitiesArray::iterator Scene::findEntityByEntityId(std::string id)
 	{
+		DEBUG("Search for entity: %s, start", id.c_str());
 		return std::find_if(
-		begin(), end(), [&guid](const std::shared_ptr<Entity>& ptr) { return ptr->getEntityId() == guid; });
+		begin(), end(), [id](std::shared_ptr<Entity>& ptr) {
+		  	DEBUG("Search for entity: %s, given: %s", id.c_str(), ptr->getName().c_str());
+			return ptr->getName() == id;
+		});
 	}
 
 	Scene::Scene(const sf::FloatRect& rect): Entity(rect)

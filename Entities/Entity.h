@@ -14,6 +14,10 @@ namespace Godamn
 
 	class Entity : public sf::Drawable, public sf::Transformable, public Object
 	{
+	public:
+		typedef uint16_t EntityID;
+
+	private:
 		friend class Renderer;
 
 		sf::FloatRect m_rect;
@@ -23,10 +27,7 @@ namespace Godamn
 		static int m_debug;
 
 	public:
-		// {E7102D28-1EBB-43FA-AB95-212B25ACF37E}
-		inline static constexpr GUID entity_id = {
-			0xe7102d28, 0x1ebb, 0x43fa, { 0xab, 0x95, 0x21, 0x2b, 0x25, 0xac, 0xf3, 0x7e }
-		};
+		inline static constexpr EntityID entity_id = 0x0020;
 
 		Entity() = delete;
 		Entity(const sf::FloatRect& rect);
@@ -43,7 +44,7 @@ namespace Godamn
 		/**
 		 * @brief Returns unique screen object type ID
 		 */
-		static GUID getEntityId();
+		static EntityID getEntityId();
 		void keyboardDebug(Event& ev);
 
 	protected:

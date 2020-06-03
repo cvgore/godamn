@@ -14,9 +14,7 @@ namespace Godamn
 		std::shared_ptr<T> m_drawable;
 
 	public:
-		inline static constexpr GUID entity_id = {
-			0x57ac7725, 0x2b2a, 0x4be6, { 0x91, 0x32, 0x2f, 0x3a, 0x33, 0xda, 0xe2, 0xbf }
-		};
+		inline static constexpr Entity::EntityID entity_id = 0x00F0;
 
 		AnonymousEntity(T* drawable, const sf::FloatRect& rect): Entity(rect), m_drawable(drawable)
 		{

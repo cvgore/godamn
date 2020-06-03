@@ -147,4 +147,16 @@ namespace Godamn
 			return tile.getType() == type;
 		});
 	}
+
+	void TiledMap::onMouseOver(Event& ev)
+	{
+		const auto relPos = ev.getRelativePos(*this);
+
+		const uint8_t tileX = static_cast<uint8_t>(floor(relPos.x / static_cast<float>(m_tileSize.x)));
+		const uint8_t tileY = static_cast<uint8_t>(floor(relPos.y / static_cast<float>(m_tileSize.y)));
+
+		m_tiles[tileX + tileY * m_renderSize.x].onMouseOver(ev);
+		// TODO: redraw only single tile, not whole map (!performance)
+		m_verticesOutdated = true;
+	}
 }

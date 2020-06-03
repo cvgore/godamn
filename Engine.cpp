@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include <stack>
 #include "Entities/Hud.h"
 #include "Events/Event.h"
 #include "Foundation/Container.h"
@@ -77,6 +78,8 @@ namespace Godamn
 
 		// https://stackoverflow.com/questions/17888993/key-repetition-in-sfml-2-0
 		m_renderer->setKeyRepeatEnabled(false);
+
+		callEngineEvents(Engine::EngineEvent::Initialized);
 	}
 
 	int Engine::spawn()
@@ -91,7 +94,7 @@ namespace Godamn
 
 		scene->addEntity(__new TiledMap(tiledMapRect));
 
-		auto& mapEnt = *scene->findEntityByGuid(TiledMap::getEntityId());
+		auto& mapEnt = *scene->findEntityByEntityId("TiledMap");
 		auto map = static_cast<TiledMap*>(mapEnt.get());
 
 		auto tilesArray = Generator::generator();
@@ -197,7 +200,7 @@ namespace Godamn
 
 	void Engine::timerCallback(PTP_CALLBACK_INSTANCE hInst, PVOID ctx, PTP_TIMER timer)
 	{
-		static std::vector<TimerMap::key_type> timersToRemove;
+		static std::stack<TimerMap::key_type> timersToRemove;
 		auto engine = getContainer().getEngine();
 		auto& callbacks = engine->m_timerCallbacks;
 
@@ -214,20 +217,19 @@ namespace Godamn
 
 				callback(now - lastCalled, [id = data.first]() -> void {
 					DEBUG("Scheduling deletion of timer %lld", id);
-					timersToRemove.emplace_back(id);
+					timersToRemove.push(id);
 				});
 			}
 		}
 
-		if (timersToRemove.size() > 0)
+		while (timersToRemove.size() > 0)
 		{
-			for (const auto& key : timersToRemove)
-			{
-				DEBUG("Removing timer %lld", key);
-				callbacks.erase(key);
-			}
+			auto& key = timersToRemove.top();
+			DEBUG("Removing timer %lld", key);
 
-			timersToRemove.clear();
+			callbacks.erase(key);
+
+			timersToRemove.pop();
 		}
 	}
 
@@ -240,9 +242,9 @@ namespace Godamn
 
 	uint64_t Engine::listenTimer(uint32_t interval, Engine::TimerCallback callback)
 	{
-		const auto id = Crypto::getRandomNumber();
+		uint64_t id = Crypto::getRandomNumber();
 
-		m_timerCallbacks.emplace(id, TimerTuple(getCurrentTimestamp(), interval, callback));
+		m_timerCallbacks.emplace(id, TimerTuple({getCurrentTimestamp(), interval, callback}));
 
 		return id;
 	}
@@ -250,5 +252,41 @@ namespace Godamn
 	const sf::Font& Engine::getMainFont() const
 	{
 		return m_mainFont;
+	}
+
+	uint64_t Engine::listenEvent(Engine::EngineEvent eventType, Engine::EngineEventCallback callback)
+	{
+		uint64_t id = Crypto::getRandomNumber();
+
+		m_eventMap[eventType].insert({id, callback});
+
+		return id;
+	}
+
+	void Engine::callEngineEvents(Engine::EngineEvent eventType)
+	{
+		static std::stack<Engine::EngineEventTupleMap::key_type> eventsToRemove;
+
+		for (auto& data : m_eventMap[eventType])
+		{
+			DEBUG("Firing engine event %x", eventType);
+			auto& callback = data.second;
+			auto id = data.first;
+
+			callback([id]() -> void {
+			 	DEBUG("Scheduling event to remove - id %lld", id);
+				eventsToRemove.push(id);
+			});
+		}
+
+		while (eventsToRemove.size() > 0)
+		{
+			auto& key = eventsToRemove.top();
+			DEBUG("Removing event %lld", key);
+
+			m_eventMap[eventType].erase(key);
+
+			eventsToRemove.pop();
+		}
 	}
 }

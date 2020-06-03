@@ -42,6 +42,6 @@ namespace Godamn
 
 	EntityConfig Building::getEntityConfig()
 	{
-		return getContainer().getEntityConfigStore()->get(getEntityId());
+		return getContainer().getEntityConfigStore()->get(entity_id);
 	}
 }

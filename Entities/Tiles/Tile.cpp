@@ -1,6 +1,8 @@
 #include "Tile.h"
 #include "../../Events/Event.h"
 #include "../../Utils/Utils.h"
+#include "../../Foundation/Container.h"
+#include "../../GameState.h"
 
 namespace Godamn
 {
@@ -35,7 +37,7 @@ namespace Godamn
 
 	void Tile::onMouseButtonClick(Event& ev)
 	{
-		// noop
+		getContainer().getGameState()->setCurrentlySelectedTile(this);
 	}
 
 	bool Tile::isUnveiled() const
@@ -46,5 +48,35 @@ namespace Godamn
 	void Tile::unveil()
 	{
 		m_unveiled = true;
+	}
+
+	std::string Tile::getTypeString() const
+	{
+		switch (getType())
+		{
+			case TileEnum::Not_Unveiled:
+				return "???";
+			case TileEnum::Grass_Stone:
+				return "Stone";
+			case TileEnum::Grass_Miner:
+				return "Mine";
+			case TileEnum::Grass_Lumber:
+				return "Lumber";
+			case TileEnum::Grass_Temple:
+				return "Temple";
+			case TileEnum::Grass_Forest:
+				return "Forest";
+			case TileEnum::Grass_Chample:
+				return "Chapel";
+			case TileEnum::Grass:
+				return "Grass";
+			default:
+				return "Unknown";
+		}
+	}
+
+	void Tile::onMouseOver(Event& ev)
+	{
+		getContainer().getGameState()->setCurrentlyHoveredTile(this);
 	}
 }

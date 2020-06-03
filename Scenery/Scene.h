@@ -21,17 +21,14 @@ namespace Godamn
 		bool m_zIndexOutdated;
 
 	public:
-		// {38D97F0A-4D56-4AF3-9F4F-EC78D5C90A58}
-		inline static constexpr GUID entity_id = {
-		0x38d97f0a, 0x4d56, 0x4af3, { 0x9f, 0x4f, 0xec, 0x78, 0xd5, 0xc9, 0x0a, 0x58 }
-		};
+		inline static constexpr uint16_t entity_id = 0x0022;
 
 		Scene();
 
 		SPEntity addEntity(Entity* entity);
 		EntitiesArray::iterator begin();
 		EntitiesArray::iterator end();
-		EntitiesArray::iterator findEntityByGuid(const GUID& guid);
+		EntitiesArray::iterator findEntityByEntityId(const std::string id);
 
 	protected:
 		Scene(const sf::FloatRect& rect);
