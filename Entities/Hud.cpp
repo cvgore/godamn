@@ -150,9 +150,9 @@ namespace Godamn
 		str.str("");
 		str.clear();
 
-		str << "[1] - place lumber [2] - place temple"
+		str << "[Q] - place lumber [W] - place temple"
 			<< "\n"
-			<< "[3] - place mine [4] - place chapel";
+			<< "[E] - place mine [R] - place chapel";
 
 		m_modesText->setString(str.str());
 
@@ -239,8 +239,12 @@ namespace Godamn
 			resources.wood -= needed.res.wood;
 			resources.stone -= needed.res.stone;
 			selTile->setType(tileType);
-			auto tileMap = *(getContainer().getSceneryManager()->getActiveScene()->findEntityByEntityId("TilesMap"));
 
+			if (tileType == TileEnum::Grass_Chample) {
+				auto tileMap = static_cast<TiledMap*>((*(getContainer().getSceneryManager()->getActiveScene()->findEntityByEntityId("TiledMap"))).get());
+
+				tileMap->unveilWithChapel(selTile->getPosOnMap());
+			}
 		} else {
 			MessageBoxA(getContainer().getEngine()->getRenderWindow().getSystemHandle(), "You need more resources!", "FAIL!", MB_APPLMODAL | MB_OK | MB_ICONWARNING);
 		}

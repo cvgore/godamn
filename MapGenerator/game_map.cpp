@@ -95,7 +95,7 @@ namespace Godamn {
 
 	void game_map::replaceBaseWithStandardObjects()
 	{
-		const char layout[] = { 's', '0', 'l', '0', 't', 'l', 's', '0', '0' };
+		const char layout[] = { 's', '0', 's', '0', 't', 'l', 'l', '0', '0' };
 		const int breakAt = 3;
 
 		for (int i = 0; i < 3; i++)

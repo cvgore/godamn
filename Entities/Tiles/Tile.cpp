@@ -6,8 +6,8 @@
 
 namespace Godamn
 {
-	Tile::Tile(const sf::FloatRect& rect, const TileEnum type)
-		: Entity(rect), m_type(type), m_vertexOutdated(true), m_unveiled(false)
+	Tile::Tile(const sf::FloatRect& rect, sf::Vector2<uint8_t> posOnMap, const TileEnum type)
+		: Entity(rect), m_type(type), m_vertexOutdated(true), m_unveiled(false), m_posOnMap(posOnMap)
 	{
 	}
 
@@ -78,5 +78,10 @@ namespace Godamn
 	void Tile::onMouseOver(Event& ev)
 	{
 		getContainer().getGameState()->setCurrentlyHoveredTile(this);
+	}
+
+	sf::Vector2<uint8_t> Tile::getPosOnMap() const
+	{
+		return m_posOnMap;
 	}
 }

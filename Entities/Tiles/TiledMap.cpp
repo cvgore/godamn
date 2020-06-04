@@ -47,7 +47,7 @@ namespace Godamn
 
 		for (uint32_t i = 0; i < tilesCount; ++i)
 		{
-			m_tiles.emplace_back(Tile(sf::FloatRect(0.f, 0.f, 0.f, 0.f)));
+			m_tiles.emplace_back(Tile(sf::FloatRect(0.f, 0.f, 0.f, 0.f), sf::Vector2<uint8_t>(i % m_renderSize.x, i / m_renderSize.x)));
 		}
 	}
 
@@ -158,5 +158,28 @@ namespace Godamn
 		m_tiles[tileX + tileY * m_renderSize.x].onMouseOver(ev);
 		// TODO: redraw only single tile, not whole map (!performance)
 		m_verticesOutdated = true;
+	}
+
+	void TiledMap::unveilWithChapel(sf::Vector2<uint8_t> chapelPos)
+	{
+		sf::Rect<uint8_t> rect({0, 0, m_renderSize.x, m_renderSize.y});
+
+		for (uint8_t i = 0; i < 4; ++i)
+		{
+			for (uint8_t j = 0; j < 4; ++j)
+			{
+				const auto posX = chapelPos.x - 2 + i;
+				const auto posY = chapelPos.y - 2 + j;
+
+				if (rect.contains(posX, posY)) {
+					unveilTile(sf::Vector2<uint8_t>(posX, posY));
+				}
+			}
+		}
+	}
+
+	sf::Vector2<uint8_t> TiledMap::getRenderSize() const
+	{
+		return m_renderSize;
 	}
 }

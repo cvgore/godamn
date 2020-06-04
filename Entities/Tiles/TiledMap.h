@@ -31,11 +31,13 @@ namespace Godamn
 		bool loadTileset(const std::string& tilesetPath, sf::Vector2<uint8_t> tileSize);
 		void setTilesConfig(std::vector<TileEnum>& tilesConfig);
 		void setRenderSize(sf::Vector2<uint8_t> renderSize);
+		sf::Vector2<uint8_t> getRenderSize() const;
 		void updateIfOutdated();
 		void onMouseButtonClick(Event& ev) override;
 		void onMouseOver(Event &ev) override;
 		void unveilTile(sf::Vector2<uint8_t> pos);
 		void unveilBase();
+		void unveilWithChapel(sf::Vector2<uint8_t> chapelPos);
 		uint16_t countTilesOfType(TileEnum type);
 
 	protected:
