@@ -2,12 +2,12 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "../Engine.h"
 #include "../Foundation/Container.h"
+#include "../Utils/Utils.h"
 
 namespace Godamn
 {
 	Scene::Scene(): Entity(getContainer().getEngine()->getGeometry())
-	{
-	}
+	{}
 
 	void Scene::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
@@ -17,9 +17,9 @@ namespace Godamn
 		}
 	}
 
-	void Scene::addEntity(Entity* entity)
+    Scene::SPEntity Scene::addEntity(Entity* entity)
 	{
-		m_entities.emplace_back(entity);
+		return m_entities.emplace_back(entity);
 	}
 
 	Scene::EntitiesArray::iterator Scene::begin()
@@ -49,10 +49,16 @@ namespace Godamn
 		}
 	}
 
-	Scene::EntitiesArray::iterator Scene::findEntityByGuid(const GUID& guid)
+	Scene::EntitiesArray::iterator Scene::findEntityByEntityId(std::string id)
 	{
-		return std::find_if(begin(), end(), [&guid](const std::shared_ptr<Entity>& ptr) {
-			return ptr->getEntityId() == guid;
+		DEBUG("Search for entity: %s, start", id.c_str());
+		return std::find_if(
+		begin(), end(), [id](std::shared_ptr<Entity>& ptr) {
+		  	DEBUG("Search for entity: %s, given: %s", id.c_str(), ptr->getName().c_str());
+			return ptr->getName() == id;
 		});
 	}
+
+	Scene::Scene(const sf::FloatRect& rect): Entity(rect)
+	{}
 }

@@ -9,6 +9,7 @@ namespace Godamn
 	class Engine;
 	class EntityConfigStore;
 	class SceneryManager;
+	class GameState;
 
 	/**
 	 * @brief Simple & small container
@@ -18,6 +19,7 @@ namespace Godamn
 		std::shared_ptr<Engine> m_engine;
 		std::shared_ptr<EntityConfigStore> m_entityStore;
 		std::shared_ptr<SceneryManager> m_sceneryManager;
+        std::shared_ptr<GameState> m_state;
 
 	public:
 		/**
@@ -46,6 +48,9 @@ namespace Godamn
 
 		void setSceneryManager(SceneryManager* manager);
 		std::shared_ptr<SceneryManager> getSceneryManager() const;
+
+        void setGameState(GameState* state);
+        std::shared_ptr<GameState> getGameState() const;
 
 	private:
 		/**

@@ -49,4 +49,14 @@ namespace Godamn
 	{
 		return m_sceneryManager;
 	}
+
+	void Container::setGameState(GameState* state)
+	{
+		m_state.reset(state);
+	}
+
+	std::shared_ptr<GameState> Container::getGameState() const
+	{
+		return m_state;
+	}
 }

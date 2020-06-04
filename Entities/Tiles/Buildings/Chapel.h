@@ -13,10 +13,7 @@ namespace Godamn
 		uint16_t m_level;
 
 	public:
-		// {53DB42F6-B363-4755-A58F-9D3718F10F9D}
-		inline static constexpr GUID entity_id = {
-			0x53db42f6, 0xb363, 0x4755, { 0xa5, 0x8f, 0x9d, 0x37, 0x18, 0xf1, 0xf, 0x9d }
-		};
+		inline static constexpr EntityID entity_id = 0x0026;
 
 		uint16_t getRange() const;
 	};

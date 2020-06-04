@@ -11,6 +11,7 @@
 // @formatter:off
 // clang-format off
 #define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
 #include <windows.h>
 #include <threadpoolapiset.h>
 #include <chrono>
@@ -29,17 +30,35 @@ namespace Godamn
 	class Engine : sf::NonCopyable, public Object, public Renderer
 	{
 	public:
-		typedef std::function<void(uint64_t, std::function<void()>)> TimerCallback;
-		typedef std::tuple<uint64_t, uint64_t, TimerCallback> TimerTuple;
+		enum class EngineEvent {
+			// Called after engine was fully initialized
+			Initialized
+		};
+
+		// void ()
+		typedef std::function<void(void)> RemoveElementCallback;
+		// void (uint64_t deltaTime, std::function<void()> removeTimer)
+		typedef std::function<void(uint64_t, RemoveElementCallback)> TimerCallback;
+		// uint64_t lastCalled, uint32_t interval, TimerCallback callback
+		typedef std::tuple<uint64_t, uint32_t, TimerCallback> TimerTuple;
+		// uint64_t keyType, TimerTuple valueType
 		typedef std::map<uint64_t, TimerTuple> TimerMap;
+		// void (std::function<void()> removeListener)
+		typedef std::function<void(RemoveElementCallback)> EngineEventCallback;
+		// uint64_t id, EngineEventCallback callback
+		typedef std::map<uint64_t, EngineEventCallback> EngineEventTupleMap;
+		// EngineEvent keyType, EngineEventTupleMap valueType
+		typedef std::map<EngineEvent, EngineEventTupleMap> EngineEventMap;
+
+
 	private:
 		sf::Font m_mainFont;
 		sf::Font m_altFont;
 		std::shared_ptr<sf::RenderWindow> m_renderer;
-		GameState* m_state;
 		PTP_POOL m_threadPool;
 		PTP_TIMER m_timer;
 		TimerMap m_timerCallbacks;
+		EngineEventMap m_eventMap;
 
 	public:
 		Engine();
@@ -80,6 +99,19 @@ namespace Godamn
 		 * @brief Returns current time in unix timestamp
 		 */
 		static uint64_t getCurrentTimestamp();
+		const sf::Font& getMainFont() const;
+		/**
+		 * @brief Listens for event on engine
+		 * @param eventType type of event to listen
+		 * @param callback
+		 * @example
+		 *
+		 * listenEvent(EngineEvent::Initialized, [](auto removeListener) -> void {
+		 *     // called right after engine init
+		 *     // removeListener() <- will remove listener
+		 * })
+		 */
+		uint64_t listenEvent(EngineEvent eventType, EngineEventCallback callback);
 
 	private:
 		/**
@@ -96,5 +128,6 @@ namespace Godamn
 		 * @brief Used by thread pool timer as a callback function
 		 */
 		static void CALLBACK timerCallback(PTP_CALLBACK_INSTANCE hInst, PVOID ctx, PTP_TIMER timer);
+		void callEngineEvents(EngineEvent eventType);
 	};
 }

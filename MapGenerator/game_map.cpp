@@ -5,11 +5,12 @@ namespace Godamn {
 	game_map::game_map(int lenght, int width, char default_value) :
 		n_lenght(lenght), n_width(width), n_default_value(default_value)
 	{
-		this->n_tab = new char* [n_lenght];
+		this->n_tab = __new char* [n_lenght];
 		for (int i = 0; i < n_lenght; i++)
 		{
-			n_tab[i] = new char[n_width];
+			n_tab[i] = __new char[n_width];
 		}
+
 		// nadawanie default_value
 		for (int i = 0; i < n_lenght; i++)
 		{
@@ -51,6 +52,7 @@ namespace Godamn {
 
 	char game_map::getChar(IPoint index) const
 	{
+		// FIXME: shit happens here
 		return this->n_tab[index.getX()][index.getY()];
 	}
 
@@ -74,6 +76,7 @@ namespace Godamn {
 	int game_map::getResourceCount(char res_type)
 	{
 		int res_count = 0;
+
 		for (int i = 0; i < n_lenght; i++)
 		{
 			for (int j = 0; j < n_width; j++)
@@ -81,6 +84,7 @@ namespace Godamn {
 				if (n_tab[i][j] == res_type) { res_count++; }
 			}
 		}
+
 		return res_count;
 	}
 
@@ -89,5 +93,17 @@ namespace Godamn {
 		return this->n_tab[index];
 	}
 
+	void game_map::replaceBaseWithStandardObjects()
+	{
+		const char layout[] = { 's', '0', 's', '0', 't', 'l', 'l', '0', '0' };
+		const int breakAt = 3;
 
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				n_tab[n_lenght - 3 + i][j] = layout[i + j * breakAt];
+			}
+		}
+	}
 }

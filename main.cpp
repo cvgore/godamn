@@ -3,8 +3,7 @@
 #include "Config/EntityConfigStore.h"
 #include "Foundation/Container.h"
 #include "Scenery/SceneryManager.h"
-
- int main()
+int main()
 {
 	/**
 	 * @brief Setting memory leak detector, only if using debug mode
@@ -25,6 +24,9 @@
 
 	// Creating scenery manager & putting it in a container
 	container.setSceneryManager(__new Godamn::SceneryManager);
+
+	 // Creating game state & putting it in a container
+	 container.setGameState(__new Godamn::GameState);
 
 	// Storing pointer to engine from container
 	auto game = container.getEngine();

@@ -9,12 +9,13 @@
 #include <vector>
 #include "../../Events/EventMethodsInterfaces.h"
 #include "../Entity.h"
+#include "TileEnum.h"
 
 namespace Godamn
 {
 	class Tile;
 
-	class TiledMap : public Entity, public IEvMouseButtonClick
+	class TiledMap : public Entity, public IEvMouseButtonClick, public IEvMouseOver
 	{
 		sf::Texture m_tileset;
 		sf::VertexArray m_vertices;
@@ -24,17 +25,20 @@ namespace Godamn
 		bool m_verticesOutdated;
 
 	public:
-		// {7381B45C-9619-4E46-888D-9C9C10C935F7}
-		inline static constexpr GUID entity_id = {
-			0x7381b45c, 0x9619, 0x4e46, {0x88, 0x8d, 0x9c, 0x9c, 0x10, 0xc9, 0x35, 0xf7}
-		};
+		inline static constexpr uint16_t entity_id = 0x0021;
 
 		TiledMap(sf::FloatRect& rect);
 		bool loadTileset(const std::string& tilesetPath, sf::Vector2<uint8_t> tileSize);
 		void setTilesConfig(std::vector<TileEnum>& tilesConfig);
 		void setRenderSize(sf::Vector2<uint8_t> renderSize);
+		sf::Vector2<uint8_t> getRenderSize() const;
 		void updateIfOutdated();
 		void onMouseButtonClick(Event& ev) override;
+		void onMouseOver(Event &ev) override;
+		void unveilTile(sf::Vector2<uint8_t> pos);
+		void unveilBase();
+		void unveilWithChapel(sf::Vector2<uint8_t> chapelPos);
+		uint16_t countTilesOfType(TileEnum type);
 
 	protected:
 		void redraw();

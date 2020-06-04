@@ -2,10 +2,11 @@
 #include "../../Events/Event.h"
 #include "../../Utils/Utils.h"
 #include "Tile.h"
+#include <algorithm>
 
 namespace Godamn
 {
-	TiledMap::TiledMap(sf::FloatRect& rect) : Entity(rect), m_verticesOutdated(true)
+	TiledMap::TiledMap(sf::FloatRect& rect): Entity(rect), m_verticesOutdated(true)
 	{
 		// resize the vertex array to fit the level size
 		m_vertices.setPrimitiveType(sf::Quads);
@@ -46,7 +47,7 @@ namespace Godamn
 
 		for (uint32_t i = 0; i < tilesCount; ++i)
 		{
-			m_tiles.emplace_back(Tile(sf::FloatRect(0.f, 0.f, 0.f, 0.f)));
+			m_tiles.emplace_back(Tile(sf::FloatRect(0.f, 0.f, 0.f, 0.f), sf::Vector2<uint8_t>(i % m_renderSize.x, i / m_renderSize.x)));
 		}
 	}
 
@@ -122,5 +123,63 @@ namespace Godamn
 	void TiledMap::beforeDraw(const Renderer& renderer)
 	{
 		updateIfOutdated();
+	}
+
+	void TiledMap::unveilTile(sf::Vector2<uint8_t> pos)
+	{
+		m_tiles.at(pos.x + pos.y * m_renderSize.x).unveil();
+	}
+
+	void TiledMap::unveilBase()
+	{
+		for (uint8_t i = 0; i < 3; ++i)
+		{
+			for (uint8_t j = 0; j < 3; ++j)
+			{
+				unveilTile(sf::Vector2<uint8_t>(j, m_renderSize.y - i - 1));
+			}
+		}
+	}
+
+	uint16_t TiledMap::countTilesOfType(TileEnum type)
+	{
+		return std::count_if(m_tiles.cbegin(), m_tiles.cend(), [&type](const Tile& tile) -> bool {
+			return tile.getType() == type;
+		});
+	}
+
+	void TiledMap::onMouseOver(Event& ev)
+	{
+		const auto relPos = ev.getRelativePos(*this);
+
+		const uint8_t tileX = static_cast<uint8_t>(floor(relPos.x / static_cast<float>(m_tileSize.x)));
+		const uint8_t tileY = static_cast<uint8_t>(floor(relPos.y / static_cast<float>(m_tileSize.y)));
+
+		m_tiles[tileX + tileY * m_renderSize.x].onMouseOver(ev);
+		// TODO: redraw only single tile, not whole map (!performance)
+		m_verticesOutdated = true;
+	}
+
+	void TiledMap::unveilWithChapel(sf::Vector2<uint8_t> chapelPos)
+	{
+		sf::Rect<uint8_t> rect({0, 0, m_renderSize.x, m_renderSize.y});
+
+		for (uint8_t i = 0; i < 4; ++i)
+		{
+			for (uint8_t j = 0; j < 4; ++j)
+			{
+				const auto posX = chapelPos.x - 2 + i;
+				const auto posY = chapelPos.y - 2 + j;
+
+				if (rect.contains(posX, posY)) {
+					unveilTile(sf::Vector2<uint8_t>(posX, posY));
+				}
+			}
+		}
+	}
+
+	sf::Vector2<uint8_t> TiledMap::getRenderSize() const
+	{
+		return m_renderSize;
 	}
 }

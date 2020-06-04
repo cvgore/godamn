@@ -1,23 +1,16 @@
 #pragma once
+
 #include <iostream>
 #include <vector>
-#include "res_generator.h"
-#include "game_map.h"
 #include "../Entities/Tiles/TileEnum.h"
-
+#include "game_map.h"
+#include "res_generator.h"
 
 namespace Godamn
 {
-	class Generator {
-
+	class Generator
+	{
 	public:
-
 		static std::vector<TileEnum> generator();
-
 	};
 }
-
-
-
-
-

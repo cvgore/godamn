@@ -7,7 +7,7 @@
 #include "../Utils/Utils.h"
 
 #define CONFIGURE_ENTITY(entityClass, ...) \
-	std::pair<StoreKey, StoreVal>(guid_to_string(entityClass::getEntityId()), StoreVal __VA_ARGS__)
+	std::pair<StoreKey, StoreVal>(#entityClass, StoreVal __VA_ARGS__)
 
 #define BEGIN_CONFIGURE() m_store = StoreMap({
 #define END_CONFIGURE() \
@@ -40,9 +40,9 @@ namespace Godamn
 			return m_store.at(key);
 		}
 
-		T get(const GUID key) const
+		T get(const uint16_t key) const
 		{
-			return get(guid_to_string(key));
+			return m_store.at(std::to_string(key));
 		}
 
 		T operator[](const std::string key) const
@@ -50,7 +50,7 @@ namespace Godamn
 			return get(key);
 		}
 
-		T operator[](const GUID key) const
+		T operator[](const uint16_t key) const
 		{
 			return get(key);
 		}

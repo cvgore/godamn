@@ -1,10 +1,12 @@
 #include "Engine.h"
+#include <stack>
+#include "Entities/Hud.h"
 #include "Events/Event.h"
 #include "Foundation/Container.h"
+#include "MapGenerator/Generator.h"
 #include "Scenery/SceneryManager.h"
 #include "Utils/Crypto.h"
 #include "Utils/Utils.h"
-#include "MapGenerator/Generator.h"
 
 using EventType = sf::Event::EventType;
 
@@ -21,15 +23,12 @@ namespace Godamn
 	 */
 	const char* requirements[] = { FF_ALT_FONT, FF_MAIN_FONT, FF_TILESET };
 
-	Engine::Engine() :
-		m_renderer(nullptr), m_state(nullptr), m_threadPool(nullptr)
+	Engine::Engine(): m_renderer(nullptr), m_threadPool(nullptr)
 	{}
 
 	Engine::~Engine()
 	{
 		m_renderer.reset();
-
-		delete m_state;
 	}
 
 	/**
@@ -43,7 +42,7 @@ namespace Godamn
 		{
 			if (stat(requirement, &data) != EXIT_SUCCESS)
 			{
-				PANIC("Could not stat on file")
+				PANIC("Could not stat on file: %s", requirement);
 			}
 		}
 	}
@@ -62,25 +61,29 @@ namespace Godamn
 		}
 
 		m_renderer = std::shared_ptr<sf::RenderWindow>(__new sf::RenderWindow(
-		sf::VideoMode(800, 600), APP_NAME " " APP_VERSION, sf::Style::Default ^ sf::Style::Resize));
+		sf::VideoMode(800, 600), APP_NAME " " APP_VERSION, sf::Style::Default ^ sf::Style::Resize,
+		sf::ContextSettings(0, 0, 2)));
 
 		m_threadPool = CreateThreadpool(nullptr);
 
 		SetThreadpoolThreadMaximum(m_threadPool, 2);
 		SetThreadpoolThreadMinimum(m_threadPool, 1);
 
-		FILETIME ft = {0, 0};
+		FILETIME ft = { 0, 0 };
 
 		m_timer = CreateThreadpoolTimer(timerCallback, nullptr, nullptr);
 		SetThreadpoolTimerEx(m_timer, &ft, TIMER_INTERVAL_MIN, TIMER_INTERVAL_MIN / 10);
-		
+
 		m_renderer->setFramerateLimit(60);
+
+		// https://stackoverflow.com/questions/17888993/key-repetition-in-sfml-2-0
+		m_renderer->setKeyRepeatEnabled(false);
+
+		callEngineEvents(Engine::EngineEvent::Initialized);
 	}
 
 	int Engine::spawn()
 	{
-		m_state = __new GameState;
-
 		auto tiledMapRect = sf::FloatRect(16.f, 16.f, 768.f, 480.f);
 
 		auto manager = getContainer().getSceneryManager().get();
@@ -91,14 +94,18 @@ namespace Godamn
 
 		scene->addEntity(__new TiledMap(tiledMapRect));
 
-		auto& mapEnt = *scene->findEntityByGuid(TiledMap::getEntityId());
+		auto& mapEnt = *scene->findEntityByEntityId("TiledMap");
 		auto map = static_cast<TiledMap*>(mapEnt.get());
 
 		auto tilesArray = Generator::generator();
-		
-		map->loadTileset(FF_TILESET, sf::Vector2<uint8_t>(32, 32));
-		map->setRenderSize(sf::Vector2<uint8_t>(24, 15));
+
+		map->loadTileset(FF_TILESET, { 32, 32 });
+		map->setRenderSize({ 24, 15 });
 		map->setTilesConfig(tilesArray);
+		map->unveilBase();
+
+		scene->addEntity(
+		__new Hud({ 16.f, getGeometry().height - 100.f + 8.f, getGeometry().width - 32.f, 100.f - 16.f - 8.f }));
 
 		while (m_renderer->isOpen())
 		{
@@ -193,50 +200,93 @@ namespace Godamn
 
 	void Engine::timerCallback(PTP_CALLBACK_INSTANCE hInst, PVOID ctx, PTP_TIMER timer)
 	{
-		static std::vector<TimerMap::key_type> timersToRemove;
+		static std::stack<TimerMap::key_type> timersToRemove;
 		auto engine = getContainer().getEngine();
 		auto& callbacks = engine->m_timerCallbacks;
 
-		for (auto& data : callbacks) {
+		for (auto& data : callbacks)
+		{
 			auto [id, callbackData] = data;
 			auto [lastCalled, interval, callback] = callbackData;
 
 			const auto now = getCurrentTimestamp();
 
-			if ((lastCalled + interval) <= now) {
+			if ((lastCalled + interval) <= now)
+			{
 				std::get<0>(data.second) = getCurrentTimestamp();
 
 				callback(now - lastCalled, [id = data.first]() -> void {
 					DEBUG("Scheduling deletion of timer %lld", id);
-				  	timersToRemove.emplace_back(id);
+					timersToRemove.push(id);
 				});
 			}
 		}
 
-		if (timersToRemove.size() > 0) {
-			for (const auto& key : timersToRemove) {
-				DEBUG("Removing timer %lld", key);
-				callbacks.erase(key);
-			}
+		while (timersToRemove.size() > 0)
+		{
+			auto& key = timersToRemove.top();
+			DEBUG("Removing timer %lld", key);
 
-			timersToRemove.clear();
+			callbacks.erase(key);
+
+			timersToRemove.pop();
 		}
 	}
 
 	uint64_t Engine::getCurrentTimestamp()
 	{
-		return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+		return std::chrono::duration_cast<std::chrono::milliseconds>(
+			   std::chrono::steady_clock::now().time_since_epoch())
+		.count();
 	}
 
 	uint64_t Engine::listenTimer(uint32_t interval, Engine::TimerCallback callback)
 	{
-		const auto id = Crypto::getRandomNumber();
+		uint64_t id = Crypto::getRandomNumber();
 
-		m_timerCallbacks.emplace(
-			id,
-		  	std::tuple<uint64_t, uint64_t, Engine::TimerCallback, bool>(getCurrentTimestamp(), interval, callback)
-		);
+		m_timerCallbacks.emplace(id, TimerTuple({getCurrentTimestamp(), interval, callback}));
 
 		return id;
+	}
+
+	const sf::Font& Engine::getMainFont() const
+	{
+		return m_mainFont;
+	}
+
+	uint64_t Engine::listenEvent(Engine::EngineEvent eventType, Engine::EngineEventCallback callback)
+	{
+		uint64_t id = Crypto::getRandomNumber();
+
+		m_eventMap[eventType].insert({id, callback});
+
+		return id;
+	}
+
+	void Engine::callEngineEvents(Engine::EngineEvent eventType)
+	{
+		static std::stack<Engine::EngineEventTupleMap::key_type> eventsToRemove;
+
+		for (auto& data : m_eventMap[eventType])
+		{
+			DEBUG("Firing engine event %x", eventType);
+			auto& callback = data.second;
+			auto id = data.first;
+
+			callback([id]() -> void {
+			 	DEBUG("Scheduling event to remove - id %lld", id);
+				eventsToRemove.push(id);
+			});
+		}
+
+		while (eventsToRemove.size() > 0)
+		{
+			auto& key = eventsToRemove.top();
+			DEBUG("Removing event %lld", key);
+
+			m_eventMap[eventType].erase(key);
+
+			eventsToRemove.pop();
+		}
 	}
 }

@@ -16,5 +16,6 @@ namespace Godamn
 		Moutain_Miner,
 		Moutain_Stone,
 		Moutain_Chample,
+		Not_Unveiled
 	};
 }
