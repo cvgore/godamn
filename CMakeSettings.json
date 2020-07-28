@@ -12,11 +12,6 @@
       "inheritEnvironments": [ "msvc_x86" ],
       "variables": [
         {
-          "name": "SFML_DIR",
-          "value": "C:/SFML-2.5.1",
-          "type": "PATH"
-        },
-        {
           "name": "_DEBUG",
           "value": "True",
           "type": "BOOL"
