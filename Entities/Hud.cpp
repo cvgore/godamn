@@ -18,10 +18,10 @@
 #include <windows.h>
 namespace Godamn
 {
-	Hud::Hud(const sf::FloatRect& rect): Scene(rect)
+	Hud::Hud(const sf::FloatRect& rect) : Scene(rect)
 	{
 		auto hudBgEnt =
-		__new AnonymousEntity<sf::RectangleShape>(__new sf::RectangleShape({ rect.width, rect.height }), rect);
+			__new AnonymousEntity<sf::RectangleShape>(__new sf::RectangleShape({ rect.width, rect.height }), rect);
 		auto hudBgShp = (*hudBgEnt);
 
 		addEntity(hudBgEnt);
@@ -29,8 +29,8 @@ namespace Godamn
 		hudBgShp->setFillColor({ 60, 55, 95 });
 
 		auto faithPointsEnt = __new AnonymousEntity<sf::Text>(
-		__new sf::Text(L"<faithPts>", getContainer().getEngine()->getMainFont(), 16),
-		{ rect.left + 8.f, rect.top + 8.f, 150.f, 16.f });
+			__new sf::Text(L"<faithPts>", getContainer().getEngine()->getMainFont(), 16),
+			{ rect.left + 8.f, rect.top + 8.f, 150.f, 16.f });
 		auto faithPointsTxt = (*faithPointsEnt);
 		m_faithPointsText = faithPointsTxt.get().get();
 
@@ -39,8 +39,8 @@ namespace Godamn
 		faithPointsTxt->setFillColor(sf::Color::White);
 
 		auto woodAmountEnt = __new AnonymousEntity<sf::Text>(
-		__new sf::Text(L"<woodAmount>", getContainer().getEngine()->getMainFont(), 16),
-		{ rect.left + 8.f, faithPointsTxt.getRect().top + faithPointsTxt.getRect().height + 8.f, 150.f, 16.f });
+			__new sf::Text(L"<woodAmount>", getContainer().getEngine()->getMainFont(), 16),
+			{ rect.left + 8.f, faithPointsTxt.getRect().top + faithPointsTxt.getRect().height + 8.f, 150.f, 16.f });
 		auto woodAmountTxt = (*woodAmountEnt);
 		m_woodAmountText = woodAmountTxt.get().get();
 
@@ -49,8 +49,8 @@ namespace Godamn
 		woodAmountTxt->setFillColor(sf::Color::White);
 
 		auto stoneAmountEnt = __new AnonymousEntity<sf::Text>(
-		__new sf::Text(L"<stoneAmount>", getContainer().getEngine()->getMainFont(), 16),
-		{ rect.left + 8.f, woodAmountTxt.getRect().top + woodAmountTxt.getRect().height + 8.f, 150.f, 16.f });
+			__new sf::Text(L"<stoneAmount>", getContainer().getEngine()->getMainFont(), 16),
+			{ rect.left + 8.f, woodAmountTxt.getRect().top + woodAmountTxt.getRect().height + 8.f, 150.f, 16.f });
 		auto stoneAmountTxt = (*stoneAmountEnt);
 		m_stoneAmountText = stoneAmountTxt.get().get();
 
@@ -59,8 +59,8 @@ namespace Godamn
 		stoneAmountTxt->setFillColor(sf::Color::White);
 
 		auto currentModeEnt = __new AnonymousEntity<sf::Text>(
-		__new sf::Text(L"<currentMode>", getContainer().getEngine()->getMainFont(), 16),
-		{ faithPointsTxt.getRect().left + faithPointsTxt.getRect().width + 8.f, rect.top + 8.f, 128.f, 16.f });
+			__new sf::Text(L"<currentMode>", getContainer().getEngine()->getMainFont(), 16),
+			{ faithPointsTxt.getRect().left + faithPointsTxt.getRect().width + 8.f, rect.top + 8.f, 128.f, 16.f });
 		auto currentModeTxt = (*currentModeEnt);
 		m_currentModeText = currentModeTxt.get().get();
 
@@ -69,9 +69,9 @@ namespace Godamn
 		currentModeTxt->setFillColor(sf::Color::White);
 
 		auto modesEnt = __new AnonymousEntity<sf::Text>(
-		__new sf::Text(L"<modes>", getContainer().getEngine()->getMainFont(), 16),
-		{ currentModeTxt.getRect().left + currentModeTxt.getRect().width + 8.f, currentModeTxt.getRect().top + 8.f,
-		  250.f, 16.f });
+			__new sf::Text(L"<modes>", getContainer().getEngine()->getMainFont(), 16),
+			{ currentModeTxt.getRect().left + currentModeTxt.getRect().width + 8.f, currentModeTxt.getRect().top + 8.f,
+			  250.f, 16.f });
 		auto modesTxt = (*modesEnt);
 		m_modesText = modesTxt.get().get();
 
@@ -80,8 +80,8 @@ namespace Godamn
 		modesTxt->setFillColor(sf::Color::White);
 
 		auto currSelTileEnt = __new AnonymousEntity<sf::Text>(
-		__new sf::Text(L"<selectedTile>", getContainer().getEngine()->getMainFont(), 16),
-		{ modesTxt.getRect().left + modesTxt.getRect().width + 8.f, currentModeTxt.getRect().top + 8.f, 128.f, 16.f });
+			__new sf::Text(L"<selectedTile>", getContainer().getEngine()->getMainFont(), 16),
+			{ modesTxt.getRect().left + modesTxt.getRect().width + 8.f, currentModeTxt.getRect().top + 8.f, 128.f, 16.f });
 		auto currSelTileTxt = (*currSelTileEnt);
 		m_currentlySelectedTile = currSelTileTxt.get().get();
 
@@ -90,9 +90,9 @@ namespace Godamn
 		currSelTileTxt->setFillColor(sf::Color::White);
 
 		auto currHovTileEnt = __new AnonymousEntity<sf::Text>(
-		__new sf::Text(L"<hoveredTile>", getContainer().getEngine()->getMainFont(), 16),
-		{ currSelTileTxt.getRect().left, currSelTileTxt.getRect().top + currSelTileTxt.getRect().height + 8.f, 128.f,
-		  16.f });
+			__new sf::Text(L"<hoveredTile>", getContainer().getEngine()->getMainFont(), 16),
+			{ currSelTileTxt.getRect().left, currSelTileTxt.getRect().top + currSelTileTxt.getRect().height + 8.f, 128.f,
+			  16.f });
 		auto currHovTileTxt = (*currHovTileEnt);
 		m_currentlyHoveredTile = currHovTileTxt.get().get();
 
@@ -196,8 +196,8 @@ namespace Godamn
 		auto selTile = gs->getCurrentlySelectedTile();
 
 		if (selTile == nullptr ||
-		!selTile->isUnveiled() || (selTile->getType() != TileEnum::Grass &&
-		selTile->getType() != TileEnum::Grass_Forest && selTile->getType() != TileEnum::Grass_Stone))
+			!selTile->isUnveiled() || (selTile->getType() != TileEnum::Grass &&
+				selTile->getType() != TileEnum::Grass_Forest && selTile->getType() != TileEnum::Grass_Stone))
 		{
 			return;
 		}
@@ -210,30 +210,41 @@ namespace Godamn
 
 		switch (key)
 		{
-			case sf::Keyboard::Q:
-				cfgStoreKey = "LoggingCamp";
-				tileType = TileEnum::Grass_Lumber;
-				break;
-			case sf::Keyboard::W:
-				cfgStoreKey = "Temple";
-				tileType = TileEnum::Grass_Temple;
-				break;
-			case sf::Keyboard::E:
-				cfgStoreKey = "Mine";
-				tileType = TileEnum::Grass_Miner;
-				break;
-			case sf::Keyboard::R:
-				cfgStoreKey = "Chapel";
-				tileType = TileEnum::Grass_Chample;
-				break;
-			default:
+		case sf::Keyboard::Q:
+			cfgStoreKey = "LoggingCamp";
+
+			if (selTile->getType() != TileEnum::Grass_Forest)
+			{
+				
 				return;
+			}
+			tileType = TileEnum::Grass_Lumber;
+			break;
+		case sf::Keyboard::W:
+			cfgStoreKey = "Temple";
+			tileType = TileEnum::Grass_Temple;
+			break;
+		case sf::Keyboard::E:
+			cfgStoreKey = "Mine";
+			if (selTile->getType() != TileEnum::Grass_Stone)
+			{
+				// TODO message why you can't place lumbermill there
+				return;
+			}
+			tileType = TileEnum::Grass_Miner;
+			break;
+		case sf::Keyboard::R:
+			cfgStoreKey = "Chapel";
+			tileType = TileEnum::Grass_Chample;
+			break;
+		default:
+			return;
 		}
 
 		needed = (*cfgStore)[cfgStoreKey].requirements;
 
 		if (
-		needed.res.stone <= resources.stone && needed.res.wood <= resources.wood && needed.res.faith <= resources.faith)
+			needed.res.stone <= resources.stone && needed.res.wood <= resources.wood && needed.res.faith <= resources.faith)
 		{
 			resources.faith -= needed.res.faith;
 			resources.wood -= needed.res.wood;
@@ -245,8 +256,13 @@ namespace Godamn
 
 				tileMap->unveilWithChapel(selTile->getPosOnMap());
 			}
-		} else {
+		}
+		else {
 			MessageBoxA(getContainer().getEngine()->getRenderWindow().getSystemHandle(), "You need more resources!", "FAIL!", MB_APPLMODAL | MB_OK | MB_ICONWARNING);
 		}
 	}
+	/*void display_not_placeable_msg(Tile* tile, TileEnum type )
+	{
+		MessageBoxA(getContainer().getEngine()->getRenderWindow().getSystemHandle(), "You need more resources!", "FAIL!", MB_APPLMODAL | MB_OK | MB_ICONWARNING);
+	}*/
 }

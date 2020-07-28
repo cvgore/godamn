@@ -7,6 +7,9 @@
 
 namespace Godamn
 {
+	class Tile;
+	enum class TileEnum;
+
 	class Hud : public Scene, public IEvMouseButtonClick, public IEvKeyPress
 	{
 		sf::Text* m_faithPointsText;
@@ -27,4 +30,5 @@ namespace Godamn
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 		void beforeDraw(const Renderer &renderer) override;
 	};
+	
 }
