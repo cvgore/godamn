@@ -25,10 +25,9 @@ target_sources(GodamnLib
 
 ## Building
 
-1. Download SFML library (_2.5.1, VC15 32-bit_) from https://www.sfml-dev.org/files/SFML-2.5.1-windows-vc15-32-bit.zip.
-Then unpack contents to `C:/SFML-2.5.1` folder.
+1. Clone repo (`git clone --recursive` recommended to get all dependencies)
 
-2. Make sure, that your Visual Studio installation supports CMake projects nad contains CMake tools
+1. Make sure, that your Visual Studio installation supports CMake projects nad contains CMake tools
 (if you can make CMake project within Project Wizard window, it's ok)
 
 ## License
